@@ -1,0 +1,168 @@
+{
+  "metadata": {
+    "config_used": {
+      "escort_avoidance_percentage": 10,
+      "extra_dist_pct": 20,
+      "fare_per_km": 10,
+      "max_cab_capacity": 4,
+      "max_employees_per_request": 1000,
+      "office": [
+        17.458826,
+        78.385718
+      ],
+      "osrm_endpoint": "http://35.244.42.110:5000"
+    },
+    "matrix_status": {
+      "coordinates_processed": 10,
+      "endpoint_used": "http://35.244.42.110:5000",
+      "status": "success",
+      "trip_type": "login"
+    },
+    "processing_timestamp": "2025-11-20T06:47:10.841966",
+    "trip_type": "login"
+  },
+  "routes": [
+    {
+      "cab_number": 1,
+      "employee_details": [
+        {
+          "description": "Pickup #1",
+          "direct_km": 19.33,
+          "employee_id": "7809",
+          "extra_percentage": 15.4,
+          "gender": "Male",
+          "pickup_sequence": 1,
+          "trip_km": 22.31
+        },
+        {
+          "description": "Pickup #2",
+          "direct_km": 9.2,
+          "employee_id": "7894",
+          "extra_percentage": 17.17,
+          "gender": "Female",
+          "pickup_sequence": 2,
+          "trip_km": 10.78
+        },
+        {
+          "description": "Pickup #3",
+          "direct_km": 2.85,
+          "employee_id": "231113",
+          "extra_percentage": 0,
+          "gender": "Male",
+          "pickup_sequence": 3,
+          "trip_km": 2.85
+        },
+        {
+          "description": "Pickup #4",
+          "direct_km": 2.85,
+          "employee_id": "48894",
+          "extra_percentage": 0,
+          "gender": "Female",
+          "pickup_sequence": 4,
+          "trip_km": 2.85
+        }
+      ],
+      "is_male_led": true,
+      "requires_escort": false,
+      "route_type": "MALE-LED PICKUP",
+      "total_cost": 223.12,
+      "total_distance_km": 22.31,
+      "trip_type": "login"
+    },
+    {
+      "cab_number": 2,
+      "employee_details": [
+        {
+          "description": "Pickup #1",
+          "direct_km": 10.99,
+          "employee_id": "Rat123",
+          "extra_percentage": 14.99,
+          "gender": "Male",
+          "pickup_sequence": 1,
+          "trip_km": 12.63
+        },
+        {
+          "description": "Pickup #2",
+          "direct_km": 10.17,
+          "employee_id": "9234",
+          "extra_percentage": 0,
+          "gender": "Male",
+          "pickup_sequence": 2,
+          "trip_km": 10.17
+        }
+      ],
+      "is_male_led": true,
+      "requires_escort": false,
+      "route_type": "MALE-LED PICKUP",
+      "total_cost": 126.32,
+      "total_distance_km": 12.63,
+      "trip_type": "login"
+    },
+    {
+      "cab_number": 3,
+      "employee_details": [
+        {
+          "description": "Pickup #1",
+          "direct_km": 4.43,
+          "employee_id": "18094",
+          "extra_percentage": 7.84,
+          "gender": "Female",
+          "pickup_sequence": 1,
+          "trip_km": 4.78
+        },
+        {
+          "description": "Pickup #2",
+          "direct_km": 4.23,
+          "employee_id": "SRK023",
+          "extra_percentage": 0,
+          "gender": "Male",
+          "pickup_sequence": 2,
+          "trip_km": 4.23
+        }
+      ],
+      "is_male_led": false,
+      "requires_escort": true,
+      "route_type": "FEMALE-LED PICKUP",
+      "total_cost": 95.54,
+      "total_distance_km": 9.55,
+      "trip_type": "login"
+    },
+    {
+      "cab_number": 4,
+      "employee_details": [
+        {
+          "description": "Pickup #1",
+          "direct_km": 2.85,
+          "employee_id": "889944",
+          "extra_percentage": 0,
+          "gender": "Male",
+          "pickup_sequence": 1,
+          "trip_km": 2.85
+        }
+      ],
+      "is_male_led": true,
+      "requires_escort": false,
+      "route_type": "MALE-LED PICKUP",
+      "total_cost": 28.47,
+      "total_distance_km": 2.85,
+      "trip_type": "login"
+    }
+  ],
+  "statistics": {
+    "escort_avoidance_rate": 0,
+    "escorts_avoided": 0,
+    "females_added_to_male_routes": 3,
+    "route_reorganizations": 0,
+    "total_escort_attempts": 0
+  },
+  "summary": {
+    "escort_cabs": 1,
+    "male_led_cabs": 3,
+    "total_cabs": 4,
+    "total_cost": 473.45,
+    "total_employees": 9,
+    "total_females": 3,
+    "total_males": 6,
+    "trip_type": "login"
+  }
+}
