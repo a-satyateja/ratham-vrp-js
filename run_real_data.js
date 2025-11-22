@@ -101,11 +101,62 @@ async function runRealData() {
     const { distances: distMatrix, durations: timeMatrix } = await osrm.getDistanceMatrix(locations);
     console.log(`Matrix Shape: ${distMatrix.length} x ${distMatrix[0].length}`);
     
+    // 2.1 Apply Floyd-Warshall normalization to find shortest paths
+    console.log("Applying Floyd-Warshall normalization...");
+    
+    /**
+     * Floyd-Warshall algorithm to normalize distance matrix
+     * Finds shortest paths between all pairs of vertices
+     * @param {number[][]} matrix - Input distance/time matrix
+     * @returns {number[][]} - Normalized matrix with shortest paths
+     */
+    function floydWarshall(matrix) {
+        const n = matrix.length;
+        // Create a deep copy of the matrix
+        const dist = matrix.map(row => [...row]);
+        
+        // Floyd-Warshall algorithm
+        for (let k = 0; k < n; k++) {
+            for (let i = 0; i < n; i++) {
+                for (let j = 0; j < n; j++) {
+                    if (dist[i][k] + dist[k][j] < dist[i][j]) {
+                        dist[i][j] = dist[i][k] + dist[k][j];
+                    }
+                }
+            }
+        }
+        
+        return dist;
+    }
+    
+    const normalizedDistMatrix = floydWarshall(distMatrix);
+    const normalizedTimeMatrix = floydWarshall(timeMatrix);
+    
+    // Calculate statistics about the normalization
+    let totalImprovement = 0;
+    let improvedPairs = 0;
+    for (let i = 0; i < distMatrix.length; i++) {
+        for (let j = 0; j < distMatrix[i].length; j++) {
+            if (i !== j) {
+                const improvement = distMatrix[i][j] - normalizedDistMatrix[i][j];
+                if (improvement > 0) {
+                    totalImprovement += improvement;
+                    improvedPairs++;
+                }
+            }
+        }
+    }
+    
+    console.log(`Floyd-Warshall Results:`);
+    console.log(`  Improved pairs: ${improvedPairs} out of ${distMatrix.length * (distMatrix.length - 1)}`);
+    console.log(`  Total distance improvement: ${Math.round(totalImprovement)} meters`);
+    console.log(`  Average improvement per improved pair: ${improvedPairs > 0 ? Math.round(totalImprovement / improvedPairs) : 0} meters`);
+    
     // 3. Pre-process (Escort Logic)
     console.log("\nRunning Pre-processor (Farthest Female First)...");
     const preprocessor = new RathamPreprocessor();
     const result = preprocessor.processEscorts(
-        formattedEmployees, officeLoc, distMatrix, timeMatrix
+        formattedEmployees, officeLoc, normalizedDistMatrix, normalizedTimeMatrix
     );
     
     const nodes = result.nodes;
@@ -224,7 +275,7 @@ async function runRealData() {
                             const originalEmp = employeesData.find(e => e.id === emp.id);
                             if (originalEmp) {
                                 // Calculate direct distance from office to this employee
-                                const directDistance = distMatrix[0][emp.original_idx];
+                                const directDistance = normalizedDistMatrix[0][emp.original_idx];
                                 
                                 // Planned route distance = distance to group node + internal travel to this employee
                                 const plannedRouteDistance = routeDistanceToNode + internalDistance;
@@ -254,7 +305,7 @@ async function runRealData() {
                                 // Add internal travel to next employee in the group
                                 if (j < node.components.length - 1) {
                                     const nextEmp = node.components[j + 1];
-                                    const internalLegDist = distMatrix[emp.original_idx][nextEmp.original_idx];
+                                    const internalLegDist = normalizedDistMatrix[emp.original_idx][nextEmp.original_idx];
                                     internalDistance += internalLegDist;
                                 }
                             }
