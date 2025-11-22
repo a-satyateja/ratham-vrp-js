@@ -928,7 +928,7 @@
     },
     {
       "vehicle_id": "Veh_17",
-      "route_summary": "OFFICE -> Group_RR121 -> OFFICE -> OFFICE",
+      "route_summary": "OFFICE -> Group_RR121 -> OFFICE",
       "employees": [
         {
           "id": "RR025",
@@ -985,12 +985,6 @@
           "to": "OFFICE",
           "distance": 2583,
           "time": 258
-        },
-        {
-          "from": "OFFICE",
-          "to": "OFFICE",
-          "distance": 0,
-          "time": 0
         }
       ],
       "total_distance": 8551
@@ -1109,7 +1103,7 @@
     },
     {
       "vehicle_id": "Veh_20",
-      "route_summary": "OFFICE -> Group_RR154 -> OFFICE",
+      "route_summary": "OFFICE -> Group_RR154 -> OFFICE -> OFFICE",
       "employees": [
         {
           "id": "RR145",
@@ -1180,6 +1174,12 @@
           "to": "OFFICE",
           "distance": 13387,
           "time": 1026
+        },
+        {
+          "from": "OFFICE",
+          "to": "OFFICE",
+          "distance": 0,
+          "time": 0
         }
       ],
       "total_distance": 16529
