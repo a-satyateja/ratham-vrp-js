@@ -1,0 +1,419 @@
+const axios = require('axios');
+
+class OSRMClient {
+    constructor(baseUrl = "http://35.244.42.110:5000") {
+        this.baseUrl = baseUrl;
+    }
+
+    async getDistanceMatrix(locations) {
+        // locations: [[lat, lon], ...]
+        // OSRM expects lon,lat
+        const coords = locations.map(loc => `${loc[1]},${loc[0]}`).join(';');
+        const url = `${this.baseUrl}/table/v1/driving/${coords}?annotations=distance,duration`;
+
+        try {
+            const response = await axios.get(url);
+            const data = response.data;
+            
+            // OSRM returns arrays of arrays (rows)
+            // distances[i][j] is distance from i to j
+            return {
+                distances: data.distances,
+                durations: data.durations
+            };
+        } catch (error) {
+            console.error(`Error fetching from OSRM: ${error.message}`);
+            // Fallback (Simple Euclidean approximation if OSRM fails, for testing)
+            const n = locations.length;
+            const dist = Array(n).fill(0).map(() => Array(n).fill(0));
+            const time = Array(n).fill(0).map(() => Array(n).fill(0));
+            
+            for (let i = 0; i < n; i++) {
+                for (let j = 0; j < n; j++) {
+                    const d = Math.sqrt(
+                        Math.pow(locations[i][0] - locations[j][0], 2) + 
+                        Math.pow(locations[i][1] - locations[j][1], 2)
+                    ) * 111000; // Rough meters
+                    dist[i][j] = d;
+                    time[i][j] = d / 10.0; // 10 m/s
+                }
+            }
+            return { distances: dist, durations: time };
+        }
+    }
+}
+
+class CuOptServerClient {
+    constructor(baseUrl = "https://cuopt-259264810953.asia-southeast1.run.app") {
+        this.baseUrl = baseUrl;
+        this.optimizeUrl = `${this.baseUrl}/cuopt/request`;
+        this.healthUrl = `${this.baseUrl}/cuopt/health`;
+    }
+
+    async checkHealth() {
+        try {
+            const response = await axios.get(this.healthUrl, { timeout: 5000 });
+            return response.status === 200;
+        } catch (e) {
+            return false;
+        }
+    }
+
+    async getOptimizedRoutes(problemData) {
+        try {
+            const response = await axios.post(this.optimizeUrl, problemData, {
+                headers: { 
+                    'Content-Type': 'application/json',
+                    'Accept': 'application/json'
+                },
+                timeout: 60000
+            });
+            
+            const result = response.data;
+
+            // Check if async
+            if (result.reqId && !result.response) {
+                console.log(`Async Response Received: ${JSON.stringify(result, null, 2)}`);
+                console.log(`Request queued with ID: ${result.reqId}. Polling...`);
+                return await this.pollResult(result.reqId);
+            }
+
+            return result;
+        } catch (error) {
+            console.error(`Error calling cuOpt Server: ${error.message}`);
+            if (error.response) {
+                console.error(`Response Data: ${JSON.stringify(error.response.data)}`);
+            }
+            return { status: -1, error: error.message };
+        }
+    }
+
+    async pollResult(reqId, retries = 60) {
+        const statusUrl = `${this.baseUrl}/cuopt/request/${reqId}`;
+        const solutionUrl = `${this.baseUrl}/cuopt/solution/${reqId}`;
+        const headers = { "Accept": "application/json" };
+
+        for (let i = 0; i < retries; i++) {
+            await new Promise(resolve => setTimeout(resolve, 1000));
+            try {
+                const response = await axios.get(statusUrl, { headers });
+                if (response.status === 200) {
+                    let statusData = response.data;
+                    
+                    // Handle potential MsgPack string response if axios auto-parsed it weirdly or if it's just a string
+                    // But axios usually handles JSON. If server returns string "completed", statusData will be "completed"
+                    
+                    const isCompleted = statusData === "completed" || (typeof statusData === 'object' && statusData.status === "completed");
+                    const isFailed = typeof statusData === 'object' && statusData.status === "failed";
+
+                    if (isCompleted) {
+                        const solResp = await axios.get(solutionUrl, { headers });
+                        return solResp.data;
+                    } else if (isFailed) {
+                        return { status: -1, error: "Solver failed" };
+                    }
+                }
+            } catch (error) {
+                console.error(`Polling error: ${error.message}`);
+            }
+        }
+        return { status: -1, error: "Polling timed out" };
+    }
+}
+
+class RathamPreprocessor {
+    constructor(guardCost = 50000.0) {
+        this.guardCost = guardCost;
+    }
+
+    processEscorts(employees, officeLoc, distMatrix, timeMatrix) {
+        // Separate by gender
+        const males = employees.filter(e => e.gender === 'M');
+        const females = employees.filter(e => e.gender === 'F');
+
+        // Sort females by distance from office (descending)
+        females.forEach(f => {
+            f.dist_from_office = distMatrix[0][f.original_idx];
+        });
+        females.sort((a, b) => b.dist_from_office - a.dist_from_office);
+
+        const availableMales = new Set(males.map(m => m.id));
+        const assignedFemales = new Set();
+        
+        const tasks = [];
+        const pickupDeliveryPairs = [];
+        
+        // --- Farthest Female First Grouping ---
+        for (const fFar of females) {
+            if (assignedFemales.has(fFar.id)) continue;
+
+            // Find best male
+            let bestM = null;
+            let minDetour = Infinity;
+            const fIdx = fFar.original_idx;
+
+            for (const m of males) {
+                if (availableMales.has(m.id)) {
+                    const mIdx = m.original_idx;
+                    const d = distMatrix[fIdx][mIdx];
+                    if (d < minDetour) {
+                        minDetour = d;
+                        bestM = m;
+                    }
+                }
+            }
+
+            if (bestM) {
+                const groupFemales = [fFar];
+                assignedFemales.add(fFar.id);
+                availableMales.delete(bestM.id);
+
+                // Batching - but validate 30% constraint
+                let cumulativeInternalDist = 0;
+                while (groupFemales.length + 1 < 4) {
+                    let bestCand = null;
+                    let minCandDist = Infinity;
+                    
+                    for (const fCand of females) {
+                        if (!assignedFemales.has(fCand.id)) {
+                            const candIdx = fCand.original_idx;
+                            const d = distMatrix[fIdx][candIdx];
+                            if (d < minCandDist) {
+                                minCandDist = d;
+                                bestCand = fCand;
+                            }
+                        }
+                    }
+
+                    if (bestCand && minCandDist < 3000) {
+                        const routeDistToCandidate = fFar.dist_from_office + cumulativeInternalDist + minCandDist;
+                        const directDistToCandidate = bestCand.dist_from_office;
+                        const extraDistPercent = directDistToCandidate > 0 
+                            ? ((routeDistToCandidate - directDistToCandidate) / directDistToCandidate) * 100 
+                            : 0;
+                        
+                        if (extraDistPercent <= 30) {
+                            groupFemales.push(bestCand);
+                            assignedFemales.add(bestCand.id);
+                            cumulativeInternalDist += minCandDist;
+                        } else {
+                            break;
+                        }
+                    } else {
+                        break;
+                    }
+                }
+
+                // Create pickup-delivery pair
+                // Pickups: all females, Delivery: male location
+                const pickupIndices = [];
+                for (const f of groupFemales) {
+                    pickupIndices.push(tasks.length);
+                    tasks.push({
+                        id: f.id,
+                        type: 'pickup',
+                        location_idx: f.original_idx,
+                        demand: 1,
+                        service_time: f.service_time || 120,
+                        group_id: `Group_${bestM.id}`
+                    });
+                }
+                
+                const deliveryIdx = tasks.length;
+                tasks.push({
+                    id: bestM.id,
+                    type: 'delivery',
+                    location_idx: bestM.original_idx,
+                    demand: 1,
+                    service_time: bestM.service_time || 120,
+                    group_id: `Group_${bestM.id}`
+                });
+                
+                pickupDeliveryPairs.push({
+                    pickups: pickupIndices,
+                    delivery: deliveryIdx,
+                    group_id: `Group_${bestM.id}`
+                });
+            }
+        }
+
+        // --- Remaining Females (Guarded) ---
+        const remainingFemales = females.filter(f => !assignedFemales.has(f.id));
+        remainingFemales.sort((a, b) => b.dist_from_office - a.dist_from_office);
+
+        while (remainingFemales.length > 0) {
+            const group = [remainingFemales.shift()];
+            // Max 3 females (guard takes 1 capacity slot)
+            while (remainingFemales.length > 0 && group.length < 3) {
+                group.push(remainingFemales.shift());
+            }
+
+            group.sort((a, b) => a.dist_from_office - b.dist_from_office);
+            
+            // Create pickup-delivery pair
+            // Pickups: all females + guard (virtual), Delivery: last female location
+            const pickupIndices = [];
+            for (const f of group) {
+                pickupIndices.push(tasks.length);
+                tasks.push({
+                    id: f.id,
+                    type: 'pickup',
+                    location_idx: f.original_idx,
+                    demand: 1,
+                    service_time: f.service_time || 120,
+                    group_id: `GuardedGroup_${group[0].id}`
+                });
+            }
+            
+            // Add guard as a pickup (virtual person taking capacity)
+            pickupIndices.push(tasks.length);
+            tasks.push({
+                id: `Guard_${group[0].id}`,
+                type: 'pickup',
+                location_idx: 0, // Guard picked up from office
+                demand: 1,
+                service_time: 0,
+                group_id: `GuardedGroup_${group[0].id}`,
+                is_guard: true
+            });
+            
+            // Delivery at last female's location (guard stays)
+            const lastFemale = group[group.length - 1];
+            const deliveryIdx = tasks.length;
+            tasks.push({
+                id: `${lastFemale.id}_delivery`,
+                type: 'delivery',
+                location_idx: lastFemale.original_idx,
+                demand: group.length + 1, // All females + guard
+                service_time: 0,
+                group_id: `GuardedGroup_${group[0].id}`
+            });
+            
+            pickupDeliveryPairs.push({
+                pickups: pickupIndices,
+                delivery: deliveryIdx,
+                group_id: `GuardedGroup_${group[0].id}`,
+                is_guarded: true
+            });
+        }
+
+        // --- Remaining Males (no pickup-delivery, just regular tasks) ---
+        for (const m of males) {
+            if (availableMales.has(m.id)) {
+                tasks.push({
+                    id: m.id,
+                    type: 'delivery',  // Single male = delivery only
+                    location_idx: m.original_idx,
+                    demand: 1,
+                    service_time: m.service_time || 120,
+                    group_id: `Male_${m.id}`
+                });
+            }
+        }
+
+        return {
+            tasks,
+            pickup_delivery_pairs: pickupDeliveryPairs,
+            original_dist_matrix: distMatrix,
+            original_time_matrix: timeMatrix
+        };
+    }
+}
+
+async function solveVrp(processedData, nVehicles, vehicleCapacity, maxDetourTime) {
+    const { tasks, pickup_delivery_pairs, original_dist_matrix, original_time_matrix } = processedData;
+    
+    // Build location list (office + all unique task locations)
+    const locationSet = new Set([0]); // Office
+    for (const task of tasks) {
+        locationSet.add(task.location_idx);
+    }
+    const locations = Array.from(locationSet).sort((a, b) => a - b);
+    const locationToIdx = {};
+    locations.forEach((loc, idx) => {
+        locationToIdx[loc] = idx;
+    });
+    
+    // Build matrices for these locations
+    const nLoc = locations.length;
+    const distMatrix = Array(nLoc).fill(0).map(() => Array(nLoc).fill(0));
+    const timeMatrix = Array(nLoc).fill(0).map(() => Array(nLoc).fill(0));
+    
+    for (let i = 0; i < nLoc; i++) {
+        for (let j = 0; j < nLoc; j++) {
+            const origI = locations[i];
+            const origJ = locations[j];
+            distMatrix[i][j] = original_dist_matrix[origI][origJ];
+            timeMatrix[i][j] = original_time_matrix[origI][origJ];
+        }
+    }
+    
+    // Map tasks to new location indices
+    const taskLocations = tasks.map(t => locationToIdx[t.location_idx]);
+    const demands = tasks.map(t => t.demand);
+    const serviceTimes = tasks.map(t => t.service_time);
+    const timeWindows = tasks.map(() => [0, Math.floor(maxDetourTime)]);
+    
+    // Build pickup_and_delivery_pairs array
+    // Format: [[pickup1, pickup2, ..., delivery], ...]
+    const pickupDeliveryPairsArray = pickup_delivery_pairs.map(pair => {
+        return [...pair.pickups, pair.delivery];
+    });
+    
+    // Construct JSON Payload
+    const payload = {
+        "cost_matrix_data": {
+            "data": {
+                "0": distMatrix
+            }
+        },
+        "travel_time_matrix_data": {
+            "data": {
+                "0": timeMatrix
+            }
+        },
+        "fleet_data": {
+            "vehicle_locations": Array(nVehicles).fill([0, 0]), // Start and end at office
+            "vehicle_ids": Array.from({length: nVehicles}, (_, i) => `Veh_${i}`),
+            "vehicle_types": Array(nVehicles).fill(0),
+            "capacities": [Array(nVehicles).fill(vehicleCapacity)],
+            "vehicle_time_windows": Array(nVehicles).fill([0, 86400])
+        },
+        "task_data": {
+            "task_locations": taskLocations,
+            "demand": [demands],
+            "task_time_windows": timeWindows,
+            "service_times": serviceTimes.map(t => Math.floor(t)),
+            "pickup_delivery_pairs": pickupDeliveryPairsArray
+        },
+        "solver_config": {
+            "time_limit": 5,
+            "objectives": {
+                "cost": 1
+            }
+        }
+    };
+
+    const client = new CuOptServerClient();
+    console.log("Sending request to cuOpt Server...");
+    const result = await client.getOptimizedRoutes(payload);
+    
+    return { 
+        solution: result, 
+        processedData: {
+            tasks,
+            pickup_delivery_pairs,
+            locations,
+            locationToIdx,
+            dist_matrix: distMatrix,
+            time_matrix: timeMatrix
+        }
+    };
+}
+
+module.exports = {
+    OSRMClient,
+    CuOptServerClient,
+    RathamPreprocessor,
+    solveVrp
+};
