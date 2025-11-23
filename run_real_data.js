@@ -156,7 +156,7 @@ async function runRealData() {
     console.log("\nRunning Pre-processor (Farthest Female First)...");
     const preprocessor = new RathamPreprocessor();
     const result = preprocessor.processEscorts(
-        formattedEmployees, officeLoc, normalizedDistMatrix, normalizedTimeMatrix
+        formattedEmployees, officeLoc, normalizedDistMatrix, normalizedTimeMatrix, 4, 0.5
     );
     
     const nodes = result.nodes;

@@ -66,19 +66,18 @@ async function solveRoute(payload) {
         const normalizedDistMatrix = floydWarshall(distMatrix);
         const normalizedTimeMatrix = floydWarshall(timeMatrix);
 
-        // 3. Pre-process (Escort Logic)
-        const preprocessor = new RathamPreprocessor();
-        const result = preprocessor.processEscorts(
-            formattedEmployees, officeLoc, normalizedDistMatrix, normalizedTimeMatrix
-        );
-
-        const nodes = result.nodes;
-
-        // 4. Solve
-        // Defaulting params as they are not in the payload
         const n_vehicles = employees.length; // Safe upper bound
         const vehicle_capacity = config.max_cab_capacity || 4;
         const max_detour_time = 7200; // 2 hours default
+        const max_detour_percent = config.max_detour_percent || 0.5;
+
+        // 3. Pre-process (Escort Logic)
+        const preprocessor = new RathamPreprocessor();
+        const result = preprocessor.processEscorts(
+            formattedEmployees, officeLoc, normalizedDistMatrix, normalizedTimeMatrix, vehicle_capacity, max_detour_percent
+        );
+
+        const nodes = result.nodes;
 
         console.log("Attempting to solve with cuOpt Server...");
         const { solution: solutionJson } = await solveVrp(
@@ -103,6 +102,7 @@ async function solveRoute(payload) {
                 let totalMales = 0;
                 let maleLedCabs = 0;
                 let escortCabs = 0;
+                const highDetourEmployees = [];
 
                 for (const [vId, vInfo] of Object.entries(vehicleData)) {
                     const routeIndices = vInfo.route || [];
@@ -177,6 +177,15 @@ async function solveRoute(payload) {
                                         pickup_sequence: pickupSequence,
                                         trip_km: parseFloat((plannedRouteDistance / 1000).toFixed(2))
                                     });
+
+                                    if (percentExtraDistance > 50) {
+                                        highDetourEmployees.push({
+                                            id: emp.id,
+                                            detour_percent: parseFloat(percentExtraDistance.toFixed(2)),
+                                            direct_km: parseFloat((directDistance / 1000).toFixed(2)),
+                                            trip_km: parseFloat((plannedRouteDistance / 1000).toFixed(2))
+                                        });
+                                    }
                                     
                                     pickupSequence++;
 
@@ -286,6 +295,14 @@ async function solveRoute(payload) {
                     // Update route cost based on config
                     const farePerKm = config.fare_per_km || 10;
                     routes[routes.length - 1].total_cost = parseFloat((routes[routes.length - 1].total_distance_km * farePerKm).toFixed(2));
+                }
+
+                if (highDetourEmployees.length > 0) {
+                    console.log("\n⚠️  High Detour Alert (>50%):");
+                    highDetourEmployees.forEach(e => {
+                        console.log(`  - Employee ${e.id}: ${e.detour_percent}% detour (Direct: ${e.direct_km}km, Actual: ${e.trip_km}km)`);
+                    });
+                    console.log(""); // Empty line for readability
                 }
 
                 return {

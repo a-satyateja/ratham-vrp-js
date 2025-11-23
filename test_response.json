@@ -17,7 +17,7 @@
       "status": "success",
       "trip_type": "logout"
     },
-    "processing_timestamp": "2025-11-22T14:55:18.743Z",
+    "processing_timestamp": "2025-11-23T10:46:30.495Z",
     "trip_type": "logout"
   },
   "routes": [
@@ -26,46 +26,37 @@
       "employee_details": [
         {
           "description": "Pickup #1",
-          "direct_km": 9.61,
-          "employee_id": "12770",
+          "direct_km": 6.61,
+          "employee_id": "14189",
           "extra_percentage": 0,
           "gender": "Male",
           "pickup_sequence": 1,
-          "trip_km": 9.61
+          "trip_km": 6.61
         },
         {
           "description": "Pickup #2",
-          "direct_km": 14.6,
-          "employee_id": "13819",
-          "extra_percentage": 7.11,
+          "direct_km": 7.18,
+          "employee_id": "15343",
+          "extra_percentage": 18.66,
           "gender": "Male",
           "pickup_sequence": 2,
-          "trip_km": 15.64
+          "trip_km": 8.52
         },
         {
           "description": "Pickup #3",
           "direct_km": 34.32,
           "employee_id": "17238",
-          "extra_percentage": 38.98,
+          "extra_percentage": 14.92,
           "gender": "Female",
           "pickup_sequence": 3,
-          "trip_km": 47.7
-        },
-        {
-          "description": "Pickup #4",
-          "direct_km": 11.03,
-          "employee_id": "12921",
-          "extra_percentage": 566.74,
-          "gender": "Male",
-          "pickup_sequence": 4,
-          "trip_km": 73.56
+          "trip_km": 39.44
         }
       ],
       "is_male_led": true,
       "requires_escort": false,
       "route_type": "MALE-LED PICKUP",
-      "total_cost": 571.6,
-      "total_distance_km": 57.16,
+      "total_cost": 716.2,
+      "total_distance_km": 71.62,
       "trip_type": "logout"
     },
     {
@@ -73,88 +64,41 @@
       "employee_details": [
         {
           "description": "Pickup #1",
-          "direct_km": 35.99,
-          "employee_id": "16155",
+          "direct_km": 21.18,
+          "employee_id": "18289",
           "extra_percentage": 0,
           "gender": "Male",
           "pickup_sequence": 1,
-          "trip_km": 35.99
-        },
-        {
-          "description": "Pickup #2",
-          "direct_km": 31.29,
-          "employee_id": "10593",
-          "extra_percentage": 62.12,
-          "gender": "Female",
-          "pickup_sequence": 2,
-          "trip_km": 50.72
-        },
-        {
-          "description": "Pickup #3",
-          "direct_km": 31.68,
-          "employee_id": "18587",
-          "extra_percentage": 62.69,
-          "gender": "Male",
-          "pickup_sequence": 3,
-          "trip_km": 51.55
-        },
-        {
-          "description": "Pickup #4",
-          "direct_km": 2.27,
-          "employee_id": "10987",
-          "extra_percentage": 3381.31,
-          "gender": "Male",
-          "pickup_sequence": 4,
-          "trip_km": 79
-        }
-      ],
-      "is_male_led": true,
-      "requires_escort": false,
-      "route_type": "MALE-LED PICKUP",
-      "total_cost": 810.9,
-      "total_distance_km": 81.09,
-      "trip_type": "logout"
-    },
-    {
-      "cab_number": 3,
-      "employee_details": [
-        {
-          "description": "Pickup #1",
-          "direct_km": 1.22,
-          "employee_id": "14794",
-          "extra_percentage": 0,
-          "gender": "Male",
-          "pickup_sequence": 1,
-          "trip_km": 1.22
+          "trip_km": 21.18
         },
         {
           "description": "Pickup #2",
           "direct_km": 30.46,
           "employee_id": "13563",
-          "extra_percentage": 0,
+          "extra_percentage": 1.17,
           "gender": "Female",
           "pickup_sequence": 2,
-          "trip_km": 30.46
+          "trip_km": 30.81
         },
         {
           "description": "Pickup #3",
-          "direct_km": 21.18,
-          "employee_id": "18289",
-          "extra_percentage": 93.82,
+          "direct_km": 15.74,
+          "employee_id": "17759",
+          "extra_percentage": 205.47,
           "gender": "Male",
           "pickup_sequence": 3,
-          "trip_km": 41.05
+          "trip_km": 48.09
         }
       ],
       "is_male_led": true,
       "requires_escort": false,
       "route_type": "MALE-LED PICKUP",
-      "total_cost": 523.8,
-      "total_distance_km": 52.38,
+      "total_cost": 615.4,
+      "total_distance_km": 61.54,
       "trip_type": "logout"
     },
     {
-      "cab_number": 4,
+      "cab_number": 3,
       "employee_details": [
         {
           "description": "Pickup #1",
@@ -176,117 +120,32 @@
         },
         {
           "description": "Pickup #3",
-          "direct_km": 24.85,
-          "employee_id": "T020",
-          "extra_percentage": 54.71,
-          "gender": "Male",
-          "pickup_sequence": 3,
-          "trip_km": 38.45
-        }
-      ],
-      "is_male_led": false,
-      "requires_escort": true,
-      "route_type": "FEMALE-LED PICKUP",
-      "total_cost": 529.5,
-      "total_distance_km": 52.95,
-      "trip_type": "logout"
-    },
-    {
-      "cab_number": 5,
-      "employee_details": [
-        {
-          "description": "Pickup #1",
-          "direct_km": 26.06,
-          "employee_id": "18706",
-          "extra_percentage": 0,
+          "direct_km": 31.29,
+          "employee_id": "10593",
+          "extra_percentage": 16.89,
           "gender": "Female",
-          "pickup_sequence": 1,
-          "trip_km": 26.06
-        },
-        {
-          "description": "Pickup #2",
-          "direct_km": 27.84,
-          "employee_id": "15794",
-          "extra_percentage": 6.08,
-          "gender": "Female",
-          "pickup_sequence": 2,
-          "trip_km": 29.53
-        },
-        {
-          "description": "Pickup #3",
-          "direct_km": 18.22,
-          "employee_id": "13374",
-          "extra_percentage": 121.83,
-          "gender": "Male",
           "pickup_sequence": 3,
-          "trip_km": 40.41
+          "trip_km": 36.57
         },
         {
           "description": "Pickup #4",
-          "direct_km": 2.24,
-          "employee_id": "14084",
-          "extra_percentage": 1805.76,
+          "direct_km": 31.68,
+          "employee_id": "18587",
+          "extra_percentage": 18.02,
           "gender": "Male",
           "pickup_sequence": 4,
-          "trip_km": 42.62
+          "trip_km": 37.4
         }
       ],
       "is_male_led": false,
       "requires_escort": true,
       "route_type": "FEMALE-LED PICKUP",
-      "total_cost": 446.7,
-      "total_distance_km": 44.67,
+      "total_cost": 568.5,
+      "total_distance_km": 56.85,
       "trip_type": "logout"
     },
     {
-      "cab_number": 6,
-      "employee_details": [
-        {
-          "description": "Pickup #1",
-          "direct_km": 22.63,
-          "employee_id": "10761",
-          "extra_percentage": 0,
-          "gender": "Female",
-          "pickup_sequence": 1,
-          "trip_km": 22.63
-        },
-        {
-          "description": "Pickup #2",
-          "direct_km": 17.47,
-          "employee_id": "19006",
-          "extra_percentage": 66.27,
-          "gender": "Male",
-          "pickup_sequence": 2,
-          "trip_km": 29.05
-        },
-        {
-          "description": "Pickup #3",
-          "direct_km": 10.2,
-          "employee_id": "T007",
-          "extra_percentage": 210.72,
-          "gender": "Male",
-          "pickup_sequence": 3,
-          "trip_km": 31.69
-        },
-        {
-          "description": "Pickup #4",
-          "direct_km": 10.2,
-          "employee_id": "10086",
-          "extra_percentage": 212.31,
-          "gender": "Male",
-          "pickup_sequence": 4,
-          "trip_km": 31.85
-        }
-      ],
-      "is_male_led": false,
-      "requires_escort": true,
-      "route_type": "FEMALE-LED PICKUP",
-      "total_cost": 426.1,
-      "total_distance_km": 42.61,
-      "trip_type": "logout"
-    },
-    {
-      "cab_number": 7,
+      "cab_number": 4,
       "employee_details": [
         {
           "description": "Pickup #1",
@@ -299,37 +158,178 @@
         },
         {
           "description": "Pickup #2",
-          "direct_km": 16.21,
-          "employee_id": "19606",
-          "extra_percentage": 83.71,
-          "gender": "Male",
+          "direct_km": 26.06,
+          "employee_id": "18706",
+          "extra_percentage": 0,
+          "gender": "Female",
           "pickup_sequence": 2,
-          "trip_km": 29.78
+          "trip_km": 26.06
         },
         {
           "description": "Pickup #3",
-          "direct_km": 7.01,
-          "employee_id": "17822",
-          "extra_percentage": 362.5,
-          "gender": "Male",
+          "direct_km": 27.84,
+          "employee_id": "15794",
+          "extra_percentage": 6.08,
+          "gender": "Female",
           "pickup_sequence": 3,
-          "trip_km": 32.41
+          "trip_km": 29.53
         },
         {
           "description": "Pickup #4",
-          "direct_km": 6.78,
-          "employee_id": "12943",
-          "extra_percentage": 402.05,
+          "direct_km": 35.99,
+          "employee_id": "16155",
+          "extra_percentage": 14.83,
           "gender": "Male",
           "pickup_sequence": 4,
-          "trip_km": 34.06
+          "trip_km": 41.33
         }
       ],
       "is_male_led": false,
       "requires_escort": true,
       "route_type": "FEMALE-LED PICKUP",
-      "total_cost": 407.2,
-      "total_distance_km": 40.72,
+      "total_cost": 575.4,
+      "total_distance_km": 57.54,
+      "trip_type": "logout"
+    },
+    {
+      "cab_number": 5,
+      "employee_details": [
+        {
+          "description": "Pickup #1",
+          "direct_km": 1.22,
+          "employee_id": "14794",
+          "extra_percentage": 0,
+          "gender": "Male",
+          "pickup_sequence": 1,
+          "trip_km": 1.22
+        },
+        {
+          "description": "Pickup #2",
+          "direct_km": 20.96,
+          "employee_id": "19815",
+          "extra_percentage": 0,
+          "gender": "Female",
+          "pickup_sequence": 2,
+          "trip_km": 20.96
+        },
+        {
+          "description": "Pickup #3",
+          "direct_km": 24.85,
+          "employee_id": "T020",
+          "extra_percentage": 49.62,
+          "gender": "Male",
+          "pickup_sequence": 3,
+          "trip_km": 37.19
+        },
+        {
+          "description": "Pickup #4",
+          "direct_km": 8.61,
+          "employee_id": "12087",
+          "extra_percentage": 350.09,
+          "gender": "Male",
+          "pickup_sequence": 4,
+          "trip_km": 38.74
+        }
+      ],
+      "is_male_led": true,
+      "requires_escort": false,
+      "route_type": "MALE-LED PICKUP",
+      "total_cost": 472,
+      "total_distance_km": 47.2,
+      "trip_type": "logout"
+    },
+    {
+      "cab_number": 6,
+      "employee_details": [
+        {
+          "description": "Pickup #1",
+          "direct_km": 9.38,
+          "employee_id": "19517",
+          "extra_percentage": 0,
+          "gender": "Male",
+          "pickup_sequence": 1,
+          "trip_km": 9.38
+        },
+        {
+          "description": "Pickup #2",
+          "direct_km": 17.13,
+          "employee_id": "11737",
+          "extra_percentage": 9.82,
+          "gender": "Female",
+          "pickup_sequence": 2,
+          "trip_km": 18.82
+        },
+        {
+          "description": "Pickup #3",
+          "direct_km": 20.5,
+          "employee_id": "11674",
+          "extra_percentage": 30.08,
+          "gender": "Female",
+          "pickup_sequence": 3,
+          "trip_km": 26.67
+        },
+        {
+          "description": "Pickup #4",
+          "direct_km": 19.22,
+          "employee_id": "17771",
+          "extra_percentage": 57.91,
+          "gender": "Male",
+          "pickup_sequence": 4,
+          "trip_km": 30.35
+        }
+      ],
+      "is_male_led": true,
+      "requires_escort": false,
+      "route_type": "MALE-LED PICKUP",
+      "total_cost": 381.4,
+      "total_distance_km": 38.14,
+      "trip_type": "logout"
+    },
+    {
+      "cab_number": 7,
+      "employee_details": [
+        {
+          "description": "Pickup #1",
+          "direct_km": 3.09,
+          "employee_id": "12126",
+          "extra_percentage": 0,
+          "gender": "Female",
+          "pickup_sequence": 1,
+          "trip_km": 3.09
+        },
+        {
+          "description": "Pickup #2",
+          "direct_km": 5.76,
+          "employee_id": "15144",
+          "extra_percentage": 34.63,
+          "gender": "Female",
+          "pickup_sequence": 2,
+          "trip_km": 7.75
+        },
+        {
+          "description": "Pickup #3",
+          "direct_km": 12.95,
+          "employee_id": "17457",
+          "extra_percentage": 49.76,
+          "gender": "Female",
+          "pickup_sequence": 3,
+          "trip_km": 19.39
+        },
+        {
+          "description": "Pickup #4",
+          "direct_km": 16.21,
+          "employee_id": "19606",
+          "extra_percentage": 47.14,
+          "gender": "Male",
+          "pickup_sequence": 4,
+          "trip_km": 23.85
+        }
+      ],
+      "is_male_led": false,
+      "requires_escort": true,
+      "route_type": "FEMALE-LED PICKUP",
+      "total_cost": 198.5,
+      "total_distance_km": 19.85,
       "trip_type": "logout"
     },
     {
@@ -337,37 +337,46 @@
       "employee_details": [
         {
           "description": "Pickup #1",
-          "direct_km": 20.96,
-          "employee_id": "19815",
+          "direct_km": 3.82,
+          "employee_id": "16921",
           "extra_percentage": 0,
           "gender": "Female",
           "pickup_sequence": 1,
-          "trip_km": 20.96
+          "trip_km": 3.82
         },
         {
           "description": "Pickup #2",
-          "direct_km": 16.99,
-          "employee_id": "15773",
-          "extra_percentage": 49.94,
-          "gender": "Male",
+          "direct_km": 5.07,
+          "employee_id": "18657",
+          "extra_percentage": 3.75,
+          "gender": "Female",
           "pickup_sequence": 2,
-          "trip_km": 25.48
+          "trip_km": 5.26
         },
         {
           "description": "Pickup #3",
-          "direct_km": 15.74,
-          "employee_id": "17759",
-          "extra_percentage": 48.9,
-          "gender": "Male",
+          "direct_km": 11.48,
+          "employee_id": "13269",
+          "extra_percentage": 7.25,
+          "gender": "Female",
           "pickup_sequence": 3,
-          "trip_km": 23.44
+          "trip_km": 12.32
+        },
+        {
+          "description": "Pickup #4",
+          "direct_km": 12.42,
+          "employee_id": "15954",
+          "extra_percentage": 49.85,
+          "gender": "Male",
+          "pickup_sequence": 4,
+          "trip_km": 18.61
         }
       ],
       "is_male_led": false,
       "requires_escort": true,
       "route_type": "FEMALE-LED PICKUP",
-      "total_cost": 368.9,
-      "total_distance_km": 36.89,
+      "total_cost": 180.9,
+      "total_distance_km": 18.09,
       "trip_type": "logout"
     },
     {
@@ -375,46 +384,46 @@
       "employee_details": [
         {
           "description": "Pickup #1",
-          "direct_km": 2.97,
-          "employee_id": "15264",
+          "direct_km": 2.98,
+          "employee_id": "11711",
           "extra_percentage": 0,
-          "gender": "Male",
+          "gender": "Female",
           "pickup_sequence": 1,
-          "trip_km": 2.97
+          "trip_km": 2.98
         },
         {
           "description": "Pickup #2",
-          "direct_km": 20.5,
-          "employee_id": "11674",
-          "extra_percentage": 2.97,
+          "direct_km": 5.99,
+          "employee_id": "15620",
+          "extra_percentage": 10.92,
           "gender": "Female",
           "pickup_sequence": 2,
-          "trip_km": 21.11
+          "trip_km": 6.64
         },
         {
           "description": "Pickup #3",
-          "direct_km": 19.22,
-          "employee_id": "17771",
-          "extra_percentage": 28.99,
-          "gender": "Male",
+          "direct_km": 10.84,
+          "employee_id": "10858",
+          "extra_percentage": 14.61,
+          "gender": "Female",
           "pickup_sequence": 3,
-          "trip_km": 24.79
+          "trip_km": 12.42
         },
         {
           "description": "Pickup #4",
-          "direct_km": 8.61,
-          "employee_id": "12087",
-          "extra_percentage": 271.52,
+          "direct_km": 11.03,
+          "employee_id": "12921",
+          "extra_percentage": 43.41,
           "gender": "Male",
           "pickup_sequence": 4,
-          "trip_km": 31.98
+          "trip_km": 15.82
         }
       ],
-      "is_male_led": true,
-      "requires_escort": false,
-      "route_type": "MALE-LED PICKUP",
-      "total_cost": 404.4,
-      "total_distance_km": 40.44,
+      "is_male_led": false,
+      "requires_escort": true,
+      "route_type": "FEMALE-LED PICKUP",
+      "total_cost": 124.4,
+      "total_distance_km": 12.44,
       "trip_type": "logout"
     },
     {
@@ -422,267 +431,50 @@
       "employee_details": [
         {
           "description": "Pickup #1",
-          "direct_km": 17.13,
-          "employee_id": "11737",
+          "direct_km": 5.47,
+          "employee_id": "14675",
           "extra_percentage": 0,
           "gender": "Female",
           "pickup_sequence": 1,
-          "trip_km": 17.13
-        },
-        {
-          "description": "Pickup #2",
-          "direct_km": 9.38,
-          "employee_id": "19517",
-          "extra_percentage": 174.92,
-          "gender": "Male",
-          "pickup_sequence": 2,
-          "trip_km": 25.79
-        },
-        {
-          "description": "Pickup #3",
-          "direct_km": 8.86,
-          "employee_id": "17257",
-          "extra_percentage": 142.5,
-          "gender": "Male",
-          "pickup_sequence": 3,
-          "trip_km": 21.49
-        },
-        {
-          "description": "Pickup #4",
-          "direct_km": 9.1,
-          "employee_id": "15980",
-          "extra_percentage": 140.72,
-          "gender": "Male",
-          "pickup_sequence": 4,
-          "trip_km": 21.9
-        }
-      ],
-      "is_male_led": false,
-      "requires_escort": true,
-      "route_type": "FEMALE-LED PICKUP",
-      "total_cost": 316.9,
-      "total_distance_km": 31.69,
-      "trip_type": "logout"
-    },
-    {
-      "cab_number": 11,
-      "employee_details": [
-        {
-          "description": "Pickup #1",
-          "direct_km": 13.5,
-          "employee_id": "15090",
-          "extra_percentage": 0,
-          "gender": "Female",
-          "pickup_sequence": 1,
-          "trip_km": 13.5
-        },
-        {
-          "description": "Pickup #2",
-          "direct_km": 5.66,
-          "employee_id": "19548",
-          "extra_percentage": 290.49,
-          "gender": "Male",
-          "pickup_sequence": 2,
-          "trip_km": 22.11
-        }
-      ],
-      "is_male_led": false,
-      "requires_escort": true,
-      "route_type": "FEMALE-LED PICKUP",
-      "total_cost": 165.4,
-      "total_distance_km": 16.54,
-      "trip_type": "logout"
-    },
-    {
-      "cab_number": 12,
-      "employee_details": [
-        {
-          "description": "Pickup #1",
-          "direct_km": 12.95,
-          "employee_id": "17457",
-          "extra_percentage": 0,
-          "gender": "Female",
-          "pickup_sequence": 1,
-          "trip_km": 12.95
-        },
-        {
-          "description": "Pickup #2",
-          "direct_km": 8.67,
-          "employee_id": "15124",
-          "extra_percentage": 125.12,
-          "gender": "Male",
-          "pickup_sequence": 2,
-          "trip_km": 19.51
-        },
-        {
-          "description": "Pickup #3",
-          "direct_km": 7.84,
-          "employee_id": "akhilDum002",
-          "extra_percentage": 97.1,
-          "gender": "Male",
-          "pickup_sequence": 3,
-          "trip_km": 15.46
-        },
-        {
-          "description": "Pickup #4",
-          "direct_km": 7.84,
-          "employee_id": "akhilDum001",
-          "extra_percentage": 97.1,
-          "gender": "Male",
-          "pickup_sequence": 4,
-          "trip_km": 15.46
-        }
-      ],
-      "is_male_led": false,
-      "requires_escort": true,
-      "route_type": "FEMALE-LED PICKUP",
-      "total_cost": 243.3,
-      "total_distance_km": 24.33,
-      "trip_type": "logout"
-    },
-    {
-      "cab_number": 13,
-      "employee_details": [
-        {
-          "description": "Pickup #1",
-          "direct_km": 4.45,
-          "employee_id": "11055",
-          "extra_percentage": 0,
-          "gender": "Male",
-          "pickup_sequence": 1,
-          "trip_km": 4.45
-        },
-        {
-          "description": "Pickup #2",
-          "direct_km": 12.42,
-          "employee_id": "15954",
-          "extra_percentage": 10.49,
-          "gender": "Male",
-          "pickup_sequence": 2,
-          "trip_km": 13.72
-        },
-        {
-          "description": "Pickup #3",
-          "direct_km": 11.48,
-          "employee_id": "13269",
-          "extra_percentage": 64.21,
-          "gender": "Female",
-          "pickup_sequence": 3,
-          "trip_km": 18.86
-        },
-        {
-          "description": "Pickup #4",
-          "direct_km": 8.58,
-          "employee_id": "19391",
-          "extra_percentage": 175.83,
-          "gender": "Male",
-          "pickup_sequence": 4,
-          "trip_km": 23.66
-        }
-      ],
-      "is_male_led": true,
-      "requires_escort": false,
-      "route_type": "MALE-LED PICKUP",
-      "total_cost": 272.7,
-      "total_distance_km": 27.27,
-      "trip_type": "logout"
-    },
-    {
-      "cab_number": 14,
-      "employee_details": [
-        {
-          "description": "Pickup #1",
-          "direct_km": 10.84,
-          "employee_id": "10858",
-          "extra_percentage": 0,
-          "gender": "Female",
-          "pickup_sequence": 1,
-          "trip_km": 10.84
-        },
-        {
-          "description": "Pickup #2",
-          "direct_km": 5.18,
-          "employee_id": "14430",
-          "extra_percentage": 269.08,
-          "gender": "Male",
-          "pickup_sequence": 2,
-          "trip_km": 19.11
-        },
-        {
-          "description": "Pickup #3",
-          "direct_km": 7.18,
-          "employee_id": "15343",
-          "extra_percentage": 103.81,
-          "gender": "Male",
-          "pickup_sequence": 3,
-          "trip_km": 14.63
-        },
-        {
-          "description": "Pickup #4",
-          "direct_km": 3.41,
-          "employee_id": "19116",
-          "extra_percentage": 453.5,
-          "gender": "Male",
-          "pickup_sequence": 4,
-          "trip_km": 18.85
-        }
-      ],
-      "is_male_led": false,
-      "requires_escort": true,
-      "route_type": "FEMALE-LED PICKUP",
-      "total_cost": 229.6,
-      "total_distance_km": 22.96,
-      "trip_type": "logout"
-    },
-    {
-      "cab_number": 15,
-      "employee_details": [
-        {
-          "description": "Pickup #1",
-          "direct_km": 4.05,
-          "employee_id": "T019",
-          "extra_percentage": 0,
-          "gender": "Male",
-          "pickup_sequence": 1,
-          "trip_km": 4.05
+          "trip_km": 5.47
         },
         {
           "description": "Pickup #2",
           "direct_km": 9.72,
           "employee_id": "19639",
-          "extra_percentage": 1.79,
+          "extra_percentage": 4.67,
           "gender": "Female",
           "pickup_sequence": 2,
-          "trip_km": 9.9
+          "trip_km": 10.18
         },
         {
           "description": "Pickup #3",
           "direct_km": 10.16,
           "employee_id": "19058",
-          "extra_percentage": 6.47,
+          "extra_percentage": 9.23,
           "gender": "Female",
           "pickup_sequence": 3,
-          "trip_km": 10.82
+          "trip_km": 11.1
         },
         {
           "description": "Pickup #4",
-          "direct_km": 5.42,
-          "employee_id": "10222",
-          "extra_percentage": 182.05,
+          "direct_km": 13.75,
+          "employee_id": "16970",
+          "extra_percentage": 47.71,
           "gender": "Male",
           "pickup_sequence": 4,
-          "trip_km": 15.28
+          "trip_km": 20.31
         }
       ],
-      "is_male_led": true,
-      "requires_escort": false,
-      "route_type": "MALE-LED PICKUP",
-      "total_cost": 161,
-      "total_distance_km": 16.1,
+      "is_male_led": false,
+      "requires_escort": true,
+      "route_type": "FEMALE-LED PICKUP",
+      "total_cost": 196.9,
+      "total_distance_km": 19.69,
       "trip_type": "logout"
     },
     {
-      "cab_number": 16,
+      "cab_number": 11,
       "employee_details": [
         {
           "description": "Pickup #1",
@@ -713,211 +505,70 @@
         },
         {
           "description": "Pickup #4",
-          "direct_km": 6.61,
-          "employee_id": "14189",
-          "extra_percentage": 43.43,
+          "direct_km": 14.6,
+          "employee_id": "13819",
+          "extra_percentage": 19.56,
           "gender": "Male",
           "pickup_sequence": 4,
-          "trip_km": 9.49
+          "trip_km": 17.45
         }
       ],
       "is_male_led": false,
       "requires_escort": true,
       "route_type": "FEMALE-LED PICKUP",
-      "total_cost": 127.5,
-      "total_distance_km": 12.75,
+      "total_cost": 207.2,
+      "total_distance_km": 20.72,
       "trip_type": "logout"
     },
     {
-      "cab_number": 17,
+      "cab_number": 12,
       "employee_details": [
         {
           "description": "Pickup #1",
-          "direct_km": 5.07,
-          "employee_id": "18657",
+          "direct_km": 3.86,
+          "employee_id": "10977",
           "extra_percentage": 0,
           "gender": "Female",
           "pickup_sequence": 1,
-          "trip_km": 5.07
+          "trip_km": 3.86
         },
         {
           "description": "Pickup #2",
           "direct_km": 5.42,
           "employee_id": "18376",
-          "extra_percentage": 4.54,
+          "extra_percentage": 4.83,
           "gender": "Female",
           "pickup_sequence": 2,
-          "trip_km": 5.67
+          "trip_km": 5.68
         },
         {
           "description": "Pickup #3",
           "direct_km": 6.12,
           "employee_id": "17830",
-          "extra_percentage": 31.3,
+          "extra_percentage": 31.56,
           "gender": "Female",
           "pickup_sequence": 3,
-          "trip_km": 8.04
+          "trip_km": 8.05
         },
         {
           "description": "Pickup #4",
-          "direct_km": 5.24,
-          "employee_id": "15000",
-          "extra_percentage": 66.04,
+          "direct_km": 9.61,
+          "employee_id": "12770",
+          "extra_percentage": 49.41,
           "gender": "Male",
           "pickup_sequence": 4,
-          "trip_km": 8.7
+          "trip_km": 14.36
         }
       ],
       "is_male_led": false,
       "requires_escort": true,
       "route_type": "FEMALE-LED PICKUP",
-      "total_cost": 119,
-      "total_distance_km": 11.9,
+      "total_cost": 144.8,
+      "total_distance_km": 14.48,
       "trip_type": "logout"
     },
     {
-      "cab_number": 18,
-      "employee_details": [
-        {
-          "description": "Pickup #1",
-          "direct_km": 5.99,
-          "employee_id": "15620",
-          "extra_percentage": 0,
-          "gender": "Female",
-          "pickup_sequence": 1,
-          "trip_km": 5.99
-        },
-        {
-          "description": "Pickup #2",
-          "direct_km": 7.39,
-          "employee_id": "18899",
-          "extra_percentage": 49.24,
-          "gender": "Male",
-          "pickup_sequence": 2,
-          "trip_km": 11.02
-        },
-        {
-          "description": "Pickup #3",
-          "direct_km": 10.41,
-          "employee_id": "T016",
-          "extra_percentage": -13.37,
-          "gender": "Male",
-          "pickup_sequence": 3,
-          "trip_km": 9.02
-        },
-        {
-          "description": "Pickup #4",
-          "direct_km": 13.75,
-          "employee_id": "16970",
-          "extra_percentage": 8.4,
-          "gender": "Male",
-          "pickup_sequence": 4,
-          "trip_km": 14.9
-        }
-      ],
-      "is_male_led": false,
-      "requires_escort": true,
-      "route_type": "FEMALE-LED PICKUP",
-      "total_cost": 291.2,
-      "total_distance_km": 29.12,
-      "trip_type": "logout"
-    },
-    {
-      "cab_number": 19,
-      "employee_details": [
-        {
-          "description": "Pickup #1",
-          "direct_km": 5.76,
-          "employee_id": "15144",
-          "extra_percentage": 0,
-          "gender": "Female",
-          "pickup_sequence": 1,
-          "trip_km": 5.76
-        },
-        {
-          "description": "Pickup #2",
-          "direct_km": 5.11,
-          "employee_id": "16912",
-          "extra_percentage": 58.24,
-          "gender": "Male",
-          "pickup_sequence": 2,
-          "trip_km": 8.08
-        },
-        {
-          "description": "Pickup #3",
-          "direct_km": 5.41,
-          "employee_id": "10396",
-          "extra_percentage": 21.18,
-          "gender": "Male",
-          "pickup_sequence": 3,
-          "trip_km": 6.56
-        },
-        {
-          "description": "Pickup #4",
-          "direct_km": 5.52,
-          "employee_id": "19535",
-          "extra_percentage": 22.46,
-          "gender": "Male",
-          "pickup_sequence": 4,
-          "trip_km": 6.76
-        }
-      ],
-      "is_male_led": false,
-      "requires_escort": true,
-      "route_type": "FEMALE-LED PICKUP",
-      "total_cost": 130.8,
-      "total_distance_km": 13.08,
-      "trip_type": "logout"
-    },
-    {
-      "cab_number": 20,
-      "employee_details": [
-        {
-          "description": "Pickup #1",
-          "direct_km": 3.82,
-          "employee_id": "16921",
-          "extra_percentage": 0,
-          "gender": "Female",
-          "pickup_sequence": 1,
-          "trip_km": 3.82
-        },
-        {
-          "description": "Pickup #2",
-          "direct_km": 3.86,
-          "employee_id": "10977",
-          "extra_percentage": 0,
-          "gender": "Female",
-          "pickup_sequence": 2,
-          "trip_km": 3.86
-        },
-        {
-          "description": "Pickup #3",
-          "direct_km": 5.47,
-          "employee_id": "14675",
-          "extra_percentage": 4.78,
-          "gender": "Female",
-          "pickup_sequence": 3,
-          "trip_km": 5.74
-        },
-        {
-          "description": "Pickup #4",
-          "direct_km": 5.37,
-          "employee_id": "19241",
-          "extra_percentage": 30.42,
-          "gender": "Male",
-          "pickup_sequence": 4,
-          "trip_km": 7.01
-        }
-      ],
-      "is_male_led": false,
-      "requires_escort": true,
-      "route_type": "FEMALE-LED PICKUP",
-      "total_cost": 99.8,
-      "total_distance_km": 9.98,
-      "trip_type": "logout"
-    },
-    {
-      "cab_number": 21,
+      "cab_number": 13,
       "employee_details": [
         {
           "description": "Pickup #1",
@@ -930,249 +581,88 @@
         },
         {
           "description": "Pickup #2",
-          "direct_km": 5.01,
-          "employee_id": "16539",
-          "extra_percentage": 50.22,
-          "gender": "Female",
-          "pickup_sequence": 2,
-          "trip_km": 7.53
-        },
-        {
-          "description": "Pickup #3",
           "direct_km": 5.2,
           "employee_id": "19899",
-          "extra_percentage": 103.15,
+          "extra_percentage": 4.99,
           "gender": "Female",
-          "pickup_sequence": 3,
-          "trip_km": 10.56
-        },
-        {
-          "description": "Pickup #4",
-          "direct_km": 5.82,
-          "employee_id": "15193",
-          "extra_percentage": 103.5,
-          "gender": "Male",
-          "pickup_sequence": 4,
-          "trip_km": 11.85
-        }
-      ],
-      "is_male_led": false,
-      "requires_escort": true,
-      "route_type": "FEMALE-LED PICKUP",
-      "total_cost": 102.5,
-      "total_distance_km": 10.25,
-      "trip_type": "logout"
-    },
-    {
-      "cab_number": 22,
-      "employee_details": [
-        {
-          "description": "Pickup #1",
-          "direct_km": 4.62,
-          "employee_id": "19617",
-          "extra_percentage": 0,
-          "gender": "Female",
-          "pickup_sequence": 1,
-          "trip_km": 4.62
-        },
-        {
-          "description": "Pickup #2",
-          "direct_km": 1.76,
-          "employee_id": "17414",
-          "extra_percentage": 349.89,
-          "gender": "Male",
           "pickup_sequence": 2,
-          "trip_km": 7.91
+          "trip_km": 5.46
         },
         {
           "description": "Pickup #3",
-          "direct_km": 1.72,
-          "employee_id": "17828",
-          "extra_percentage": 185.46,
+          "direct_km": 10.41,
+          "employee_id": "T016",
+          "extra_percentage": 11.28,
           "gender": "Male",
           "pickup_sequence": 3,
-          "trip_km": 4.9
-        }
-      ],
-      "is_male_led": false,
-      "requires_escort": true,
-      "route_type": "FEMALE-LED PICKUP",
-      "total_cost": 64.4,
-      "total_distance_km": 6.44,
-      "trip_type": "logout"
-    },
-    {
-      "cab_number": 23,
-      "employee_details": [
-        {
-          "description": "Pickup #1",
-          "direct_km": 4.53,
-          "employee_id": "16813",
-          "extra_percentage": 0,
-          "gender": "Female",
-          "pickup_sequence": 1,
-          "trip_km": 4.53
-        },
-        {
-          "description": "Pickup #2",
-          "direct_km": 4.95,
-          "employee_id": "11730",
-          "extra_percentage": 7.52,
-          "gender": "Male",
-          "pickup_sequence": 2,
-          "trip_km": 5.32
-        },
-        {
-          "description": "Pickup #3",
-          "direct_km": 5.61,
-          "employee_id": "1",
-          "extra_percentage": -7.42,
-          "gender": "Male",
-          "pickup_sequence": 3,
-          "trip_km": 5.19
+          "trip_km": 11.59
         },
         {
           "description": "Pickup #4",
-          "direct_km": 5.84,
-          "employee_id": "16197",
-          "extra_percentage": 15.81,
+          "direct_km": 7.39,
+          "employee_id": "18899",
+          "extra_percentage": 6.08,
           "gender": "Male",
           "pickup_sequence": 4,
-          "trip_km": 6.76
+          "trip_km": 7.84
         }
       ],
       "is_male_led": false,
       "requires_escort": true,
       "route_type": "FEMALE-LED PICKUP",
-      "total_cost": 119.3,
-      "total_distance_km": 11.93,
+      "total_cost": 157.1,
+      "total_distance_km": 15.71,
       "trip_type": "logout"
     },
     {
-      "cab_number": 24,
+      "cab_number": 14,
       "employee_details": [
         {
           "description": "Pickup #1",
-          "direct_km": 4.21,
-          "employee_id": "10268",
-          "extra_percentage": 0,
-          "gender": "Female",
-          "pickup_sequence": 1,
-          "trip_km": 4.21
-        },
-        {
-          "description": "Pickup #2",
-          "direct_km": 1.73,
-          "employee_id": "12253",
-          "extra_percentage": 361.71,
-          "gender": "Male",
-          "pickup_sequence": 2,
-          "trip_km": 7.97
-        }
-      ],
-      "is_male_led": false,
-      "requires_escort": true,
-      "route_type": "FEMALE-LED PICKUP",
-      "total_cost": 57.6,
-      "total_distance_km": 5.76,
-      "trip_type": "logout"
-    },
-    {
-      "cab_number": 25,
-      "employee_details": [
-        {
-          "description": "Pickup #1",
-          "direct_km": 2.46,
-          "employee_id": "12385",
-          "extra_percentage": 0,
-          "gender": "Female",
-          "pickup_sequence": 1,
-          "trip_km": 2.46
-        },
-        {
-          "description": "Pickup #2",
-          "direct_km": 2.97,
-          "employee_id": "16799",
-          "extra_percentage": 10.9,
-          "gender": "Female",
-          "pickup_sequence": 2,
-          "trip_km": 3.3
-        },
-        {
-          "description": "Pickup #3",
-          "direct_km": 3.09,
-          "employee_id": "12126",
-          "extra_percentage": 55.56,
-          "gender": "Female",
-          "pickup_sequence": 3,
-          "trip_km": 4.8
-        },
-        {
-          "description": "Pickup #4",
-          "direct_km": 2.31,
-          "employee_id": "19363",
-          "extra_percentage": 199.27,
-          "gender": "Male",
-          "pickup_sequence": 4,
-          "trip_km": 6.92
-        }
-      ],
-      "is_male_led": false,
-      "requires_escort": true,
-      "route_type": "FEMALE-LED PICKUP",
-      "total_cost": 52.1,
-      "total_distance_km": 5.21,
-      "trip_type": "logout"
-    },
-    {
-      "cab_number": 26,
-      "employee_details": [
-        {
-          "description": "Pickup #1",
-          "direct_km": 2.98,
-          "employee_id": "11711",
-          "extra_percentage": 0,
-          "gender": "Female",
-          "pickup_sequence": 1,
-          "trip_km": 2.98
-        },
-        {
-          "description": "Pickup #2",
           "direct_km": 3.04,
           "employee_id": "16456",
-          "extra_percentage": 93.97,
+          "extra_percentage": 0,
           "gender": "Male",
+          "pickup_sequence": 1,
+          "trip_km": 3.04
+        },
+        {
+          "description": "Pickup #2",
+          "direct_km": 4.53,
+          "employee_id": "16813",
+          "extra_percentage": 0.57,
+          "gender": "Female",
           "pickup_sequence": 2,
-          "trip_km": 5.9
+          "trip_km": 4.56
         },
         {
           "description": "Pickup #3",
-          "direct_km": 3.77,
-          "employee_id": "15897",
-          "extra_percentage": 31.14,
-          "gender": "Male",
+          "direct_km": 5.01,
+          "employee_id": "16539",
+          "extra_percentage": 7.94,
+          "gender": "Female",
           "pickup_sequence": 3,
-          "trip_km": 4.94
+          "trip_km": 5.41
         },
         {
           "description": "Pickup #4",
-          "direct_km": 3.86,
-          "employee_id": "17329",
-          "extra_percentage": 45.23,
+          "direct_km": 5.61,
+          "employee_id": "1",
+          "extra_percentage": 8.99,
           "gender": "Male",
           "pickup_sequence": 4,
-          "trip_km": 5.6
+          "trip_km": 6.11
         }
       ],
-      "is_male_led": false,
-      "requires_escort": true,
-      "route_type": "FEMALE-LED PICKUP",
-      "total_cost": 99.5,
-      "total_distance_km": 9.95,
+      "is_male_led": true,
+      "requires_escort": false,
+      "route_type": "MALE-LED PICKUP",
+      "total_cost": 110.2,
+      "total_distance_km": 11.02,
       "trip_type": "logout"
     },
     {
-      "cab_number": 27,
+      "cab_number": 15,
       "employee_details": [
         {
           "description": "Pickup #1",
@@ -1194,39 +684,527 @@
         },
         {
           "description": "Pickup #3",
-          "direct_km": 2.06,
-          "employee_id": "19361",
-          "extra_percentage": 63.11,
-          "gender": "Male",
+          "direct_km": 4.62,
+          "employee_id": "19617",
+          "extra_percentage": 31.4,
+          "gender": "Female",
           "pickup_sequence": 3,
-          "trip_km": 3.36
+          "trip_km": 6.06
+        },
+        {
+          "description": "Pickup #4",
+          "direct_km": 18.22,
+          "employee_id": "13374",
+          "extra_percentage": 8.49,
+          "gender": "Male",
+          "pickup_sequence": 4,
+          "trip_km": 19.76
         }
       ],
       "is_male_led": false,
       "requires_escort": true,
       "route_type": "FEMALE-LED PICKUP",
-      "total_cost": 43.2,
-      "total_distance_km": 4.32,
+      "total_cost": 211.3,
+      "total_distance_km": 21.13,
       "trip_type": "logout"
     },
     {
-      "cab_number": 28,
+      "cab_number": 16,
       "employee_details": [
         {
           "description": "Pickup #1",
-          "direct_km": 1.22,
-          "employee_id": "TE655",
+          "direct_km": 1.73,
+          "employee_id": "12253",
           "extra_percentage": 0,
           "gender": "Male",
           "pickup_sequence": 1,
-          "trip_km": 1.22
+          "trip_km": 1.73
+        },
+        {
+          "description": "Pickup #2",
+          "direct_km": 1.76,
+          "employee_id": "17414",
+          "extra_percentage": 9.61,
+          "gender": "Male",
+          "pickup_sequence": 2,
+          "trip_km": 1.93
+        },
+        {
+          "description": "Pickup #3",
+          "direct_km": 4.21,
+          "employee_id": "10268",
+          "extra_percentage": 4.94,
+          "gender": "Female",
+          "pickup_sequence": 3,
+          "trip_km": 4.42
+        },
+        {
+          "description": "Pickup #4",
+          "direct_km": 16.99,
+          "employee_id": "15773",
+          "extra_percentage": 8.44,
+          "gender": "Male",
+          "pickup_sequence": 4,
+          "trip_km": 18.43
         }
       ],
       "is_male_led": true,
       "requires_escort": false,
       "route_type": "MALE-LED PICKUP",
-      "total_cost": 22.6,
-      "total_distance_km": 2.26,
+      "total_cost": 197.8,
+      "total_distance_km": 19.78,
+      "trip_type": "logout"
+    },
+    {
+      "cab_number": 17,
+      "employee_details": [
+        {
+          "description": "Pickup #1",
+          "direct_km": 2.46,
+          "employee_id": "12385",
+          "extra_percentage": 0,
+          "gender": "Female",
+          "pickup_sequence": 1,
+          "trip_km": 2.46
+        },
+        {
+          "description": "Pickup #2",
+          "direct_km": 2.97,
+          "employee_id": "16799",
+          "extra_percentage": 10.9,
+          "gender": "Female",
+          "pickup_sequence": 2,
+          "trip_km": 3.3
+        },
+        {
+          "description": "Pickup #3",
+          "direct_km": 2.97,
+          "employee_id": "15264",
+          "extra_percentage": 10.9,
+          "gender": "Male",
+          "pickup_sequence": 3,
+          "trip_km": 3.3
+        },
+        {
+          "description": "Pickup #4",
+          "direct_km": 2.31,
+          "employee_id": "19363",
+          "extra_percentage": 36.28,
+          "gender": "Male",
+          "pickup_sequence": 4,
+          "trip_km": 3.15
+        }
+      ],
+      "is_male_led": false,
+      "requires_escort": true,
+      "route_type": "FEMALE-LED PICKUP",
+      "total_cost": 59,
+      "total_distance_km": 5.9,
+      "trip_type": "logout"
+    },
+    {
+      "cab_number": 18,
+      "employee_details": [
+        {
+          "description": "Pickup #1",
+          "direct_km": 8.67,
+          "employee_id": "15124",
+          "extra_percentage": 0,
+          "gender": "Male",
+          "pickup_sequence": 1,
+          "trip_km": 8.67
+        },
+        {
+          "description": "Pickup #2",
+          "direct_km": 17.47,
+          "employee_id": "19006",
+          "extra_percentage": 0,
+          "gender": "Male",
+          "pickup_sequence": 2,
+          "trip_km": 17.47
+        },
+        {
+          "description": "Pickup #3",
+          "direct_km": 22.63,
+          "employee_id": "10761",
+          "extra_percentage": 5.55,
+          "gender": "Female",
+          "pickup_sequence": 3,
+          "trip_km": 23.89
+        }
+      ],
+      "is_male_led": true,
+      "requires_escort": false,
+      "route_type": "MALE-LED PICKUP",
+      "total_cost": 462.6,
+      "total_distance_km": 46.26,
+      "trip_type": "logout"
+    },
+    {
+      "cab_number": 19,
+      "employee_details": [
+        {
+          "description": "Pickup #1",
+          "direct_km": 1.72,
+          "employee_id": "17828",
+          "extra_percentage": 0,
+          "gender": "Male",
+          "pickup_sequence": 1,
+          "trip_km": 1.72
+        },
+        {
+          "description": "Pickup #2",
+          "direct_km": 5.66,
+          "employee_id": "19548",
+          "extra_percentage": 3.67,
+          "gender": "Male",
+          "pickup_sequence": 2,
+          "trip_km": 5.87
+        },
+        {
+          "description": "Pickup #3",
+          "direct_km": 13.5,
+          "employee_id": "15090",
+          "extra_percentage": 13.43,
+          "gender": "Female",
+          "pickup_sequence": 3,
+          "trip_km": 15.31
+        }
+      ],
+      "is_male_led": true,
+      "requires_escort": false,
+      "route_type": "MALE-LED PICKUP",
+      "total_cost": 269.6,
+      "total_distance_km": 26.96,
+      "trip_type": "logout"
+    },
+    {
+      "cab_number": 20,
+      "employee_details": [
+        {
+          "description": "Pickup #1",
+          "direct_km": 4.45,
+          "employee_id": "11055",
+          "extra_percentage": 0,
+          "gender": "Male",
+          "pickup_sequence": 1,
+          "trip_km": 4.45
+        },
+        {
+          "description": "Pickup #2",
+          "direct_km": 5.11,
+          "employee_id": "16912",
+          "extra_percentage": 12.91,
+          "gender": "Male",
+          "pickup_sequence": 2,
+          "trip_km": 5.77
+        },
+        {
+          "description": "Pickup #3",
+          "direct_km": 5.41,
+          "employee_id": "10396",
+          "extra_percentage": 21.37,
+          "gender": "Male",
+          "pickup_sequence": 3,
+          "trip_km": 6.57
+        },
+        {
+          "description": "Pickup #4",
+          "direct_km": 5.37,
+          "employee_id": "19241",
+          "extra_percentage": 25.08,
+          "gender": "Male",
+          "pickup_sequence": 4,
+          "trip_km": 6.72
+        }
+      ],
+      "is_male_led": true,
+      "requires_escort": false,
+      "route_type": "MALE-LED PICKUP",
+      "total_cost": 128.8,
+      "total_distance_km": 12.88,
+      "trip_type": "logout"
+    },
+    {
+      "cab_number": 21,
+      "employee_details": [
+        {
+          "description": "Pickup #1",
+          "direct_km": 7.84,
+          "employee_id": "akhilDum001",
+          "extra_percentage": 0,
+          "gender": "Male",
+          "pickup_sequence": 1,
+          "trip_km": 7.84
+        },
+        {
+          "description": "Pickup #2",
+          "direct_km": 7.84,
+          "employee_id": "akhilDum002",
+          "extra_percentage": 0,
+          "gender": "Male",
+          "pickup_sequence": 2,
+          "trip_km": 7.84
+        },
+        {
+          "description": "Pickup #3",
+          "direct_km": 7.01,
+          "employee_id": "17822",
+          "extra_percentage": 46.72,
+          "gender": "Male",
+          "pickup_sequence": 3,
+          "trip_km": 10.28
+        },
+        {
+          "description": "Pickup #4",
+          "direct_km": 6.78,
+          "employee_id": "12943",
+          "extra_percentage": 75.85,
+          "gender": "Male",
+          "pickup_sequence": 4,
+          "trip_km": 11.93
+        }
+      ],
+      "is_male_led": true,
+      "requires_escort": false,
+      "route_type": "MALE-LED PICKUP",
+      "total_cost": 185.9,
+      "total_distance_km": 18.59,
+      "trip_type": "logout"
+    },
+    {
+      "cab_number": 22,
+      "employee_details": [
+        {
+          "description": "Pickup #1",
+          "direct_km": 3.41,
+          "employee_id": "19116",
+          "extra_percentage": 0,
+          "gender": "Male",
+          "pickup_sequence": 1,
+          "trip_km": 3.41
+        },
+        {
+          "description": "Pickup #2",
+          "direct_km": 3.77,
+          "employee_id": "15897",
+          "extra_percentage": 3.02,
+          "gender": "Male",
+          "pickup_sequence": 2,
+          "trip_km": 3.88
+        },
+        {
+          "description": "Pickup #3",
+          "direct_km": 4.05,
+          "employee_id": "T019",
+          "extra_percentage": 16.93,
+          "gender": "Male",
+          "pickup_sequence": 3,
+          "trip_km": 4.74
+        },
+        {
+          "description": "Pickup #4",
+          "direct_km": 3.86,
+          "employee_id": "17329",
+          "extra_percentage": 32.02,
+          "gender": "Male",
+          "pickup_sequence": 4,
+          "trip_km": 5.09
+        }
+      ],
+      "is_male_led": true,
+      "requires_escort": false,
+      "route_type": "MALE-LED PICKUP",
+      "total_cost": 94.4,
+      "total_distance_km": 9.44,
+      "trip_type": "logout"
+    },
+    {
+      "cab_number": 23,
+      "employee_details": [
+        {
+          "description": "Pickup #1",
+          "direct_km": 8.58,
+          "employee_id": "19391",
+          "extra_percentage": 0,
+          "gender": "Male",
+          "pickup_sequence": 1,
+          "trip_km": 8.58
+        },
+        {
+          "description": "Pickup #2",
+          "direct_km": 5.24,
+          "employee_id": "15000",
+          "extra_percentage": 137.68,
+          "gender": "Male",
+          "pickup_sequence": 2,
+          "trip_km": 12.45
+        },
+        {
+          "description": "Pickup #3",
+          "direct_km": 5.52,
+          "employee_id": "19535",
+          "extra_percentage": 151.17,
+          "gender": "Male",
+          "pickup_sequence": 3,
+          "trip_km": 13.87
+        },
+        {
+          "description": "Pickup #4",
+          "direct_km": 5.42,
+          "employee_id": "10222",
+          "extra_percentage": 157.95,
+          "gender": "Male",
+          "pickup_sequence": 4,
+          "trip_km": 13.98
+        }
+      ],
+      "is_male_led": true,
+      "requires_escort": false,
+      "route_type": "MALE-LED PICKUP",
+      "total_cost": 201.9,
+      "total_distance_km": 20.19,
+      "trip_type": "logout"
+    },
+    {
+      "cab_number": 24,
+      "employee_details": [
+        {
+          "description": "Pickup #1",
+          "direct_km": 8.86,
+          "employee_id": "17257",
+          "extra_percentage": 0,
+          "gender": "Male",
+          "pickup_sequence": 1,
+          "trip_km": 8.86
+        },
+        {
+          "description": "Pickup #2",
+          "direct_km": 9.1,
+          "employee_id": "15980",
+          "extra_percentage": 1.88,
+          "gender": "Male",
+          "pickup_sequence": 2,
+          "trip_km": 9.27
+        },
+        {
+          "description": "Pickup #3",
+          "direct_km": 10.2,
+          "employee_id": "T007",
+          "extra_percentage": 1.68,
+          "gender": "Male",
+          "pickup_sequence": 3,
+          "trip_km": 10.37
+        },
+        {
+          "description": "Pickup #4",
+          "direct_km": 10.2,
+          "employee_id": "10086",
+          "extra_percentage": 3.31,
+          "gender": "Male",
+          "pickup_sequence": 4,
+          "trip_km": 10.54
+        }
+      ],
+      "is_male_led": true,
+      "requires_escort": false,
+      "route_type": "MALE-LED PICKUP",
+      "total_cost": 212.9,
+      "total_distance_km": 21.29,
+      "trip_type": "logout"
+    },
+    {
+      "cab_number": 25,
+      "employee_details": [
+        {
+          "description": "Pickup #1",
+          "direct_km": 5.18,
+          "employee_id": "14430",
+          "extra_percentage": 0,
+          "gender": "Male",
+          "pickup_sequence": 1,
+          "trip_km": 5.18
+        },
+        {
+          "description": "Pickup #2",
+          "direct_km": 4.95,
+          "employee_id": "11730",
+          "extra_percentage": 34.37,
+          "gender": "Male",
+          "pickup_sequence": 2,
+          "trip_km": 6.65
+        },
+        {
+          "description": "Pickup #3",
+          "direct_km": 5.82,
+          "employee_id": "15193",
+          "extra_percentage": 51.83,
+          "gender": "Male",
+          "pickup_sequence": 3,
+          "trip_km": 8.84
+        },
+        {
+          "description": "Pickup #4",
+          "direct_km": 5.84,
+          "employee_id": "16197",
+          "extra_percentage": 55.41,
+          "gender": "Male",
+          "pickup_sequence": 4,
+          "trip_km": 9.08
+        }
+      ],
+      "is_male_led": true,
+      "requires_escort": false,
+      "route_type": "MALE-LED PICKUP",
+      "total_cost": 142.4,
+      "total_distance_km": 14.24,
+      "trip_type": "logout"
+    },
+    {
+      "cab_number": 26,
+      "employee_details": [
+        {
+          "description": "Pickup #1",
+          "direct_km": 2.27,
+          "employee_id": "10987",
+          "extra_percentage": 0,
+          "gender": "Male",
+          "pickup_sequence": 1,
+          "trip_km": 2.27
+        },
+        {
+          "description": "Pickup #2",
+          "direct_km": 2.24,
+          "employee_id": "14084",
+          "extra_percentage": 9.77,
+          "gender": "Male",
+          "pickup_sequence": 2,
+          "trip_km": 2.45
+        },
+        {
+          "description": "Pickup #3",
+          "direct_km": 2.06,
+          "employee_id": "19361",
+          "extra_percentage": 34.02,
+          "gender": "Male",
+          "pickup_sequence": 3,
+          "trip_km": 2.76
+        },
+        {
+          "description": "Pickup #4",
+          "direct_km": 1.22,
+          "employee_id": "TE655",
+          "extra_percentage": 224.15,
+          "gender": "Male",
+          "pickup_sequence": 4,
+          "trip_km": 3.94
+        }
+      ],
+      "is_male_led": true,
+      "requires_escort": false,
+      "route_type": "MALE-LED PICKUP",
+      "total_cost": 49.8,
+      "total_distance_km": 4.98,
       "trip_type": "logout"
     }
   ],
@@ -1238,10 +1216,10 @@
     "total_escort_attempts": 0
   },
   "summary": {
-    "escort_cabs": 21,
-    "male_led_cabs": 7,
-    "total_cabs": 28,
-    "total_cost": 7207.5,
+    "escort_cabs": 11,
+    "male_led_cabs": 15,
+    "total_cabs": 26,
+    "total_cost": 6865.3,
     "total_employees": 100,
     "total_females": 41,
     "total_males": 59,
