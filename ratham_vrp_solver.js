@@ -1,5 +1,6 @@
 const axios = require('axios');
 const { RathamPreprocessor } = require('./escort_processor');
+const { buildTimeWindows } = require('./constraint_builder');
 
 class OSRMClient {
     constructor(baseUrl = "http://35.244.42.110:5000") {
@@ -124,28 +125,15 @@ class CuOptServerClient {
 
 
 
-async function solveVrp(processedData, nVehicles, vehicleCapacity, maxDetourTime) {
-    const nodes = processedData.nodes;
+async function solveVrp(processedData, nVehicles, vehicleCapacity, maxDetourTime, maxDetourPercent = 0.5) {
     const distMatrix = processedData.dist_matrix;
     const timeMatrix = processedData.time_matrix;
-    const serviceTimes = processedData.service_times;
-    const nLocations = nodes.length;
+    const groups = processedData.groups;
+    const totalEmployees = processedData.total_employees;
+    const nLocations = totalEmployees + 1; // Office + Employees
 
-    // Prepare Time Windows
-    const timeWindows = [];
-    for (const node of nodes) {
-        let limit = parseFloat(maxDetourTime);
-        if (['pair', 'group', 'guarded_group'].includes(node.type)) {
-            const internalTime = parseFloat(node.internal_time || 0);
-            limit = Math.max(0.0, limit - internalTime);
-        }
-
-        if (node.type === 'office') {
-            timeWindows.push([0, 86400]); // 24 hours
-        } else {
-            timeWindows.push([0, Math.floor(limit)]); // Use integer limit
-        }
-    }
+    // Prepare Time Windows using Constraint Builder
+    const timeWindows = buildTimeWindows(totalEmployees, timeMatrix, maxDetourPercent);
 
     // Construct JSON Payload
     const payload = {
@@ -169,29 +157,34 @@ async function solveVrp(processedData, nVehicles, vehicleCapacity, maxDetourTime
         },
         "task_data": {
             "task_locations": Array.from({length: nLocations}, (_, i) => i),
-            "demand": [nodes.map(n => n.demand)],
+            "demand": [Array.from({length: nLocations}, (_, i) => i === 0 ? 0 : 1)],
             "task_time_windows": timeWindows,
-            "service_times": serviceTimes.map(t => Math.floor(t)), // Ensure int
+            "service_times": Array(nLocations).fill(120), // Default 2 mins per stop
             "order_vehicle_match": (() => {
-                // Create order_vehicle_match to ensure one group per vehicle
-                // Each group gets assigned to a specific vehicle
+                // Create order_vehicle_match to ensure grouped employees share a vehicle
                 const orderVehicleMatch = [];
                 let vehicleIdx = 0;
                 
-                for (let i = 0; i < nodes.length; i++) {
-                    const node = nodes[i];
-                    
-                    if (node.type === 'group' || node.type === 'guarded_group') {
-                        // Assign this group to one specific vehicle
-                        // This ensures no two groups share a vehicle
+                // 1. Assign Groups to Vehicles
+                for (const group of groups) {
+                    const vId = vehicleIdx % nVehicles;
+                    for (const member of group.components) {
                         orderVehicleMatch.push({
-                            "order_id": i,
-                            "vehicle_ids": [vehicleIdx % nVehicles]
+                            "order_id": member.original_idx,
+                            "vehicle_ids": [vId]
                         });
-                        vehicleIdx++;
                     }
-                    // Office and single males don't need constraints - they can go on any vehicle
+                    vehicleIdx++;
                 }
+                
+                // 2. Assign Single Males to Vehicles?
+                // If they are not in any group, they are free.
+                // But wait, processEscorts puts everyone in SOME node (Group, GuardedGroup, or Male Node).
+                // If 'Male Node' is returned in 'groups' list?
+                // In escort_processor.js, I only added 'group' and 'guarded_group' to 'groups' list.
+                // Single males (type 'male') are NOT in 'groups'.
+                // So they are free to be assigned to any vehicle (or we can assign them to remaining vehicles).
+                // The solver will handle them.
                 
                 return orderVehicleMatch;
             })()

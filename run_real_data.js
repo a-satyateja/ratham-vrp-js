@@ -181,14 +181,16 @@ async function runRealData() {
     }
     
     console.log(`\nSummary: ${groups} Groups (with Male), ${guarded} Guarded Groups, ${males} Single Males`);
-    
-    // 4. Solve
-    console.log("\nAttempting to solve with cuOpt Server...");
+    // const nodes = result.nodes;
+    const totalLocations = result.total_employees + 1;
+
+    console.log("Attempting to solve with cuOpt Server...");
     const { solution: solutionJson } = await solveVrp(
         result,
         40, // n_vehicles
         4,  // vehicle_capacity
-        7200 // max_detour_time (2 hours in seconds)
+        7200, // max_detour_time (2 hours in seconds)
+        0.5   // max_detour_percent
     );
     
     // Parse Response
@@ -218,15 +220,15 @@ async function runRealData() {
             // Print Routes and build detailed output
             const vehicleData = solverResp.vehicle_data || {};
             for (const [vId, vInfo] of Object.entries(vehicleData)) {
-                const route = vInfo.route || [];
+                const routeIndices = vInfo.route || [];
                 
                 // Map route indices back to Node IDs
-                const routeIds = route.map(idx => {
-                    if (idx < nodes.length) {
-                        return nodes[idx].id;
-                    } else {
-                        return `Unknown_${idx}`;
+                const routeIds = routeIndices.map(idx => {
+                    if (idx === 0) return "Office";
+                    if (idx > 0 && idx <= formattedEmployees.length) {
+                        return formattedEmployees[idx - 1].id;
                     }
+                    return `Unknown_${idx}`;
                 });
                 console.log(`  ${vId}: ${routeIds.join(' -> ')}`);
                 
@@ -239,94 +241,91 @@ async function runRealData() {
                     total_distance: 0
                 };
                 
-                // Expand groups to individual employees
                 // First, calculate cumulative distances from office to each node
                 const cumulativeDistances = [0]; // Office is at index 0
-                for (let i = 0; i < route.length - 1; i++) {
-                    const fromIdx = route[i];
-                    const toIdx = route[i + 1];
-                    if (fromIdx < nodes.length && toIdx < nodes.length) {
+                let routeDistance = 0;
+                for (let i = 0; i < routeIndices.length - 1; i++) {
+                    const fromIdx = routeIndices[i];
+                    const toIdx = routeIndices[i + 1];
+                    if (fromIdx < totalLocations && toIdx < totalLocations) {
                         const legDist = result.dist_matrix[fromIdx][toIdx];
                         cumulativeDistances.push(cumulativeDistances[cumulativeDistances.length - 1] + legDist);
+                        routeDistance += legDist;
                     }
                 }
                 
-                for (let i = 0; i < route.length; i++) {
-                    const nodeIdx = route[i];
-                    if (nodeIdx >= nodes.length) continue;
+                let pickupSequence = 1;
+                let hasFemale = false;
+                let hasMale = false;
+                let totalFemales = 0;
+                let totalMales = 0;
+                const routeEmployees = [];
+                const highDetourEmployees = [];
+
+                // Iterate through route to build employee details
+                for (let i = 0; i < routeIndices.length; i++) {
+                    const nodeIdx = routeIndices[i];
+                    if (nodeIdx === 0) continue; // Skip Office
                     
-                    const node = nodes[nodeIdx];
+                    const emp = formattedEmployees[nodeIdx - 1];
                     
-                    // Skip office nodes
-                    if (node.type === 'office') continue;
-                    
-                    // Get cumulative distance to this node (start of the group)
-                    const routeDistanceToNode = cumulativeDistances[i] || 0;
-                    
-                    // Add all employees in this node
-                    if (node.components) {
-                        // Calculate internal distances within the group
-                        let internalDistance = 0;
-                        
-                        for (let j = 0; j < node.components.length; j++) {
-                            const emp = node.components[j];
-                            
-                            // Find original employee data
-                            const originalEmp = employeesData.find(e => e.id === emp.id);
-                            if (originalEmp) {
-                                // Calculate direct distance from office to this employee
-                                const directDistance = normalizedDistMatrix[0][emp.original_idx];
-                                
-                                // Planned route distance = distance to group node + internal travel to this employee
-                                const plannedRouteDistance = routeDistanceToNode + internalDistance;
-                                
-                                // Calculate extra distance
-                                const extraDistanceMeters = plannedRouteDistance - directDistance;
-                                const extraDistanceKm = extraDistanceMeters / 1000;
-                                const percentExtraDistance = directDistance > 0 
-                                    ? (extraDistanceMeters / directDistance) * 100 
-                                    : 0;
-                                
-                                vehicleInfo.employees.push({
-                                    id: emp.id,
-                                    gender: originalEmp.gender,
-                                    location: {
-                                        lat: originalEmp.lat,
-                                        lon: originalEmp.lon
-                                    },
-                                    direct_distance_from_office_km: Math.round(directDistance) / 1000,
-                                    planned_route_distance_km: Math.round(plannedRouteDistance) / 1000,
-                                    extra_distance_travelled_km: Math.round(extraDistanceKm * 1000) / 1000,
-                                    percent_extra_distance: Math.round(percentExtraDistance * 100) / 100,
-                                    group: node.id,
-                                    service_time: emp.service_time || 120
-                                });
-                                
-                                // Add internal travel to next employee in the group
-                                if (j < node.components.length - 1) {
-                                    const nextEmp = node.components[j + 1];
-                                    const internalLegDist = normalizedDistMatrix[emp.original_idx][nextEmp.original_idx];
-                                    internalDistance += internalLegDist;
-                                }
-                            }
+                    if (emp) {
+                        if (emp.gender === 'F') {
+                            hasFemale = true;
+                            totalFemales++;
+                        } else {
+                            hasMale = true;
+                            totalMales++;
                         }
+
+                        const routeDistanceToNode = cumulativeDistances[i] || 0;
+                        const directDistance = normalizedDistMatrix[0][emp.original_idx];
+                        const plannedRouteDistance = routeDistanceToNode;
+                        
+                        const extraDistanceMeters = plannedRouteDistance - directDistance;
+                        const percentExtraDistance = directDistance > 0 
+                            ? (extraDistanceMeters / directDistance) * 100 
+                            : 0;
+
+                        routeEmployees.push({
+                            description: `Pickup #${pickupSequence}`,
+                            direct_km: parseFloat((directDistance / 1000).toFixed(2)),
+                            employee_id: emp.id,
+                            extra_percentage: parseFloat(percentExtraDistance.toFixed(2)),
+                            gender: emp.gender === 'M' ? 'Male' : 'Female',
+                            pickup_sequence: pickupSequence,
+                            trip_km: parseFloat((plannedRouteDistance / 1000).toFixed(2))
+                        });
+
+                        if (percentExtraDistance > 50) {
+                            highDetourEmployees.push({
+                                id: emp.id,
+                                detour_percent: parseFloat(percentExtraDistance.toFixed(2)),
+                                direct_km: parseFloat((directDistance / 1000).toFixed(2)),
+                                trip_km: parseFloat((plannedRouteDistance / 1000).toFixed(2))
+                            });
+                        }
+                        
+                        pickupSequence++;
                     }
                 }
+                vehicleInfo.employees = routeEmployees;
                 
                 // Calculate leg distances
-                for (let i = 0; i < route.length - 1; i++) {
-                    const fromIdx = route[i];
-                    const toIdx = route[i + 1];
+                for (let i = 0; i < routeIndices.length - 1; i++) {
+                    const fromIdx = routeIndices[i];
+                    const toIdx = routeIndices[i + 1];
                     
-                    if (fromIdx < nodes.length && toIdx < nodes.length) {
-                        const fromNode = nodes[fromIdx];
-                        const toNode = nodes[toIdx];
+                    if (fromIdx < totalLocations && toIdx < totalLocations) {
+                        const fromName = fromIdx === 0 ? "Office" : formattedEmployees[fromIdx - 1].id;
+                        const toName = toIdx === 0 ? "Office" : formattedEmployees[toIdx - 1].id;
+                        
                         const legDistance = result.dist_matrix[fromIdx][toIdx];
                         const legTime = result.time_matrix[fromIdx][toIdx];
                         
                         vehicleInfo.legs.push({
-                            from: fromNode.id,
-                            to: toNode.id,
+                            from: fromName,
+                            to: toName,
                             distance: Math.round(legDistance),
                             time: Math.round(legTime)
                         });

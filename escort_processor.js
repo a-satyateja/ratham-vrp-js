@@ -341,92 +341,33 @@ class RathamPreprocessor {
             }
         }
 
-        // Rebuild Matrices
-        const nNew = processedNodes.length;
-        const newDist = Array(nNew).fill(0).map(() => Array(nNew).fill(0));
-        const newTime = Array(nNew).fill(0).map(() => Array(nNew).fill(0));
-
-        for (let i = 0; i < nNew; i++) {
-            for (let j = 0; j < nNew; j++) {
-                if (i === j) continue;
-                const nodeI = processedNodes[i];
-                const nodeJ = processedNodes[j];
-                // Distance from LAST component of I to FIRST component of J
-                const idxFrom = nodeI.original_indices[nodeI.original_indices.length - 1];
-                const idxTo = nodeJ.original_indices[0];
-                
-                newDist[i][j] = distMatrix[idxFrom][idxTo];
-                newTime[i][j] = timeMatrix[idxFrom][idxTo];
-            }
-        }
-
-        // Calculate Service Times
-        const serviceTimes = new Array(nNew).fill(0);
-        for (let i = 0; i < nNew; i++) {
-            const node = processedNodes[i];
-            if (['group', 'guarded_group', 'pair'].includes(node.type)) {
-                const lastComp = node.components[node.components.length - 1];
-                serviceTimes[i] = node.internal_time + (lastComp.service_time || 0);
-            } else if (node.type === 'office') {
-                serviceTimes[i] = 0;
-            } else {
-                serviceTimes[i] = node.components[0].service_time || 0;
-            }
-        }
-
-        // --- Logging Grouping Details ---
-        console.log("\n--- Initial Grouping Details ---");
-        const groupingLog = [];
-        
+        // Collect all groups for solver constraints
+        const groups = [];
         for (const node of processedNodes) {
             if (node.type === 'group' || node.type === 'guarded_group') {
-                // Assume route: Office -> Comp1 -> Comp2 -> ... -> CompN
-                // Note: This is an ESTIMATE based on the grouping order (sorted by distance).
-                // The actual solver might reorder them.
-                let currentIdx = 0; // Office
-                let routeDist = 0;
-                
-                for (let i = 0; i < node.components.length; i++) {
-                    const comp = node.components[i];
-                    const compIdx = comp.original_idx;
-                    
-                    // Add leg distance
-                    routeDist += distMatrix[currentIdx][compIdx];
-                    
-                    // Direct Distance
-                    const directDist = distMatrix[0][compIdx];
-                    
-                    // Deviation
-                    let deviation = 0;
-                    if (directDist > 0) {
-                        deviation = ((routeDist - directDist) / directDist) * 100;
-                    }
-                    
-                    groupingLog.push({
-                        Group: node.id,
-                        Type: node.type,
-                        Employee: comp.id,
-                        Gender: comp.gender,
-                        Direct_Km: parseFloat((directDist / 1000).toFixed(2)),
-                        Est_Route_Km: parseFloat((routeDist / 1000).toFixed(2)),
-                        Deviation_Percent: parseFloat(deviation.toFixed(2))
-                    });
-                    
-                    currentIdx = compIdx;
-                }
+                groups.push(node);
             }
         }
-        
-        if (groupingLog.length > 0) {
-            console.table(groupingLog);
-        }
 
+        // Return ORIGINAL matrices and raw employee data for solver
+        // The solver will now treat every employee as a node.
+        // We pass 'groups' to enforce vehicle constraints.
+        
         return {
-            nodes: processedNodes,
-            dist_matrix: newDist,
-            time_matrix: newTime,
-            service_times: serviceTimes,
-            node_mapping: nodeMapping
+            nodes: processedNodes, // We still return this for logging/debugging if needed, but solver will use 'employees'
+            // Actually, let's return a clean list of tasks matching the original matrix indices
+            // Task 0: Office
+            // Task i: Employee at original_idx i
+            
+            // We need to ensure the solver sees tasks 0..N matching the matrix 0..N
+            // The 'employees' array passed in might not be sorted by original_idx?
+            // But original_idx was assigned as i+1 in solver_service.js.
+            // So we can assume index i corresponds to original_idx i.
+            
+            dist_matrix: distMatrix,
+            time_matrix: timeMatrix,
+            groups: groups,
+            total_employees: employees.length
         };
     }
 }

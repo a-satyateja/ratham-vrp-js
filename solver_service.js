@@ -62,6 +62,17 @@ async function solveRoute(payload) {
         
         const { distances: distMatrix, durations: timeMatrix } = await osrm.getDistanceMatrix(locations);
         
+        console.log(`OSRM Request: ${locations.length} locations.`);
+        if (distMatrix) {
+            console.log(`OSRM Response: Matrix Size ${distMatrix.length}x${distMatrix[0].length}`);
+            if (distMatrix.length !== locations.length) {
+                console.error("CRITICAL ERROR: OSRM returned truncated matrix!");
+                console.error(`Expected ${locations.length}, got ${distMatrix.length}`);
+            }
+        } else {
+            console.error("CRITICAL ERROR: OSRM returned null matrix!");
+        }
+        
         // 2.1 Apply Floyd-Warshall normalization
         const normalizedDistMatrix = floydWarshall(distMatrix);
         const normalizedTimeMatrix = floydWarshall(timeMatrix);
@@ -73,21 +84,51 @@ async function solveRoute(payload) {
 
         // 3. Pre-process (Escort Logic)
         const preprocessor = new RathamPreprocessor();
-        const result = preprocessor.processEscorts(
-            formattedEmployees, officeLoc, normalizedDistMatrix, normalizedTimeMatrix, vehicle_capacity, max_detour_percent
-        );
+        
+        const BYPASS_ESCORT = true;
+        let result;
 
-        const nodes = result.nodes;
+        if (BYPASS_ESCORT) {
+            console.log("⚠️ ESCORT LOGIC BYPASSED ⚠️");
+            result = {
+                dist_matrix: normalizedDistMatrix,
+                time_matrix: normalizedTimeMatrix,
+                groups: [],
+                total_employees: employees.length,
+                nodes: []
+            };
+        } else {
+            result = preprocessor.processEscorts(
+                formattedEmployees, officeLoc, normalizedDistMatrix, normalizedTimeMatrix, vehicle_capacity, max_detour_percent
+            );
+        }
+
+        // const nodes = result.nodes; // No longer used for solver, only for logging if needed
+        const totalLocations = result.total_employees + 1; // Office + Employees
 
         console.log("Attempting to solve with cuOpt Server...");
         const { solution: solutionJson } = await solveVrp(
             result,
-            n_vehicles,
+            40, // n_vehicles
             vehicle_capacity,
-            max_detour_time
+            max_detour_time,
+            max_detour_percent
         );
 
         // 5. Format Response
+        console.log("Solver Response received. Checking structure...");
+        if (solutionJson) {
+            console.log("Solution JSON:", JSON.stringify(solutionJson, null, 2));
+            console.log("Solution JSON keys:", Object.keys(solutionJson));
+            if (solutionJson.response) {
+                 console.log("Response status:", solutionJson.response.solver_response ? solutionJson.response.solver_response.status : "No solver_response");
+            } else {
+                console.log("No 'response' field in solutionJson:", JSON.stringify(solutionJson, null, 2));
+            }
+        } else {
+            console.log("solutionJson is null or undefined");
+        }
+
         if (solutionJson.response && solutionJson.response.solver_response) {
             const solverResp = solutionJson.response.solver_response;
             
@@ -110,7 +151,8 @@ async function solveRoute(payload) {
                     // Skip empty routes or routes with only office (start/end)
                     // Usually route includes start(0) -> nodes -> end(0)
                     // We need to check if there are any actual employee nodes
-                    const employeeNodeIndices = routeIndices.filter(idx => idx !== 0 && idx < nodes.length);
+                    // Tasks are 1..N
+                    const employeeNodeIndices = routeIndices.filter(idx => idx !== 0);
                     
                     if (employeeNodeIndices.length === 0) continue;
 
@@ -124,8 +166,8 @@ async function solveRoute(payload) {
                     for (let i = 0; i < routeIndices.length - 1; i++) {
                         const fromIdx = routeIndices[i];
                         const toIdx = routeIndices[i + 1];
-                        if (fromIdx < nodes.length && toIdx < nodes.length) {
-                            const legDist = result.dist_matrix[fromIdx][toIdx];
+                        if (fromIdx < totalLocations && toIdx < totalLocations) {
+                            const legDist = result.dist_matrix[fromIdx][toIdx]; // Original Matrix
                             cumulativeDistances.push(cumulativeDistances[cumulativeDistances.length - 1] + legDist);
                             routeDistance += legDist;
                         }
@@ -138,64 +180,54 @@ async function solveRoute(payload) {
                     // Iterate through route to build employee details
                     for (let i = 0; i < routeIndices.length; i++) {
                         const nodeIdx = routeIndices[i];
-                        if (nodeIdx >= nodes.length) continue;
+                        if (nodeIdx === 0) continue; // Skip Office
                         
-                        const node = nodes[nodeIdx];
-                        if (node.type === 'office') continue;
-
-                        const routeDistanceToNode = cumulativeDistances[i] || 0;
-                        let internalDistance = 0;
-
-                        if (node.components) {
-                            for (let j = 0; j < node.components.length; j++) {
-                                const emp = node.components[j];
-                                const originalEmp = employees.find(e => e.id === emp.id);
-                                
-                                if (originalEmp) {
-                                    if (originalEmp.gender === 'Female') {
-                                        hasFemale = true;
-                                        totalFemales++;
-                                    } else {
-                                        hasMale = true;
-                                        totalMales++;
-                                    }
-
-                                    const directDistance = normalizedDistMatrix[0][emp.original_idx];
-                                    const plannedRouteDistance = routeDistanceToNode + internalDistance;
-                                    
-                                    const extraDistanceMeters = plannedRouteDistance - directDistance;
-                                    const percentExtraDistance = directDistance > 0 
-                                        ? (extraDistanceMeters / directDistance) * 100 
-                                        : 0;
-
-                                    routeEmployees.push({
-                                        description: `Pickup #${pickupSequence}`,
-                                        direct_km: parseFloat((directDistance / 1000).toFixed(2)),
-                                        employee_id: emp.id,
-                                        extra_percentage: parseFloat(percentExtraDistance.toFixed(2)),
-                                        gender: originalEmp.gender,
-                                        pickup_sequence: pickupSequence,
-                                        trip_km: parseFloat((plannedRouteDistance / 1000).toFixed(2))
-                                    });
-
-                                    if (percentExtraDistance > 50) {
-                                        highDetourEmployees.push({
-                                            id: emp.id,
-                                            detour_percent: parseFloat(percentExtraDistance.toFixed(2)),
-                                            direct_km: parseFloat((directDistance / 1000).toFixed(2)),
-                                            trip_km: parseFloat((plannedRouteDistance / 1000).toFixed(2))
-                                        });
-                                    }
-                                    
-                                    pickupSequence++;
-
-                                    if (j < node.components.length - 1) {
-                                        const nextEmp = node.components[j + 1];
-                                        const internalLegDist = normalizedDistMatrix[emp.original_idx][nextEmp.original_idx];
-                                        internalDistance += internalLegDist;
-                                    }
-                                }
+                        // NodeIdx i corresponds to employees[i-1]
+                        // Because we constructed tasks as 0 (Office), 1..N (Employees)
+                        // And formattedEmployees matches this order.
+                        const emp = formattedEmployees[nodeIdx - 1];
+                        
+                        if (emp) {
+                            if (emp.gender === 'F') {
+                                hasFemale = true;
+                                totalFemales++;
+                            } else {
+                                hasMale = true;
+                                totalMales++;
                             }
+
+                            const routeDistanceToNode = cumulativeDistances[i] || 0;
+                            const directDistance = normalizedDistMatrix[0][emp.original_idx];
+                            
+                            // For Drop: Distance is from Office to Employee
+                            // plannedRouteDistance is cumulative distance from start (Office)
+                            const plannedRouteDistance = routeDistanceToNode;
+                            
+                            const extraDistanceMeters = plannedRouteDistance - directDistance;
+                            const percentExtraDistance = directDistance > 0 
+                                ? (extraDistanceMeters / directDistance) * 100 
+                                : 0;
+
+                            routeEmployees.push({
+                                description: `Pickup #${pickupSequence}`,
+                                direct_km: parseFloat((directDistance / 1000).toFixed(2)),
+                                employee_id: emp.id,
+                                extra_percentage: parseFloat(percentExtraDistance.toFixed(2)),
+                                gender: emp.gender === 'M' ? 'Male' : 'Female',
+                                pickup_sequence: pickupSequence,
+                                trip_km: parseFloat((plannedRouteDistance / 1000).toFixed(2))
+                            });
+
+                            if (percentExtraDistance > 50) {
+                                highDetourEmployees.push({
+                                    id: emp.id,
+                                    detour_percent: parseFloat(percentExtraDistance.toFixed(2)),
+                                    direct_km: parseFloat((directDistance / 1000).toFixed(2)),
+                                    trip_km: parseFloat((plannedRouteDistance / 1000).toFixed(2))
+                                });
+                            }
+                            
+                            pickupSequence++;
                         }
                     }
 
