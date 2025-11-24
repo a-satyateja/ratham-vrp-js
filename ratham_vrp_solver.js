@@ -125,7 +125,7 @@ class CuOptServerClient {
 
 
 
-async function solveVrp(processedData, nVehicles, vehicleCapacity, maxDetourTime, maxDetourPercent = 0.5) {
+async function solveVrp(processedData, nVehicles, vehicleCapacity, maxDetourTime, maxDetourPercent = 0.5, timeLimit = 20) {
     const distMatrix = processedData.dist_matrix;
     const timeMatrix = processedData.time_matrix;
     const groups = processedData.groups;
@@ -190,7 +190,7 @@ async function solveVrp(processedData, nVehicles, vehicleCapacity, maxDetourTime
             })()
         },
         "solver_config": {
-            "time_limit": 5,
+            "time_limit": timeLimit,
             "objectives": {
                 "cost": 1
             }

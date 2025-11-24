@@ -80,7 +80,8 @@ async function solveRoute(payload) {
         const n_vehicles = employees.length; // Safe upper bound
         const vehicle_capacity = config.max_cab_capacity || 4;
         const max_detour_time = 7200; // 2 hours default
-        const max_detour_percent = config.max_detour_percent || 0.5;
+        // Dynamic detour percent from input (e.g. 20 -> 0.2), default to 0.3
+        const max_detour_percent = config.extra_dist_pct ? (config.extra_dist_pct / 100) : 0.3;
 
         // 3. Pre-process (Escort Logic)
         const preprocessor = new RathamPreprocessor();
@@ -105,21 +106,29 @@ async function solveRoute(payload) {
 
         // const nodes = result.nodes; // No longer used for solver, only for logging if needed
         const totalLocations = result.total_employees + 1; // Office + Employees
+        
+        // Calculate time limit: 10 + (nodes / 6)
+        const time_limit = Math.ceil(10 + (totalLocations / 6));
+        console.log(`Calculated Time Limit: ${time_limit}s (Nodes: ${totalLocations})`);
 
         console.log("Attempting to solve with cuOpt Server...");
         const { solution: solutionJson } = await solveVrp(
             result,
-            40, // n_vehicles
+            n_vehicles, // Use calculated n_vehicles (employees.length)
             vehicle_capacity,
             max_detour_time,
-            max_detour_percent
+            max_detour_percent,
+            time_limit
         );
 
         // 5. Format Response
         console.log("Solver Response received. Checking structure...");
         if (solutionJson) {
-            console.log("Solution JSON:", JSON.stringify(solutionJson, null, 2));
+            console.log("Solution JSON:", JSON.stringify(solutionJson.response?.solver_infeasible_response, null, 2));
+            console.log("Solution JSON:", JSON.stringify(solutionJson.warnings, null, 2));
+            console.log("Solution JSON:", JSON.stringify(solutionJson.notes, null, 2));
             console.log("Solution JSON keys:", Object.keys(solutionJson));
+            console.log("Solution JSON keys:", Object.keys(solutionJson.response));
             if (solutionJson.response) {
                  console.log("Response status:", solutionJson.response.solver_response ? solutionJson.response.solver_response.status : "No solver_response");
             } else {
