@@ -8,6 +8,7 @@ const PORT = process.env.PORT || 3000;
 // Middleware
 app.use(cors());
 app.use(express.json());
+// app.use(express.static('public')); // Served by map_server.js now
 
 // Routes
 app.post('/optimise', async (req, res) => {
@@ -22,7 +23,7 @@ app.post('/optimise', async (req, res) => {
         }
 
         console.log(`Received optimization request for ${payload.employees.length} employees.`);
-        
+        console.log('config', payload.config);
         const result = await solveRoute(payload);
         
         res.json(result);

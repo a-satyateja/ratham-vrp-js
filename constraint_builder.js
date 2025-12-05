@@ -1,27 +1,4 @@
 /**
- * Calculates time window constraints for VRP nodes based on deviation percentage.
- * 
- * Logic:
- * For each employee, the drop-off time window is [DirectTime, DirectTime * (1 + maxDeviation)].
- * 
- * For a Group Node (which represents the start of the group's route):
- * - The solver determines the arrival time T at the first component.
- * - For each member i in the group at offset O_i from the start:
- *      Arrival_i = T + O_i
- *      Constraint: DirectTime_i <= Arrival_i <= DirectTime_i * (1 + maxDeviation)
- *      Therefore:  DirectTime_i - O_i <= T <= DirectTime_i * (1 + maxDeviation) - O_i
- * 
- * - The Group's time window [Start, End] is the intersection of these constraints:
- *      Start = Max(DirectTime_i - O_i) for all i
- *      End   = Min(DirectTime_i * (1 + maxDeviation) - O_i) for all i
- * 
- * @param {Array} nodes - List of processed nodes (groups, males, etc.)
- * @param {Array} distMatrix - Distance matrix (not strictly needed if using timeMatrix, but good for ref)
- * @param {Array} timeMatrix - Time matrix (seconds)
- * @param {number} maxDetourPercent - Allowed deviation (e.g., 0.5 for 50%)
- * @returns {Array} - Array of [start, end] time windows for each node
- */
-/**
  * Calculates time window constraints for VRP tasks (Employees).
  * 
  * Logic:

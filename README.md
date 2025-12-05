@@ -137,6 +137,34 @@ The JavaScript implementation produces **identical results** to the Python versi
 }
 ```
 
+## Web Visualization
+
+A web-based visualization is available to view the optimized routes on a map.
+
+### Running the Application
+
+You need to run both the backend and frontend servers.
+
+1. **Start the Backend (Optimization Server)**:
+   ```bash
+   node server.js
+   ```
+   Runs on `http://localhost:3000`.
+
+2. **Start the Frontend (Map Visualization)**:
+   ```bash
+   node map_server.js
+   ```
+   Runs on `http://localhost:3005`.
+
+Then open [http://localhost:3005](http://localhost:3005) in your browser.
+
+### Features
+- Interactive map with route visualization
+- Color-coded groups
+- Side menu to toggle group visibility
+- "Load & Optimize" button to trigger the solver
+
 ## License
 
 Same as parent project.

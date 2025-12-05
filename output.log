@@ -1,0 +1,952 @@
+=== Ratham VRP: Real Data Run (JavaScript) ===
+
+Total Locations: 67
+Fetching Matrix from OSRM...
+Matrix Shape: 67 x 67
+Applying Floyd-Warshall normalization...
+Floyd-Warshall Results:
+  Improved pairs: 1561 out of 4422
+  Total distance improvement: 1134826 meters
+  Average improvement per improved pair: 727 meters
+
+Running Pre-processor (Farthest Female First)...
+
+Generated 32 Routing Nodes:
+  [GROUP] Group_RR121: [RR170, RR167, RR145, RR121] (Demand: 4)
+  [GROUP] Group_RR161: [RR133, RR164, RR155, RR161] (Demand: 4)
+  [GROUP] Group_RR007: [RR135, RR166, RR007, RR169] (Demand: 4)
+  [GROUP] Group_RR109: [RR110, RR160, RR113, RR109] (Demand: 4)
+  [GROUP] Group_RR004: [RR152, RR076, RR171, RR004] (Demand: 4)
+  [GROUP] Group_RR154: [RR141, RR132, RR157, RR154] (Demand: 4)
+  [GROUP] Group_RR008: [RR073, RR131, RR075, RR008] (Demand: 4)
+  [GROUP] Group_RR120: [RR138, RR036, RR120] (Demand: 3)
+  [GROUP] Group_RR143: [RR128, RR159, RR143] (Demand: 3)
+  [GROUP] Group_RR071: [RR123, RR071, RR070] (Demand: 3)
+  [GROUP] Group_RR009: [RR009, RR150] (Demand: 2)
+  [GROUP] Group_RR006: [RR010, RR006] (Demand: 2)
+  [GROUP] Group_RR032: [RR126, RR032] (Demand: 2)
+  [GUARDED] GuardedGroup_RR127: [RR127, RR134, RR013] (Demand: 4)
+  [GUARDED] GuardedGroup_RR129: [RR129, RR012, RR156] (Demand: 4)
+  [GUARDED] GuardedGroup_RR025: [RR025, RR021] (Demand: 3)
+
+Summary: 13 Groups (with Male), 3 Guarded Groups, 15 Single Males
+Attempting to solve with cuOpt Server...
+ConstraintBuilder: timeMatrix size: 67x67
+
+DEBUG: Generating order_vehicle_match for 16 groups.
+DEBUG: Adjusted Fleet Size: 40
+DEBUG: Generated 51 constraints.
+Sending request to cuOpt Server...
+Async Response Received: {
+  "reqId": "1b87014d-8889-4b4e-8e02-ace75051ed43"
+}
+Request queued with ID: 1b87014d-8889-4b4e-8e02-ace75051ed43. Polling...
+
+❌ Error or Invalid Response:
+{
+  "response": {
+    "solver_infeasible_response": {
+      "status": 1,
+      "num_vehicles": 34,
+      "solution_cost": 778312.201210022,
+      "objective_values": {
+        "cost": 778312.201210022
+      },
+      "vehicle_data": {
+        "Veh_0": {
+          "task_id": [
+            "Depot",
+            "36",
+            "19",
+            "Depot"
+          ],
+          "arrival_stamp": [
+            0,
+            236.10000610351562,
+            361.4000062942505,
+            608.8000078201294
+          ],
+          "type": [
+            "Depot",
+            "Delivery",
+            "Delivery",
+            "Depot"
+          ],
+          "route": [
+            0,
+            36,
+            19,
+            0
+          ]
+        },
+        "Veh_1": {
+          "task_id": [
+            "Depot",
+            "59",
+            "60",
+            "Depot"
+          ],
+          "arrival_stamp": [
+            0,
+            517,
+            637,
+            1315.2000122070312
+          ],
+          "type": [
+            "Depot",
+            "Delivery",
+            "Delivery",
+            "Depot"
+          ],
+          "route": [
+            0,
+            59,
+            60,
+            0
+          ]
+        },
+        "Veh_2": {
+          "task_id": [
+            "Depot",
+            "11",
+            "13",
+            "17",
+            "Depot"
+          ],
+          "arrival_stamp": [
+            0,
+            1377.199951171875,
+            1703.7999572753906,
+            2039.199951171875,
+            3666.5999755859375
+          ],
+          "type": [
+            "Depot",
+            "Delivery",
+            "Delivery",
+            "Delivery",
+            "Depot"
+          ],
+          "route": [
+            0,
+            11,
+            13,
+            17,
+            0
+          ]
+        },
+        "Veh_3": {
+          "task_id": [
+            "Depot",
+            "4",
+            "6",
+            "7",
+            "Depot"
+          ],
+          "arrival_stamp": [
+            0,
+            780.4000244140625,
+            1391.1000366210938,
+            1784.9000244140625,
+            3027.5999755859375
+          ],
+          "type": [
+            "Depot",
+            "Delivery",
+            "Delivery",
+            "Delivery",
+            "Depot"
+          ],
+          "route": [
+            0,
+            4,
+            6,
+            7,
+            0
+          ]
+        },
+        "Veh_4": {
+          "task_id": [
+            "Depot",
+            "42",
+            "55",
+            "56",
+            "Depot"
+          ],
+          "arrival_stamp": [
+            0,
+            727.2000122070312,
+            1094.000015258789,
+            1613.6000213623047,
+            2921.199996948242
+          ],
+          "type": [
+            "Depot",
+            "Delivery",
+            "Delivery",
+            "Delivery",
+            "Depot"
+          ],
+          "route": [
+            0,
+            42,
+            55,
+            56,
+            0
+          ]
+        },
+        "Veh_5": {
+          "task_id": [
+            "Depot",
+            "33",
+            "31",
+            "Depot"
+          ],
+          "arrival_stamp": [
+            0,
+            499.3999938964844,
+            952.6999816894531,
+            1652.1999816894531
+          ],
+          "type": [
+            "Depot",
+            "Delivery",
+            "Delivery",
+            "Depot"
+          ],
+          "route": [
+            0,
+            33,
+            31,
+            0
+          ]
+        },
+        "Veh_6": {
+          "task_id": [
+            "Depot",
+            "37",
+            "22",
+            "Depot"
+          ],
+          "arrival_stamp": [
+            0,
+            368.20001220703125,
+            733.6000061035156,
+            1255.5
+          ],
+          "type": [
+            "Depot",
+            "Delivery",
+            "Delivery",
+            "Depot"
+          ],
+          "route": [
+            0,
+            37,
+            22,
+            0
+          ]
+        },
+        "Veh_7": {
+          "task_id": [
+            "Depot",
+            "47",
+            "48",
+            "Depot"
+          ],
+          "arrival_stamp": [
+            0,
+            1565.300048828125,
+            1894.800048828125,
+            3572.2000732421875
+          ],
+          "type": [
+            "Depot",
+            "Delivery",
+            "Delivery",
+            "Depot"
+          ],
+          "route": [
+            0,
+            47,
+            48,
+            0
+          ]
+        },
+        "Veh_8": {
+          "task_id": [
+            "Depot",
+            "1",
+            "2",
+            "Depot"
+          ],
+          "arrival_stamp": [
+            0,
+            415,
+            688.3000030517578,
+            1242.6999969482422
+          ],
+          "type": [
+            "Depot",
+            "Delivery",
+            "Delivery",
+            "Depot"
+          ],
+          "route": [
+            0,
+            1,
+            2,
+            0
+          ]
+        },
+        "Veh_9": {
+          "task_id": [
+            "Depot",
+            "24",
+            "25",
+            "39",
+            "40",
+            "Depot"
+          ],
+          "arrival_stamp": [
+            0,
+            1095.300048828125,
+            1712.2000427246094,
+            2316.000030517578,
+            3710.800079345703,
+            6166.500030517578
+          ],
+          "type": [
+            "Depot",
+            "Delivery",
+            "Delivery",
+            "Delivery",
+            "Delivery",
+            "Depot"
+          ],
+          "route": [
+            0,
+            24,
+            25,
+            39,
+            40,
+            0
+          ]
+        },
+        "Veh_10": {
+          "task_id": [
+            "Depot",
+            "50",
+            "51",
+            "52",
+            "Depot"
+          ],
+          "arrival_stamp": [
+            0,
+            1205.9000244140625,
+            1748.0000305175781,
+            1896.4000301361084,
+            3598.0999813079834
+          ],
+          "type": [
+            "Depot",
+            "Delivery",
+            "Delivery",
+            "Delivery",
+            "Depot"
+          ],
+          "route": [
+            0,
+            50,
+            51,
+            52,
+            0
+          ]
+        },
+        "Veh_11": {
+          "task_id": [
+            "Depot",
+            "43",
+            "46",
+            "49",
+            "Depot"
+          ],
+          "arrival_stamp": [
+            0,
+            537,
+            1374.2000122070312,
+            1975.9000244140625,
+            3417.4000244140625
+          ],
+          "type": [
+            "Depot",
+            "Delivery",
+            "Delivery",
+            "Delivery",
+            "Depot"
+          ],
+          "route": [
+            0,
+            43,
+            46,
+            49,
+            0
+          ]
+        },
+        "Veh_12": {
+          "task_id": [
+            "Depot",
+            "23",
+            "26",
+            "Depot"
+          ],
+          "arrival_stamp": [
+            0,
+            1476.4000244140625,
+            2119.800048828125,
+            3906.800048828125
+          ],
+          "type": [
+            "Depot",
+            "Delivery",
+            "Delivery",
+            "Depot"
+          ],
+          "route": [
+            0,
+            23,
+            26,
+            0
+          ]
+        },
+        "Veh_13": {
+          "task_id": [
+            "Depot",
+            "58",
+            "Depot"
+          ],
+          "arrival_stamp": [
+            0,
+            708.2000122070312,
+            1656.9000244140625
+          ],
+          "type": [
+            "Depot",
+            "Delivery",
+            "Depot"
+          ],
+          "route": [
+            0,
+            58,
+            0
+          ]
+        },
+        "Veh_14": {
+          "task_id": [
+            "Depot",
+            "44",
+            "45",
+            "Depot"
+          ],
+          "arrival_stamp": [
+            0,
+            742.9000244140625,
+            947.9000244140625,
+            1815.5
+          ],
+          "type": [
+            "Depot",
+            "Delivery",
+            "Delivery",
+            "Depot"
+          ],
+          "route": [
+            0,
+            44,
+            45,
+            0
+          ]
+        },
+        "Veh_15": {
+          "task_id": [
+            "Depot",
+            "53",
+            "54",
+            "Depot"
+          ],
+          "arrival_stamp": [
+            0,
+            565.2999877929688,
+            870.8999938964844,
+            1828.8999938964844
+          ],
+          "type": [
+            "Depot",
+            "Delivery",
+            "Delivery",
+            "Depot"
+          ],
+          "route": [
+            0,
+            53,
+            54,
+            0
+          ]
+        },
+        "Veh_21": {
+          "task_id": [
+            "Depot",
+            "15",
+            "16",
+            "18",
+            "Depot"
+          ],
+          "arrival_stamp": [
+            0,
+            1336,
+            1725.6000061035156,
+            2406.500030517578,
+            4213.100006103516
+          ],
+          "type": [
+            "Depot",
+            "Delivery",
+            "Delivery",
+            "Delivery",
+            "Depot"
+          ],
+          "route": [
+            0,
+            15,
+            16,
+            18,
+            0
+          ]
+        },
+        "Veh_22": {
+          "task_id": [
+            "Depot",
+            "62",
+            "Depot"
+          ],
+          "arrival_stamp": [
+            0,
+            435.29998779296875,
+            1022.5
+          ],
+          "type": [
+            "Depot",
+            "Delivery",
+            "Depot"
+          ],
+          "route": [
+            0,
+            62,
+            0
+          ]
+        },
+        "Veh_23": {
+          "task_id": [
+            "Depot",
+            "21",
+            "20",
+            "14",
+            "Depot"
+          ],
+          "arrival_stamp": [
+            0,
+            1008.0999755859375,
+            1169.6999740600586,
+            1578.6999740600586,
+            2728.6999740600586
+          ],
+          "type": [
+            "Depot",
+            "Delivery",
+            "Delivery",
+            "Delivery",
+            "Depot"
+          ],
+          "route": [
+            0,
+            21,
+            20,
+            14,
+            0
+          ]
+        },
+        "Veh_24": {
+          "task_id": [
+            "Depot",
+            "27",
+            "Depot"
+          ],
+          "arrival_stamp": [
+            0,
+            309.29998779296875,
+            624.5999908447266
+          ],
+          "type": [
+            "Depot",
+            "Delivery",
+            "Depot"
+          ],
+          "route": [
+            0,
+            27,
+            0
+          ]
+        },
+        "Veh_25": {
+          "task_id": [
+            "Depot",
+            "41",
+            "Depot"
+          ],
+          "arrival_stamp": [
+            0,
+            514.2999877929688,
+            1198.7999877929688
+          ],
+          "type": [
+            "Depot",
+            "Delivery",
+            "Depot"
+          ],
+          "route": [
+            0,
+            41,
+            0
+          ]
+        },
+        "Veh_26": {
+          "task_id": [
+            "Depot",
+            "57",
+            "Depot"
+          ],
+          "arrival_stamp": [
+            0,
+            365,
+            893.3999938964844
+          ],
+          "type": [
+            "Depot",
+            "Delivery",
+            "Depot"
+          ],
+          "route": [
+            0,
+            57,
+            0
+          ]
+        },
+        "Veh_27": {
+          "task_id": [
+            "Depot",
+            "30",
+            "Depot"
+          ],
+          "arrival_stamp": [
+            0,
+            411.20001220703125,
+            971.9000244140625
+          ],
+          "type": [
+            "Depot",
+            "Delivery",
+            "Depot"
+          ],
+          "route": [
+            0,
+            30,
+            0
+          ]
+        },
+        "Veh_28": {
+          "task_id": [
+            "Depot",
+            "64",
+            "65",
+            "66",
+            "Depot"
+          ],
+          "arrival_stamp": [
+            0,
+            880.4000244140625,
+            1000.4000244140625,
+            1451.6000366210938,
+            2590.4000244140625
+          ],
+          "type": [
+            "Depot",
+            "Delivery",
+            "Delivery",
+            "Delivery",
+            "Depot"
+          ],
+          "route": [
+            0,
+            64,
+            65,
+            66,
+            0
+          ]
+        },
+        "Veh_30": {
+          "task_id": [
+            "Depot",
+            "28",
+            "Depot"
+          ],
+          "arrival_stamp": [
+            0,
+            307.1000061035156,
+            706.7000122070312
+          ],
+          "type": [
+            "Depot",
+            "Delivery",
+            "Depot"
+          ],
+          "route": [
+            0,
+            28,
+            0
+          ]
+        },
+        "Veh_31": {
+          "task_id": [
+            "Depot",
+            "9",
+            "Depot"
+          ],
+          "arrival_stamp": [
+            0,
+            673.0999755859375,
+            1347.5999755859375
+          ],
+          "type": [
+            "Depot",
+            "Delivery",
+            "Depot"
+          ],
+          "route": [
+            0,
+            9,
+            0
+          ]
+        },
+        "Veh_32": {
+          "task_id": [
+            "Depot",
+            "12",
+            "10",
+            "Depot"
+          ],
+          "arrival_stamp": [
+            0,
+            1449.699951171875,
+            2318.2999267578125,
+            4182.89990234375
+          ],
+          "type": [
+            "Depot",
+            "Delivery",
+            "Delivery",
+            "Depot"
+          ],
+          "route": [
+            0,
+            12,
+            10,
+            0
+          ]
+        },
+        "Veh_33": {
+          "task_id": [
+            "Depot",
+            "0",
+            "Depot"
+          ],
+          "arrival_stamp": [
+            0,
+            0,
+            120
+          ],
+          "type": [
+            "Depot",
+            "Delivery",
+            "Depot"
+          ],
+          "route": [
+            0,
+            0,
+            0
+          ]
+        },
+        "Veh_34": {
+          "task_id": [
+            "Depot",
+            "38",
+            "Depot"
+          ],
+          "arrival_stamp": [
+            0,
+            379.1000061035156,
+            905.3000183105469
+          ],
+          "type": [
+            "Depot",
+            "Delivery",
+            "Depot"
+          ],
+          "route": [
+            0,
+            38,
+            0
+          ]
+        },
+        "Veh_35": {
+          "task_id": [
+            "Depot",
+            "5",
+            "3",
+            "Depot"
+          ],
+          "arrival_stamp": [
+            0,
+            895.2999877929688,
+            1273.6999816894531,
+            2353.999969482422
+          ],
+          "type": [
+            "Depot",
+            "Delivery",
+            "Delivery",
+            "Depot"
+          ],
+          "route": [
+            0,
+            5,
+            3,
+            0
+          ]
+        },
+        "Veh_36": {
+          "task_id": [
+            "Depot",
+            "8",
+            "Depot"
+          ],
+          "arrival_stamp": [
+            0,
+            1281.300048828125,
+            2581.7000732421875
+          ],
+          "type": [
+            "Depot",
+            "Delivery",
+            "Depot"
+          ],
+          "route": [
+            0,
+            8,
+            0
+          ]
+        },
+        "Veh_37": {
+          "task_id": [
+            "Depot",
+            "34",
+            "35",
+            "32",
+            "Depot"
+          ],
+          "arrival_stamp": [
+            0,
+            562.7000122070312,
+            686.3000121116638,
+            864.3000121116638,
+            1552.000024318695
+          ],
+          "type": [
+            "Depot",
+            "Delivery",
+            "Delivery",
+            "Delivery",
+            "Depot"
+          ],
+          "route": [
+            0,
+            34,
+            35,
+            32,
+            0
+          ]
+        },
+        "Veh_38": {
+          "task_id": [
+            "Depot",
+            "29",
+            "Depot"
+          ],
+          "arrival_stamp": [
+            0,
+            295.5,
+            673.7999877929688
+          ],
+          "type": [
+            "Depot",
+            "Delivery",
+            "Depot"
+          ],
+          "route": [
+            0,
+            29,
+            0
+          ]
+        },
+        "Veh_39": {
+          "task_id": [
+            "Depot",
+            "61",
+            "63",
+            "Depot"
+          ],
+          "arrival_stamp": [
+            0,
+            530.2000122070312,
+            1095.1000061035156,
+            2127.199981689453
+          ],
+          "type": [
+            "Depot",
+            "Delivery",
+            "Delivery",
+            "Depot"
+          ],
+          "route": [
+            0,
+            61,
+            63,
+            0
+          ]
+        }
+      },
+      "initial_solutions": [],
+      "dropped_tasks": {
+        "task_id": [],
+        "task_index": []
+      }
+    },
+    "total_solve_time": 20.14705228805542
+  },
+  "reqId": "1b87014d-8889-4b4e-8e02-ace75051ed43",
+  "warnings": [
+    "Client version missing or not the current format. Please upgrade your cuOpt client to '25.12', or set the client version to 'custom' if this is a custom client."
+  ],
+  "notes": [
+    "Feasible solutions could not be found. Closest infeasible solution is found with infeasibilities in:\n\tVehicle order match dimension\n"
+  ]
+}

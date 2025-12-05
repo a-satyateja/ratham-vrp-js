@@ -1,7 +1,7 @@
 {
   "summary": {
-    "total_cost": 656746.6994628906,
-    "vehicles_used": 25,
+    "total_cost": 888859.2009658813,
+    "vehicles_used": 29,
     "total_employees": 66,
     "office_location": {
       "lat": 13.045063,
@@ -11,1482 +11,1434 @@
   "vehicles": [
     {
       "vehicle_id": "Veh_0",
-      "route_summary": "OFFICE -> Group_RR020 -> OFFICE",
+      "route_summary": "Office -> RR166 -> RR007 -> RR169 -> Office",
       "employees": [
         {
-          "id": "RR156",
+          "description": "Pickup #1",
+          "direct_km": 18.06,
+          "employee_id": "RR166",
+          "extra_percentage": 0,
           "gender": "Female",
-          "location": {
-            "lat": 12.9099245,
-            "lon": 77.5155384
-          },
-          "direct_distance_from_office_km": 24.123,
-          "planned_route_distance_km": 24.123,
-          "extra_distance_travelled_km": 0,
-          "percent_extra_distance": 0,
-          "group": "Group_RR020",
-          "service_time": 120
+          "pickup_sequence": 1,
+          "trip_km": 18.06
         },
         {
-          "id": "RR020",
+          "description": "Pickup #2",
+          "direct_km": 19.53,
+          "employee_id": "RR007",
+          "extra_percentage": 2.99,
           "gender": "Male",
-          "location": {
-            "lat": 12.9617905,
-            "lon": 77.5222874999999
-          },
-          "direct_distance_from_office_km": 20.734,
-          "planned_route_distance_km": 31.543,
-          "extra_distance_travelled_km": 10.809,
-          "percent_extra_distance": 52.13,
-          "group": "Group_RR020",
-          "service_time": 120
+          "pickup_sequence": 2,
+          "trip_km": 20.12
+        },
+        {
+          "description": "Pickup #3",
+          "direct_km": 19.78,
+          "employee_id": "RR169",
+          "extra_percentage": 12.08,
+          "gender": "Female",
+          "pickup_sequence": 3,
+          "trip_km": 22.17
         }
       ],
       "legs": [
         {
-          "from": "OFFICE",
-          "to": "Group_RR020",
-          "distance": 24123,
-          "time": 2895
+          "from": "Office",
+          "to": "RR166",
+          "distance": 18062,
+          "time": 1377
         },
         {
-          "from": "Group_RR020",
-          "to": "OFFICE",
-          "distance": 19229,
-          "time": 2307
+          "from": "RR166",
+          "to": "RR007",
+          "distance": 2054,
+          "time": 207
+        },
+        {
+          "from": "RR007",
+          "to": "RR169",
+          "distance": 2054,
+          "time": 215
+        },
+        {
+          "from": "RR169",
+          "to": "Office",
+          "distance": 19699,
+          "time": 1507
         }
       ],
-      "total_distance": 43352
+      "total_distance": 41869
     },
     {
       "vehicle_id": "Veh_1",
-      "route_summary": "OFFICE -> Group_RR108 -> OFFICE",
+      "route_summary": "Office -> RR164 -> RR155 -> RR122 -> Office -> Office",
       "employees": [
         {
-          "id": "RR021",
+          "description": "Pickup #1",
+          "direct_km": 6.73,
+          "employee_id": "RR164",
+          "extra_percentage": 0,
           "gender": "Female",
-          "location": {
-            "lat": 13.0322434,
-            "lon": 77.46468
-          },
-          "direct_distance_from_office_km": 23.913,
-          "planned_route_distance_km": 23.913,
-          "extra_distance_travelled_km": 0,
-          "percent_extra_distance": 0,
-          "group": "Group_RR108",
-          "service_time": 120
+          "pickup_sequence": 1,
+          "trip_km": 6.73
         },
         {
-          "id": "RR108",
+          "description": "Pickup #2",
+          "direct_km": 6.73,
+          "employee_id": "RR155",
+          "extra_percentage": 0,
+          "gender": "Female",
+          "pickup_sequence": 2,
+          "trip_km": 6.73
+        },
+        {
+          "description": "Pickup #3",
+          "direct_km": 11.21,
+          "employee_id": "RR122",
+          "extra_percentage": 6.38,
           "gender": "Male",
-          "location": {
-            "lat": 12.9785139,
-            "lon": 77.5085597
-          },
-          "direct_distance_from_office_km": 18.75,
-          "planned_route_distance_km": 35.447,
-          "extra_distance_travelled_km": 16.698,
-          "percent_extra_distance": 89.05,
-          "group": "Group_RR108",
-          "service_time": 120
+          "pickup_sequence": 3,
+          "trip_km": 11.92
         }
       ],
       "legs": [
         {
-          "from": "OFFICE",
-          "to": "Group_RR108",
-          "distance": 23913,
-          "time": 2870
+          "from": "Office",
+          "to": "RR164",
+          "distance": 6733,
+          "time": 517
         },
         {
-          "from": "Group_RR108",
-          "to": "OFFICE",
-          "distance": 18066,
-          "time": 2168
+          "from": "RR164",
+          "to": "RR155",
+          "distance": 0,
+          "time": 0
+        },
+        {
+          "from": "RR155",
+          "to": "RR122",
+          "distance": 5191,
+          "time": 461
+        },
+        {
+          "from": "RR122",
+          "to": "Office",
+          "distance": 11636,
+          "time": 912
+        },
+        {
+          "from": "Office",
+          "to": "Office",
+          "distance": 0,
+          "time": 0
         }
       ],
-      "total_distance": 41978
+      "total_distance": 23560
     },
     {
       "vehicle_id": "Veh_2",
-      "route_summary": "OFFICE -> Group_RR071 -> OFFICE",
+      "route_summary": "Office -> RR170 -> RR167 -> RR143 -> RR108 -> Office",
       "employees": [
         {
-          "id": "RR070",
+          "description": "Pickup #1",
+          "direct_km": 2.72,
+          "employee_id": "RR170",
+          "extra_percentage": 0,
           "gender": "Female",
-          "location": {
-            "lat": 12.91719,
-            "lon": 77.65375
-          },
-          "direct_distance_from_office_km": 21.298,
-          "planned_route_distance_km": 21.298,
-          "extra_distance_travelled_km": 0,
-          "percent_extra_distance": 0,
-          "group": "Group_RR071",
-          "service_time": 120
+          "pickup_sequence": 1,
+          "trip_km": 2.72
         },
         {
-          "id": "RR071",
+          "description": "Pickup #2",
+          "direct_km": 2.75,
+          "employee_id": "RR167",
+          "extra_percentage": 0,
+          "gender": "Female",
+          "pickup_sequence": 2,
+          "trip_km": 2.75
+        },
+        {
+          "description": "Pickup #3",
+          "direct_km": 6.96,
+          "employee_id": "RR143",
+          "extra_percentage": 15.07,
           "gender": "Male",
-          "location": {
-            "lat": 12.9199706,
-            "lon": 77.6150577
-          },
-          "direct_distance_from_office_km": 19.596,
-          "planned_route_distance_km": 27.637,
-          "extra_distance_travelled_km": 8.041,
-          "percent_extra_distance": 41.03,
-          "group": "Group_RR071",
-          "service_time": 120
+          "pickup_sequence": 3,
+          "trip_km": 8.01
+        },
+        {
+          "description": "Pickup #4",
+          "direct_km": 18.75,
+          "employee_id": "RR108",
+          "extra_percentage": 10.47,
+          "gender": "Male",
+          "pickup_sequence": 4,
+          "trip_km": 20.71
         }
       ],
       "legs": [
         {
-          "from": "OFFICE",
-          "to": "Group_RR071",
-          "distance": 21298,
-          "time": 2556
+          "from": "Office",
+          "to": "RR170",
+          "distance": 2717,
+          "time": 236
         },
         {
-          "from": "Group_RR071",
-          "to": "OFFICE",
-          "distance": 16806,
-          "time": 2017
+          "from": "RR170",
+          "to": "RR167",
+          "distance": 37,
+          "time": 5
+        },
+        {
+          "from": "RR167",
+          "to": "RR143",
+          "distance": 5257,
+          "time": 520
+        },
+        {
+          "from": "RR143",
+          "to": "RR108",
+          "distance": 12704,
+          "time": 967
+        },
+        {
+          "from": "RR108",
+          "to": "Office",
+          "distance": 18066,
+          "time": 1519
         }
       ],
-      "total_distance": 38105
+      "total_distance": 38779
     },
     {
       "vehicle_id": "Veh_3",
-      "route_summary": "OFFICE -> Group_RR032 -> OFFICE",
+      "route_summary": "Office -> RR171 -> RR150 -> RR009 -> Office",
       "employees": [
         {
-          "id": "RR126",
+          "description": "Pickup #1",
+          "direct_km": 12.64,
+          "employee_id": "RR171",
+          "extra_percentage": 0,
           "gender": "Female",
-          "location": {
-            "lat": 12.911402,
-            "lon": 77.5623316
-          },
-          "direct_distance_from_office_km": 20.363,
-          "planned_route_distance_km": 20.363,
-          "extra_distance_travelled_km": 0,
-          "percent_extra_distance": 0,
-          "group": "Group_RR032",
-          "service_time": 120
+          "pickup_sequence": 1,
+          "trip_km": 12.64
         },
         {
-          "id": "RR032",
+          "description": "Pickup #2",
+          "direct_km": 18.88,
+          "employee_id": "RR150",
+          "extra_percentage": 3.32,
+          "gender": "Female",
+          "pickup_sequence": 2,
+          "trip_km": 19.51
+        },
+        {
+          "description": "Pickup #3",
+          "direct_km": 18.72,
+          "employee_id": "RR009",
+          "extra_percentage": 5.28,
           "gender": "Male",
-          "location": {
-            "lat": 12.888442,
-            "lon": 77.592306
-          },
-          "direct_distance_from_office_km": 22.772,
-          "planned_route_distance_km": 26.47,
-          "extra_distance_travelled_km": 3.698,
-          "percent_extra_distance": 16.24,
-          "group": "Group_RR032",
-          "service_time": 120
+          "pickup_sequence": 3,
+          "trip_km": 19.7
         }
       ],
       "legs": [
         {
-          "from": "OFFICE",
-          "to": "Group_RR032",
-          "distance": 20363,
-          "time": 2444
+          "from": "Office",
+          "to": "RR171",
+          "distance": 12644,
+          "time": 1141
         },
         {
-          "from": "Group_RR032",
-          "to": "OFFICE",
-          "distance": 21510,
-          "time": 2581
+          "from": "RR171",
+          "to": "RR150",
+          "distance": 6868,
+          "time": 698
+        },
+        {
+          "from": "RR150",
+          "to": "RR009",
+          "distance": 192,
+          "time": 28
+        },
+        {
+          "from": "RR009",
+          "to": "Office",
+          "distance": 19010,
+          "time": 1582
         }
       ],
-      "total_distance": 41873
+      "total_distance": 38714
     },
     {
       "vehicle_id": "Veh_4",
-      "route_summary": "OFFICE -> Group_RR007 -> OFFICE",
+      "route_summary": "Office -> RR152 -> RR076 -> RR004 -> Office",
       "employees": [
         {
-          "id": "RR166",
+          "description": "Pickup #1",
+          "direct_km": 8.43,
+          "employee_id": "RR152",
+          "extra_percentage": 0,
           "gender": "Female",
-          "location": {
-            "lat": 12.9789584,
-            "lon": 77.5167599
-          },
-          "direct_distance_from_office_km": 18.062,
-          "planned_route_distance_km": 18.062,
-          "extra_distance_travelled_km": 0,
-          "percent_extra_distance": 0,
-          "group": "Group_RR007",
-          "service_time": 120
+          "pickup_sequence": 1,
+          "trip_km": 8.43
         },
         {
-          "id": "RR169",
+          "description": "Pickup #2",
+          "direct_km": 10.02,
+          "employee_id": "RR076",
+          "extra_percentage": 10.78,
           "gender": "Female",
-          "location": {
-            "lat": 12.9631595770108,
-            "lon": 77.5154025405808
-          },
-          "direct_distance_from_office_km": 19.781,
-          "planned_route_distance_km": 20.361,
-          "extra_distance_travelled_km": 0.58,
-          "percent_extra_distance": 2.93,
-          "group": "Group_RR007",
-          "service_time": 120
+          "pickup_sequence": 2,
+          "trip_km": 11.1
         },
         {
-          "id": "RR007",
+          "description": "Pickup #3",
+          "direct_km": 15.35,
+          "employee_id": "RR004",
+          "extra_percentage": 20.86,
           "gender": "Male",
-          "location": {
-            "lat": 12.9719936,
-            "lon": 77.5043809
-          },
-          "direct_distance_from_office_km": 19.532,
-          "planned_route_distance_km": 22.466,
-          "extra_distance_travelled_km": 2.934,
-          "percent_extra_distance": 15.02,
-          "group": "Group_RR007",
-          "service_time": 120
+          "pickup_sequence": 3,
+          "trip_km": 18.55
         }
       ],
       "legs": [
         {
-          "from": "OFFICE",
-          "to": "Group_RR007",
-          "distance": 18062,
-          "time": 2167
+          "from": "Office",
+          "to": "RR152",
+          "distance": 8432,
+          "time": 727
         },
         {
-          "from": "Group_RR007",
-          "to": "OFFICE",
-          "distance": 19415,
-          "time": 2330
+          "from": "RR152",
+          "to": "RR076",
+          "distance": 2669,
+          "time": 247
+        },
+        {
+          "from": "RR076",
+          "to": "RR004",
+          "distance": 7446,
+          "time": 578
+        },
+        {
+          "from": "RR004",
+          "to": "Office",
+          "distance": 15655,
+          "time": 1280
         }
       ],
-      "total_distance": 37476
+      "total_distance": 34203
     },
     {
       "vehicle_id": "Veh_5",
-      "route_summary": "OFFICE -> Group_RR009 -> OFFICE",
+      "route_summary": "Office -> RR135 -> RR001 -> RR020 -> Office",
       "employees": [
         {
-          "id": "RR150",
+          "description": "Pickup #1",
+          "direct_km": 15.83,
+          "employee_id": "RR135",
+          "extra_percentage": 0,
           "gender": "Female",
-          "location": {
-            "lat": 13.004104,
-            "lon": 77.753713
-          },
-          "direct_distance_from_office_km": 18.884,
-          "planned_route_distance_km": 18.884,
-          "extra_distance_travelled_km": 0,
-          "percent_extra_distance": 0,
-          "group": "Group_RR009",
-          "service_time": 120
+          "pickup_sequence": 1,
+          "trip_km": 15.83
         },
         {
-          "id": "RR009",
+          "description": "Pickup #2",
+          "direct_km": 17.58,
+          "employee_id": "RR001",
+          "extra_percentage": 0.92,
           "gender": "Male",
-          "location": {
-            "lat": 13.0051472328508,
-            "lon": 77.7528356574475
-          },
-          "direct_distance_from_office_km": 18.716,
-          "planned_route_distance_km": 19.076,
-          "extra_distance_travelled_km": 0.36,
-          "percent_extra_distance": 1.93,
-          "group": "Group_RR009",
-          "service_time": 120
+          "pickup_sequence": 2,
+          "trip_km": 17.74
+        },
+        {
+          "description": "Pickup #3",
+          "direct_km": 20.73,
+          "employee_id": "RR020",
+          "extra_percentage": 1.19,
+          "gender": "Male",
+          "pickup_sequence": 3,
+          "trip_km": 20.98
         }
       ],
       "legs": [
         {
-          "from": "OFFICE",
-          "to": "Group_RR009",
-          "distance": 18884,
-          "time": 2266
+          "from": "Office",
+          "to": "RR135",
+          "distance": 15827,
+          "time": 1187
         },
         {
-          "from": "Group_RR009",
-          "to": "OFFICE",
-          "distance": 19010,
-          "time": 2281
+          "from": "RR135",
+          "to": "RR001",
+          "distance": 1910,
+          "time": 220
+        },
+        {
+          "from": "RR001",
+          "to": "RR020",
+          "distance": 3244,
+          "time": 270
+        },
+        {
+          "from": "RR020",
+          "to": "Office",
+          "distance": 19229,
+          "time": 1365
         }
       ],
-      "total_distance": 37894
+      "total_distance": 40209
     },
     {
       "vehicle_id": "Veh_6",
-      "route_summary": "OFFICE -> Group_RR120 -> OFFICE",
+      "route_summary": "Office -> RR132 -> RR008 -> RR153 -> Office",
       "employees": [
         {
-          "id": "RR138",
+          "description": "Pickup #1",
+          "direct_km": 6.16,
+          "employee_id": "RR132",
+          "extra_percentage": 0,
           "gender": "Female",
-          "location": {
-            "lat": 12.94706,
-            "lon": 77.70778
-          },
-          "direct_distance_from_office_km": 17.771,
-          "planned_route_distance_km": 17.771,
-          "extra_distance_travelled_km": 0,
-          "percent_extra_distance": 0,
-          "group": "Group_RR120",
-          "service_time": 120
+          "pickup_sequence": 1,
+          "trip_km": 6.16
         },
         {
-          "id": "RR036",
-          "gender": "Female",
-          "location": {
-            "lat": 12.9523482,
-            "lon": 77.7010268
-          },
-          "direct_distance_from_office_km": 18.059,
-          "planned_route_distance_km": 19.284,
-          "extra_distance_travelled_km": 1.225,
-          "percent_extra_distance": 6.78,
-          "group": "Group_RR120",
-          "service_time": 120
-        },
-        {
-          "id": "RR120",
+          "description": "Pickup #2",
+          "direct_km": 7.41,
+          "employee_id": "RR008",
+          "extra_percentage": 13.7,
           "gender": "Male",
-          "location": {
-            "lat": 12.961084,
-            "lon": 77.700257
-          },
-          "direct_distance_from_office_km": 18.446,
-          "planned_route_distance_km": 22.097,
-          "extra_distance_travelled_km": 3.651,
-          "percent_extra_distance": 19.79,
-          "group": "Group_RR120",
-          "service_time": 120
+          "pickup_sequence": 2,
+          "trip_km": 8.43
+        },
+        {
+          "description": "Pickup #3",
+          "direct_km": 15.6,
+          "employee_id": "RR153",
+          "extra_percentage": 26.98,
+          "gender": "Male",
+          "pickup_sequence": 3,
+          "trip_km": 19.8
         }
       ],
       "legs": [
         {
-          "from": "OFFICE",
-          "to": "Group_RR120",
-          "distance": 17771,
-          "time": 2133
+          "from": "Office",
+          "to": "RR132",
+          "distance": 6162,
+          "time": 499
         },
         {
-          "from": "Group_RR120",
-          "to": "OFFICE",
-          "distance": 15361,
-          "time": 1843
+          "from": "RR132",
+          "to": "RR008",
+          "distance": 2264,
+          "time": 192
+        },
+        {
+          "from": "RR008",
+          "to": "RR153",
+          "distance": 11379,
+          "time": 848
+        },
+        {
+          "from": "RR153",
+          "to": "Office",
+          "distance": 15573,
+          "time": 1339
         }
       ],
-      "total_distance": 33133
+      "total_distance": 35377
     },
     {
       "vehicle_id": "Veh_7",
-      "route_summary": "OFFICE -> Group_RR001 -> OFFICE",
+      "route_summary": "Office -> RR141 -> RR003 -> Office",
       "employees": [
         {
-          "id": "RR135",
+          "description": "Pickup #1",
+          "direct_km": 4.97,
+          "employee_id": "RR141",
+          "extra_percentage": 0,
           "gender": "Female",
-          "location": {
-            "lat": 12.9762136,
-            "lon": 77.55436
-          },
-          "direct_distance_from_office_km": 15.827,
-          "planned_route_distance_km": 15.827,
-          "extra_distance_travelled_km": 0,
-          "percent_extra_distance": 0,
-          "group": "Group_RR001",
-          "service_time": 120
+          "pickup_sequence": 1,
+          "trip_km": 4.97
         },
         {
-          "id": "RR001",
+          "description": "Pickup #2",
+          "direct_km": 7.6,
+          "employee_id": "RR003",
+          "extra_percentage": 0,
           "gender": "Male",
-          "location": {
-            "lat": 12.9651494750095,
-            "lon": 77.5443840257935
-          },
-          "direct_distance_from_office_km": 17.575,
-          "planned_route_distance_km": 17.736,
-          "extra_distance_travelled_km": 0.161,
-          "percent_extra_distance": 0.92,
-          "group": "Group_RR001",
-          "service_time": 120
+          "pickup_sequence": 2,
+          "trip_km": 7.6
         }
       ],
       "legs": [
         {
-          "from": "OFFICE",
-          "to": "Group_RR001",
-          "distance": 15827,
-          "time": 1899
+          "from": "Office",
+          "to": "RR141",
+          "distance": 4970,
+          "time": 411
         },
         {
-          "from": "Group_RR001",
-          "to": "OFFICE",
-          "distance": 16081,
-          "time": 1930
+          "from": "RR141",
+          "to": "RR003",
+          "distance": 2626,
+          "time": 228
+        },
+        {
+          "from": "RR003",
+          "to": "Office",
+          "distance": 7376,
+          "time": 564
         }
       ],
-      "total_distance": 31908
+      "total_distance": 14971
     },
     {
       "vehicle_id": "Veh_8",
-      "route_summary": "OFFICE -> Group_RR109 -> OFFICE",
+      "route_summary": "Office -> RR006 -> RR036 -> RR120 -> Office",
       "employees": [
         {
-          "id": "RR160",
-          "gender": "Female",
-          "location": {
-            "lat": 13.079793,
-            "lon": 77.539245
-          },
-          "direct_distance_from_office_km": 12.175,
-          "planned_route_distance_km": 12.175,
-          "extra_distance_travelled_km": 0,
-          "percent_extra_distance": 0,
-          "group": "Group_RR109",
-          "service_time": 120
-        },
-        {
-          "id": "RR113",
-          "gender": "Female",
-          "location": {
-            "lat": 13.0796352,
-            "lon": 77.5251316
-          },
-          "direct_distance_from_office_km": 14.114,
-          "planned_route_distance_km": 14.395,
-          "extra_distance_travelled_km": 0.281,
-          "percent_extra_distance": 1.99,
-          "group": "Group_RR109",
-          "service_time": 120
-        },
-        {
-          "id": "RR109",
+          "description": "Pickup #1",
+          "direct_km": 6.43,
+          "employee_id": "RR006",
+          "extra_percentage": 0,
           "gender": "Male",
-          "location": {
-            "lat": 13.0793675672293,
-            "lon": 77.5061745196685
-          },
-          "direct_distance_from_office_km": 15.914,
-          "planned_route_distance_km": 17.228,
-          "extra_distance_travelled_km": 1.313,
-          "percent_extra_distance": 8.25,
-          "group": "Group_RR109",
-          "service_time": 120
+          "pickup_sequence": 1,
+          "trip_km": 6.43
+        },
+        {
+          "description": "Pickup #2",
+          "direct_km": 18.06,
+          "employee_id": "RR036",
+          "extra_percentage": 8.04,
+          "gender": "Female",
+          "pickup_sequence": 2,
+          "trip_km": 19.51
+        },
+        {
+          "description": "Pickup #3",
+          "direct_km": 18.45,
+          "employee_id": "RR120",
+          "extra_percentage": 21.02,
+          "gender": "Male",
+          "pickup_sequence": 3,
+          "trip_km": 22.32
         }
       ],
       "legs": [
         {
-          "from": "OFFICE",
-          "to": "Group_RR109",
-          "distance": 12175,
-          "time": 1461
+          "from": "Office",
+          "to": "RR006",
+          "distance": 6435,
+          "time": 537
         },
         {
-          "from": "Group_RR109",
-          "to": "OFFICE",
-          "distance": 15255,
-          "time": 1831
+          "from": "RR006",
+          "to": "RR036",
+          "distance": 13076,
+          "time": 967
+        },
+        {
+          "from": "RR036",
+          "to": "RR120",
+          "distance": 2813,
+          "time": 299
+        },
+        {
+          "from": "RR120",
+          "to": "Office",
+          "distance": 15361,
+          "time": 1322
         }
       ],
-      "total_distance": 27430
+      "total_distance": 37685
     },
     {
       "vehicle_id": "Veh_9",
-      "route_summary": "OFFICE -> Group_RR003 -> OFFICE",
+      "route_summary": "Office -> RR109 -> RR113 -> Office",
       "employees": [
         {
-          "id": "RR123",
-          "gender": "Female",
-          "location": {
-            "lat": 12.9555939981961,
-            "lon": 77.6140363700687
-          },
-          "direct_distance_from_office_km": 13.857,
-          "planned_route_distance_km": 13.857,
-          "extra_distance_travelled_km": 0,
-          "percent_extra_distance": 0,
-          "group": "Group_RR003",
-          "service_time": 120
+          "description": "Pickup #1",
+          "direct_km": 15.91,
+          "employee_id": "RR109",
+          "extra_percentage": 0,
+          "gender": "Male",
+          "pickup_sequence": 1,
+          "trip_km": 15.91
         },
         {
-          "id": "RR003",
-          "gender": "Male",
-          "location": {
-            "lat": 12.999416,
-            "lon": 77.618177
-          },
-          "direct_distance_from_office_km": 7.596,
-          "planned_route_distance_km": 20.01,
-          "extra_distance_travelled_km": 12.414,
-          "percent_extra_distance": 163.43,
-          "group": "Group_RR003",
-          "service_time": 120
+          "description": "Pickup #2",
+          "direct_km": 14.11,
+          "employee_id": "RR113",
+          "extra_percentage": 32.83,
+          "gender": "Female",
+          "pickup_sequence": 2,
+          "trip_km": 18.75
         }
       ],
       "legs": [
         {
-          "from": "OFFICE",
-          "to": "Group_RR003",
-          "distance": 13857,
-          "time": 1663
+          "from": "Office",
+          "to": "RR109",
+          "distance": 15914,
+          "time": 1281
         },
         {
-          "from": "Group_RR003",
-          "to": "OFFICE",
-          "distance": 7376,
-          "time": 885
+          "from": "RR109",
+          "to": "RR113",
+          "distance": 2832,
+          "time": 279
+        },
+        {
+          "from": "RR113",
+          "to": "Office",
+          "distance": 13455,
+          "time": 1123
         }
       ],
-      "total_distance": 21233
+      "total_distance": 32201
     },
     {
       "vehicle_id": "Veh_10",
-      "route_summary": "OFFICE -> Group_RR004 -> OFFICE",
+      "route_summary": "Office -> RR145 -> RR162 -> Office",
       "employees": [
         {
-          "id": "RR171",
+          "description": "Pickup #1",
+          "direct_km": 3.14,
+          "employee_id": "RR145",
+          "extra_percentage": 0,
           "gender": "Female",
-          "location": {
-            "lat": 13.0294872,
-            "lon": 77.7110044
-          },
-          "direct_distance_from_office_km": 12.644,
-          "planned_route_distance_km": 12.644,
-          "extra_distance_travelled_km": 0,
-          "percent_extra_distance": 0,
-          "group": "Group_RR004",
-          "service_time": 120
+          "pickup_sequence": 1,
+          "trip_km": 3.14
         },
         {
-          "id": "RR004",
+          "description": "Pickup #2",
+          "direct_km": 7.69,
+          "employee_id": "RR162",
+          "extra_percentage": 10.93,
           "gender": "Male",
-          "location": {
-            "lat": 13.000656,
-            "lon": 77.722014
-          },
-          "direct_distance_from_office_km": 15.347,
-          "planned_route_distance_km": 18.688,
-          "extra_distance_travelled_km": 3.341,
-          "percent_extra_distance": 21.77,
-          "group": "Group_RR004",
-          "service_time": 120
+          "pickup_sequence": 2,
+          "trip_km": 8.53
         }
       ],
       "legs": [
         {
-          "from": "OFFICE",
-          "to": "Group_RR004",
-          "distance": 12644,
-          "time": 1517
+          "from": "Office",
+          "to": "RR145",
+          "distance": 3143,
+          "time": 307
         },
         {
-          "from": "Group_RR004",
-          "to": "OFFICE",
-          "distance": 15655,
-          "time": 1879
+          "from": "RR145",
+          "to": "RR162",
+          "distance": 5383,
+          "time": 426
+        },
+        {
+          "from": "RR162",
+          "to": "Office",
+          "distance": 7276,
+          "time": 568
         }
       ],
-      "total_distance": 28298
+      "total_distance": 15802
     },
     {
       "vehicle_id": "Veh_11",
-      "route_summary": "OFFICE -> Group_RR006 -> OFFICE",
+      "route_summary": "Office -> RR110 -> RR158 -> Office",
       "employees": [
         {
-          "id": "RR012",
+          "description": "Pickup #1",
+          "direct_km": 7.72,
+          "employee_id": "RR110",
+          "extra_percentage": 0,
           "gender": "Female",
-          "location": {
-            "lat": 13.0185849,
-            "lon": 77.6668194
-          },
-          "direct_distance_from_office_km": 8.2,
-          "planned_route_distance_km": 8.2,
-          "extra_distance_travelled_km": 0,
-          "percent_extra_distance": 0,
-          "group": "Group_RR006",
-          "service_time": 120
+          "pickup_sequence": 1,
+          "trip_km": 7.72
         },
         {
-          "id": "RR152",
-          "gender": "Female",
-          "location": {
-            "lat": 13.01285,
-            "lon": 77.67355
-          },
-          "direct_distance_from_office_km": 8.432,
-          "planned_route_distance_km": 10.254,
-          "extra_distance_travelled_km": 1.821,
-          "percent_extra_distance": 21.6,
-          "group": "Group_RR006",
-          "service_time": 120
-        },
-        {
-          "id": "RR076",
-          "gender": "Female",
-          "location": {
-            "lat": 13.0238996982855,
-            "lon": 77.6845083944499
-          },
-          "direct_distance_from_office_km": 10.021,
-          "planned_route_distance_km": 12.923,
-          "extra_distance_travelled_km": 2.902,
-          "percent_extra_distance": 28.96,
-          "group": "Group_RR006",
-          "service_time": 120
-        },
-        {
-          "id": "RR006",
+          "description": "Pickup #2",
+          "direct_km": 11.53,
+          "employee_id": "RR158",
+          "extra_percentage": 19.91,
           "gender": "Male",
-          "location": {
-            "lat": 13.008985,
-            "lon": 77.641918
-          },
-          "direct_distance_from_office_km": 6.435,
-          "planned_route_distance_km": 18.594,
-          "extra_distance_travelled_km": 12.159,
-          "percent_extra_distance": 188.95,
-          "group": "Group_RR006",
-          "service_time": 120
+          "pickup_sequence": 2,
+          "trip_km": 13.82
         }
       ],
       "legs": [
         {
-          "from": "OFFICE",
-          "to": "Group_RR006",
-          "distance": 8200,
-          "time": 984
+          "from": "Office",
+          "to": "RR110",
+          "distance": 7724,
+          "time": 780
         },
         {
-          "from": "Group_RR006",
-          "to": "OFFICE",
-          "distance": 5714,
-          "time": 686
+          "from": "RR110",
+          "to": "RR158",
+          "distance": 6098,
+          "time": 441
+        },
+        {
+          "from": "RR158",
+          "to": "Office",
+          "distance": 12218,
+          "time": 925
         }
       ],
-      "total_distance": 13914
+      "total_distance": 26040
     },
     {
       "vehicle_id": "Veh_12",
-      "route_summary": "OFFICE -> Group_RR074 -> OFFICE",
+      "route_summary": "Office -> RR121 -> RR126 -> RR032 -> Office",
       "employees": [
         {
-          "id": "RR134",
-          "gender": "Female",
-          "location": {
-            "lat": 13.05261,
-            "lon": 77.66902
-          },
-          "direct_distance_from_office_km": 8.497,
-          "planned_route_distance_km": 8.497,
-          "extra_distance_travelled_km": 0,
-          "percent_extra_distance": 0,
-          "group": "Group_RR074",
-          "service_time": 120
+          "description": "Pickup #1",
+          "direct_km": 3.15,
+          "employee_id": "RR121",
+          "extra_percentage": 0,
+          "gender": "Male",
+          "pickup_sequence": 1,
+          "trip_km": 3.15
         },
         {
-          "id": "RR074",
+          "description": "Pickup #2",
+          "direct_km": 20.36,
+          "employee_id": "RR126",
+          "extra_percentage": 4.81,
+          "gender": "Female",
+          "pickup_sequence": 2,
+          "trip_km": 21.34
+        },
+        {
+          "description": "Pickup #3",
+          "direct_km": 22.77,
+          "employee_id": "RR032",
+          "extra_percentage": 20.54,
           "gender": "Male",
-          "location": {
-            "lat": 13.0702604,
-            "lon": 77.6278119999999
-          },
-          "direct_distance_from_office_km": 5.121,
-          "planned_route_distance_km": 14.986,
-          "extra_distance_travelled_km": 9.864,
-          "percent_extra_distance": 192.61,
-          "group": "Group_RR074",
-          "service_time": 120
+          "pickup_sequence": 3,
+          "trip_km": 27.45
         }
       ],
       "legs": [
         {
-          "from": "OFFICE",
-          "to": "Group_RR074",
-          "distance": 8497,
-          "time": 1020
+          "from": "Office",
+          "to": "RR121",
+          "distance": 3147,
+          "time": 296
         },
         {
-          "from": "Group_RR074",
-          "to": "OFFICE",
-          "distance": 5408,
-          "time": 649
+          "from": "RR121",
+          "to": "RR126",
+          "distance": 18196,
+          "time": 1326
+        },
+        {
+          "from": "RR126",
+          "to": "RR032",
+          "distance": 6107,
+          "time": 523
+        },
+        {
+          "from": "RR032",
+          "to": "Office",
+          "distance": 21510,
+          "time": 1667
         }
       ],
-      "total_distance": 13905
+      "total_distance": 48960
     },
     {
       "vehicle_id": "Veh_13",
-      "route_summary": "OFFICE -> Group_RR162 -> OFFICE",
+      "route_summary": "Office -> RR137 -> RR123 -> RR071 -> Office",
       "employees": [
         {
-          "id": "RR141",
-          "gender": "Female",
-          "location": {
-            "lat": 13.0115605,
-            "lon": 77.6168982
-          },
-          "direct_distance_from_office_km": 4.97,
-          "planned_route_distance_km": 4.97,
-          "extra_distance_travelled_km": 0,
-          "percent_extra_distance": 0,
-          "group": "Group_RR162",
-          "service_time": 120
-        },
-        {
-          "id": "RR157",
-          "gender": "Female",
-          "location": {
-            "lat": 13.003828,
-            "lon": 77.60314
-          },
-          "direct_distance_from_office_km": 7.895,
-          "planned_route_distance_km": 8.123,
-          "extra_distance_travelled_km": 0.228,
-          "percent_extra_distance": 2.89,
-          "group": "Group_RR162",
-          "service_time": 120
-        },
-        {
-          "id": "RR162",
+          "description": "Pickup #1",
+          "direct_km": 3.96,
+          "employee_id": "RR137",
+          "extra_percentage": 0,
           "gender": "Male",
-          "location": {
-            "lat": 12.998901,
-            "lon": 77.616203
-          },
-          "direct_distance_from_office_km": 7.686,
-          "planned_route_distance_km": 10.199,
-          "extra_distance_travelled_km": 2.514,
-          "percent_extra_distance": 32.7,
-          "group": "Group_RR162",
-          "service_time": 120
+          "pickup_sequence": 1,
+          "trip_km": 3.96
+        },
+        {
+          "description": "Pickup #2",
+          "direct_km": 13.86,
+          "employee_id": "RR123",
+          "extra_percentage": 2.33,
+          "gender": "Female",
+          "pickup_sequence": 2,
+          "trip_km": 14.18
+        },
+        {
+          "description": "Pickup #3",
+          "direct_km": 19.6,
+          "employee_id": "RR071",
+          "extra_percentage": 3.55,
+          "gender": "Male",
+          "pickup_sequence": 3,
+          "trip_km": 20.29
         }
       ],
       "legs": [
         {
-          "from": "OFFICE",
-          "to": "Group_RR162",
-          "distance": 4970,
-          "time": 596
+          "from": "Office",
+          "to": "RR137",
+          "distance": 3964,
+          "time": 379
         },
         {
-          "from": "Group_RR162",
-          "to": "OFFICE",
-          "distance": 7276,
-          "time": 873
+          "from": "RR137",
+          "to": "RR123",
+          "distance": 10215,
+          "time": 857
+        },
+        {
+          "from": "RR123",
+          "to": "RR071",
+          "distance": 6112,
+          "time": 497
+        },
+        {
+          "from": "RR071",
+          "to": "Office",
+          "distance": 16806,
+          "time": 1346
         }
       ],
-      "total_distance": 12246
+      "total_distance": 37098
     },
     {
       "vehicle_id": "Veh_14",
-      "route_summary": "OFFICE -> Group_RR137 -> OFFICE",
+      "route_summary": "Office -> RR157 -> RR154 -> RR140 -> Office",
       "employees": [
         {
-          "id": "RR129",
+          "description": "Pickup #1",
+          "direct_km": 7.89,
+          "employee_id": "RR157",
+          "extra_percentage": 0,
           "gender": "Female",
-          "location": {
-            "lat": 13.0172942,
-            "lon": 77.6660174
-          },
-          "direct_distance_from_office_km": 7.764,
-          "planned_route_distance_km": 7.764,
-          "extra_distance_travelled_km": 0,
-          "percent_extra_distance": 0,
-          "group": "Group_RR137",
-          "service_time": 120
+          "pickup_sequence": 1,
+          "trip_km": 7.89
         },
         {
-          "id": "RR137",
+          "description": "Pickup #2",
+          "direct_km": 13.59,
+          "employee_id": "RR154",
+          "extra_percentage": 13.02,
           "gender": "Male",
-          "location": {
-            "lat": 13.0229168041138,
-            "lon": 77.6238636486232
-          },
-          "direct_distance_from_office_km": 3.964,
-          "planned_route_distance_km": 14.017,
-          "extra_distance_travelled_km": 10.052,
-          "percent_extra_distance": 253.57,
-          "group": "Group_RR137",
-          "service_time": 120
+          "pickup_sequence": 2,
+          "trip_km": 15.36
+        },
+        {
+          "description": "Pickup #3",
+          "direct_km": 13.69,
+          "employee_id": "RR140",
+          "extra_percentage": 14.03,
+          "gender": "Male",
+          "pickup_sequence": 3,
+          "trip_km": 15.61
         }
       ],
       "legs": [
         {
-          "from": "OFFICE",
-          "to": "Group_RR137",
-          "distance": 7764,
-          "time": 932
+          "from": "Office",
+          "to": "RR157",
+          "distance": 7895,
+          "time": 656
         },
         {
-          "from": "Group_RR137",
-          "to": "OFFICE",
-          "distance": 4333,
-          "time": 520
+          "from": "RR157",
+          "to": "RR154",
+          "distance": 7461,
+          "time": 581
+        },
+        {
+          "from": "RR154",
+          "to": "RR140",
+          "distance": 251,
+          "time": 42
+        },
+        {
+          "from": "RR140",
+          "to": "Office",
+          "distance": 13342,
+          "time": 1021
         }
       ],
-      "total_distance": 12097
+      "total_distance": 28949
     },
     {
       "vehicle_id": "Veh_15",
-      "route_summary": "OFFICE -> Group_RR143 -> OFFICE",
+      "route_summary": "Office -> RR159 -> RR124 -> Office",
       "employees": [
         {
-          "id": "RR110",
+          "description": "Pickup #1",
+          "direct_km": 3.92,
+          "employee_id": "RR159",
+          "extra_percentage": 0,
           "gender": "Female",
-          "location": {
-            "lat": 13.0706917,
-            "lon": 77.5692748
-          },
-          "direct_distance_from_office_km": 7.724,
-          "planned_route_distance_km": 7.724,
-          "extra_distance_travelled_km": 0,
-          "percent_extra_distance": 0,
-          "group": "Group_RR143",
-          "service_time": 120
+          "pickup_sequence": 1,
+          "trip_km": 3.92
         },
         {
-          "id": "RR143",
+          "description": "Pickup #2",
+          "direct_km": 11.96,
+          "employee_id": "RR124",
+          "extra_percentage": 2.2,
           "gender": "Male",
-          "location": {
-            "lat": 13.0491681,
-            "lon": 77.5712683
-          },
-          "direct_distance_from_office_km": 6.961,
-          "planned_route_distance_km": 10.9,
-          "extra_distance_travelled_km": 3.939,
-          "percent_extra_distance": 56.58,
-          "group": "Group_RR143",
-          "service_time": 120
+          "pickup_sequence": 2,
+          "trip_km": 12.22
         }
       ],
       "legs": [
         {
-          "from": "OFFICE",
-          "to": "Group_RR143",
-          "distance": 7724,
-          "time": 927
+          "from": "Office",
+          "to": "RR159",
+          "distance": 3917,
+          "time": 536
         },
         {
-          "from": "Group_RR143",
-          "to": "OFFICE",
-          "distance": 6214,
-          "time": 746
+          "from": "RR159",
+          "to": "RR124",
+          "distance": 8302,
+          "time": 624
+        },
+        {
+          "from": "RR124",
+          "to": "Office",
+          "distance": 12816,
+          "time": 960
         }
       ],
-      "total_distance": 13938
+      "total_distance": 25035
     },
     {
       "vehicle_id": "Veh_16",
-      "route_summary": "OFFICE -> Group_RR121 -> OFFICE",
+      "route_summary": "Office -> RR128 -> RR165 -> Office",
       "employees": [
         {
-          "id": "RR025",
+          "description": "Pickup #1",
+          "direct_km": 2.97,
+          "employee_id": "RR128",
+          "extra_percentage": 0,
           "gender": "Female",
-          "location": {
-            "lat": 13.0385245999999,
-            "lon": 77.6613819
-          },
-          "direct_distance_from_office_km": 5.968,
-          "planned_route_distance_km": 5.968,
-          "extra_distance_travelled_km": 0,
-          "percent_extra_distance": 0,
-          "group": "Group_RR121",
-          "service_time": 120
+          "pickup_sequence": 1,
+          "trip_km": 2.97
         },
         {
-          "id": "RR127",
-          "gender": "Female",
-          "location": {
-            "lat": 13.04063,
-            "lon": 77.67245
-          },
-          "direct_distance_from_office_km": 7.633,
-          "planned_route_distance_km": 7.655,
-          "extra_distance_travelled_km": 0.022,
-          "percent_extra_distance": 0.29,
-          "group": "Group_RR121",
-          "service_time": 120
-        },
-        {
-          "id": "RR121",
+          "description": "Pickup #2",
+          "direct_km": 12.81,
+          "employee_id": "RR165",
+          "extra_percentage": 0,
           "gender": "Male",
-          "location": {
-            "lat": 13.0321578,
-            "lon": 77.6173165
-          },
-          "direct_distance_from_office_km": 3.147,
-          "planned_route_distance_km": 15.278,
-          "extra_distance_travelled_km": 12.13,
-          "percent_extra_distance": 385.45,
-          "group": "Group_RR121",
-          "service_time": 120
+          "pickup_sequence": 2,
+          "trip_km": 12.81
         }
       ],
       "legs": [
         {
-          "from": "OFFICE",
-          "to": "Group_RR121",
-          "distance": 5968,
-          "time": 716
+          "from": "Office",
+          "to": "RR128",
+          "distance": 2969,
+          "time": 415
         },
         {
-          "from": "Group_RR121",
-          "to": "OFFICE",
-          "distance": 2583,
-          "time": 310
+          "from": "RR128",
+          "to": "RR165",
+          "distance": 9840,
+          "time": 776
+        },
+        {
+          "from": "RR165",
+          "to": "Office",
+          "distance": 12460,
+          "time": 902
         }
       ],
-      "total_distance": 8551
+      "total_distance": 25269
     },
     {
       "vehicle_id": "Veh_17",
-      "route_summary": "OFFICE -> Group_RR161 -> Male_RR136 -> OFFICE -> OFFICE",
+      "route_summary": "Office -> RR012 -> RR070 -> RR013 -> Office",
       "employees": [
         {
-          "id": "RR164",
+          "description": "Pickup #1",
+          "direct_km": 8.2,
+          "employee_id": "RR012",
+          "extra_percentage": 0,
           "gender": "Female",
-          "location": {
-            "lat": 13.089297,
-            "lon": 77.632139
-          },
-          "direct_distance_from_office_km": 6.733,
-          "planned_route_distance_km": 6.733,
-          "extra_distance_travelled_km": 0,
-          "percent_extra_distance": 0,
-          "group": "Group_RR161",
-          "service_time": 120
+          "pickup_sequence": 1,
+          "trip_km": 8.2
         },
         {
-          "id": "RR155",
+          "description": "Pickup #2",
+          "direct_km": 21.3,
+          "employee_id": "RR070",
+          "extra_percentage": 27.32,
           "gender": "Female",
-          "location": {
-            "lat": 13.089297,
-            "lon": 77.632139
-          },
-          "direct_distance_from_office_km": 6.733,
-          "planned_route_distance_km": 6.733,
-          "extra_distance_travelled_km": 0,
-          "percent_extra_distance": 0,
-          "group": "Group_RR161",
-          "service_time": 120
+          "pickup_sequence": 2,
+          "trip_km": 27.12
         },
         {
-          "id": "RR161",
-          "gender": "Male",
-          "location": {
-            "lat": 13.0939201,
-            "lon": 77.6328566
-          },
-          "direct_distance_from_office_km": 7.17,
-          "planned_route_distance_km": 7.408,
-          "extra_distance_travelled_km": 0.238,
-          "percent_extra_distance": 3.32,
-          "group": "Group_RR161",
-          "service_time": 120
-        },
-        {
-          "id": "RR136",
-          "gender": "Male",
-          "location": {
-            "lat": 13.112804,
-            "lon": 77.61822
-          },
-          "direct_distance_from_office_km": 12.498,
-          "planned_route_distance_km": 13.002,
-          "extra_distance_travelled_km": 0.503,
-          "percent_extra_distance": 4.03,
-          "group": "Male_RR136",
-          "service_time": 120
+          "description": "Pickup #3",
+          "direct_km": 35.86,
+          "employee_id": "RR013",
+          "extra_percentage": 21.44,
+          "gender": "Female",
+          "pickup_sequence": 3,
+          "trip_km": 43.55
         }
       ],
       "legs": [
         {
-          "from": "OFFICE",
-          "to": "Group_RR161",
-          "distance": 6733,
-          "time": 808
+          "from": "Office",
+          "to": "RR012",
+          "distance": 8200,
+          "time": 743
         },
         {
-          "from": "Group_RR161",
-          "to": "Male_RR136",
-          "distance": 6269,
-          "time": 752
+          "from": "RR012",
+          "to": "RR070",
+          "distance": 18916,
+          "time": 1379
         },
         {
-          "from": "Male_RR136",
-          "to": "OFFICE",
-          "distance": 12385,
-          "time": 1486
+          "from": "RR070",
+          "to": "RR013",
+          "distance": 16429,
+          "time": 1275
         },
         {
-          "from": "OFFICE",
-          "to": "OFFICE",
-          "distance": 0,
-          "time": 0
+          "from": "RR013",
+          "to": "Office",
+          "distance": 33273,
+          "time": 2336
         }
       ],
-      "total_distance": 25386
+      "total_distance": 76818
     },
     {
       "vehicle_id": "Veh_18",
-      "route_summary": "OFFICE -> Group_RR008 -> OFFICE",
+      "route_summary": "Office -> RR129 -> RR156 -> Office",
       "employees": [
         {
-          "id": "RR132",
+          "description": "Pickup #1",
+          "direct_km": 7.76,
+          "employee_id": "RR129",
+          "extra_percentage": 0,
           "gender": "Female",
-          "location": {
-            "lat": 13.012977,
-            "lon": 77.623005
-          },
-          "direct_distance_from_office_km": 6.162,
-          "planned_route_distance_km": 6.162,
-          "extra_distance_travelled_km": 0,
-          "percent_extra_distance": 0,
-          "group": "Group_RR008",
-          "service_time": 120
+          "pickup_sequence": 1,
+          "trip_km": 7.76
         },
         {
-          "id": "RR008",
-          "gender": "Male",
-          "location": {
-            "lat": 12.999895,
-            "lon": 77.618284
-          },
-          "direct_distance_from_office_km": 7.41,
-          "planned_route_distance_km": 8.425,
-          "extra_distance_travelled_km": 1.015,
-          "percent_extra_distance": 13.7,
-          "group": "Group_RR008",
-          "service_time": 120
+          "description": "Pickup #2",
+          "direct_km": 24.12,
+          "employee_id": "RR156",
+          "extra_percentage": 34.13,
+          "gender": "Female",
+          "pickup_sequence": 2,
+          "trip_km": 32.35
         }
       ],
       "legs": [
         {
-          "from": "OFFICE",
-          "to": "Group_RR008",
-          "distance": 6162,
-          "time": 739
+          "from": "Office",
+          "to": "RR129",
+          "distance": 7764,
+          "time": 698
         },
         {
-          "from": "Group_RR008",
-          "to": "OFFICE",
-          "distance": 7322,
-          "time": 879
+          "from": "RR129",
+          "to": "RR156",
+          "distance": 24591,
+          "time": 1640
+        },
+        {
+          "from": "RR156",
+          "to": "Office",
+          "distance": 24273,
+          "time": 1687
         }
       ],
-      "total_distance": 13483
+      "total_distance": 56628
     },
     {
       "vehicle_id": "Veh_19",
-      "route_summary": "OFFICE -> Group_RR154 -> OFFICE",
+      "route_summary": "Office -> RR160 -> RR021 -> Office",
       "employees": [
         {
-          "id": "RR145",
+          "description": "Pickup #1",
+          "direct_km": 12.17,
+          "employee_id": "RR160",
+          "extra_percentage": 0,
           "gender": "Female",
-          "location": {
-            "lat": 13.031367,
-            "lon": 77.61768
-          },
-          "direct_distance_from_office_km": 3.143,
-          "planned_route_distance_km": 3.143,
-          "extra_distance_travelled_km": 0,
-          "percent_extra_distance": 0,
-          "group": "Group_RR154",
-          "service_time": 120
+          "pickup_sequence": 1,
+          "trip_km": 12.17
         },
         {
-          "id": "RR131",
+          "description": "Pickup #2",
+          "direct_km": 23.91,
+          "employee_id": "RR021",
+          "extra_percentage": 14.91,
           "gender": "Female",
-          "location": {
-            "lat": 13.0275573,
-            "lon": 77.6140269
-          },
-          "direct_distance_from_office_km": 4.098,
-          "planned_route_distance_km": 4.43,
-          "extra_distance_travelled_km": 0.331,
-          "percent_extra_distance": 8.08,
-          "group": "Group_RR154",
-          "service_time": 120
-        },
-        {
-          "id": "RR075",
-          "gender": "Female",
-          "location": {
-            "lat": 13.0174846,
-            "lon": 77.6052823
-          },
-          "direct_distance_from_office_km": 6.033,
-          "planned_route_distance_km": 6.629,
-          "extra_distance_travelled_km": 0.596,
-          "percent_extra_distance": 9.88,
-          "group": "Group_RR154",
-          "service_time": 120
-        },
-        {
-          "id": "RR154",
-          "gender": "Male",
-          "location": {
-            "lat": 12.9694858,
-            "lon": 77.570347
-          },
-          "direct_distance_from_office_km": 13.587,
-          "planned_route_distance_km": 16.531,
-          "extra_distance_travelled_km": 2.944,
-          "percent_extra_distance": 21.67,
-          "group": "Group_RR154",
-          "service_time": 120
+          "pickup_sequence": 2,
+          "trip_km": 27.48
         }
       ],
       "legs": [
         {
-          "from": "OFFICE",
-          "to": "Group_RR154",
-          "distance": 3143,
-          "time": 377
+          "from": "Office",
+          "to": "RR160",
+          "distance": 12175,
+          "time": 1151
         },
         {
-          "from": "Group_RR154",
-          "to": "OFFICE",
-          "distance": 13387,
-          "time": 1606
+          "from": "RR160",
+          "to": "RR021",
+          "distance": 15304,
+          "time": 1264
+        },
+        {
+          "from": "RR021",
+          "to": "Office",
+          "distance": 23166,
+          "time": 1745
         }
       ],
-      "total_distance": 16529
+      "total_distance": 50644
     },
     {
       "vehicle_id": "Veh_20",
-      "route_summary": "OFFICE -> Group_RR153 -> OFFICE",
+      "route_summary": "Office -> RR127 -> RR138 -> Office",
       "employees": [
         {
-          "id": "RR010",
+          "description": "Pickup #1",
+          "direct_km": 7.63,
+          "employee_id": "RR127",
+          "extra_percentage": 0,
           "gender": "Female",
-          "location": {
-            "lat": 13.0283049,
-            "lon": 77.6455248576308
-          },
-          "direct_distance_from_office_km": 5.056,
-          "planned_route_distance_km": 5.056,
-          "extra_distance_travelled_km": 0,
-          "percent_extra_distance": 0,
-          "group": "Group_RR153",
-          "service_time": 120
+          "pickup_sequence": 1,
+          "trip_km": 7.63
         },
         {
-          "id": "RR153",
-          "gender": "Male",
-          "location": {
-            "lat": 12.962535,
-            "lon": 77.67291
-          },
-          "direct_distance_from_office_km": 15.596,
-          "planned_route_distance_km": 17.142,
-          "extra_distance_travelled_km": 1.546,
-          "percent_extra_distance": 9.91,
-          "group": "Group_RR153",
-          "service_time": 120
+          "description": "Pickup #2",
+          "direct_km": 17.77,
+          "employee_id": "RR138",
+          "extra_percentage": 31.84,
+          "gender": "Female",
+          "pickup_sequence": 2,
+          "trip_km": 23.43
         }
       ],
       "legs": [
         {
-          "from": "OFFICE",
-          "to": "Group_RR153",
-          "distance": 5056,
-          "time": 607
+          "from": "Office",
+          "to": "RR127",
+          "distance": 7633,
+          "time": 744
         },
         {
-          "from": "Group_RR153",
-          "to": "OFFICE",
-          "distance": 15573,
-          "time": 1869
+          "from": "RR127",
+          "to": "RR138",
+          "distance": 15797,
+          "time": 1370
+        },
+        {
+          "from": "RR138",
+          "to": "Office",
+          "distance": 18925,
+          "time": 1580
         }
       ],
-      "total_distance": 20629
+      "total_distance": 42355
     },
     {
       "vehicle_id": "Veh_21",
-      "route_summary": "OFFICE -> Group_RR158 -> Male_RR124 -> OFFICE",
+      "route_summary": "Office -> RR134 -> Office",
       "employees": [
         {
-          "id": "RR128",
+          "description": "Pickup #1",
+          "direct_km": 8.5,
+          "employee_id": "RR134",
+          "extra_percentage": 0,
           "gender": "Female",
-          "location": {
-            "lat": 13.056822,
-            "lon": 77.605691
-          },
-          "direct_distance_from_office_km": 2.969,
-          "planned_route_distance_km": 2.969,
-          "extra_distance_travelled_km": 0,
-          "percent_extra_distance": 0,
-          "group": "Group_RR158",
-          "service_time": 120
-        },
-        {
-          "id": "RR159",
-          "gender": "Female",
-          "location": {
-            "lat": 13.0616014,
-            "lon": 77.6020946
-          },
-          "direct_distance_from_office_km": 3.917,
-          "planned_route_distance_km": 3.917,
-          "extra_distance_travelled_km": 0,
-          "percent_extra_distance": 0,
-          "group": "Group_RR158",
-          "service_time": 120
-        },
-        {
-          "id": "RR158",
-          "gender": "Male",
-          "location": {
-            "lat": 13.0981717,
-            "lon": 77.5715433
-          },
-          "direct_distance_from_office_km": 11.527,
-          "planned_route_distance_km": 11.789,
-          "extra_distance_travelled_km": 0.263,
-          "percent_extra_distance": 2.28,
-          "group": "Group_RR158",
-          "service_time": 120
-        },
-        {
-          "id": "RR124",
-          "gender": "Male",
-          "location": {
-            "lat": 13.1162201,
-            "lon": 77.5762523
-          },
-          "direct_distance_from_office_km": 11.957,
-          "planned_route_distance_km": 6.489,
-          "extra_distance_travelled_km": -5.468,
-          "percent_extra_distance": -45.73,
-          "group": "Male_RR124",
-          "service_time": 120
+          "pickup_sequence": 1,
+          "trip_km": 8.5
         }
       ],
       "legs": [
         {
-          "from": "OFFICE",
-          "to": "Group_RR158",
-          "distance": 2969,
-          "time": 356
+          "from": "Office",
+          "to": "RR134",
+          "distance": 8497,
+          "time": 708
         },
         {
-          "from": "Group_RR158",
-          "to": "Male_RR124",
-          "distance": 3520,
-          "time": 422
-        },
-        {
-          "from": "Male_RR124",
-          "to": "OFFICE",
-          "distance": 12816,
-          "time": 1538
+          "from": "RR134",
+          "to": "Office",
+          "distance": 9184,
+          "time": 829
         }
       ],
-      "total_distance": 19305
+      "total_distance": 17680
     },
     {
       "vehicle_id": "Veh_22",
-      "route_summary": "OFFICE -> Group_RR140 -> OFFICE",
+      "route_summary": "Office -> RR131 -> RR075 -> Office",
       "employees": [
         {
-          "id": "RR170",
+          "description": "Pickup #1",
+          "direct_km": 4.1,
+          "employee_id": "RR131",
+          "extra_percentage": 0,
           "gender": "Female",
-          "location": {
-            "lat": 13.0415895,
-            "lon": 77.613167
-          },
-          "direct_distance_from_office_km": 2.717,
-          "planned_route_distance_km": 2.717,
-          "extra_distance_travelled_km": 0,
-          "percent_extra_distance": 0,
-          "group": "Group_RR140",
-          "service_time": 120
+          "pickup_sequence": 1,
+          "trip_km": 4.1
         },
         {
-          "id": "RR167",
+          "description": "Pickup #2",
+          "direct_km": 6.03,
+          "employee_id": "RR075",
+          "extra_percentage": 4.38,
           "gender": "Female",
-          "location": {
-            "lat": 13.0415942,
-            "lon": 77.6128262
-          },
-          "direct_distance_from_office_km": 2.754,
-          "planned_route_distance_km": 2.754,
-          "extra_distance_travelled_km": 0,
-          "percent_extra_distance": 0,
-          "group": "Group_RR140",
-          "service_time": 120
-        },
-        {
-          "id": "RR073",
-          "gender": "Female",
-          "location": {
-            "lat": 13.036684,
-            "lon": 77.612409
-          },
-          "direct_distance_from_office_km": 3.47,
-          "planned_route_distance_km": 3.637,
-          "extra_distance_travelled_km": 0.167,
-          "percent_extra_distance": 4.81,
-          "group": "Group_RR140",
-          "service_time": 120
-        },
-        {
-          "id": "RR140",
-          "gender": "Male",
-          "location": {
-            "lat": 12.9689164,
-            "lon": 77.5700385
-          },
-          "direct_distance_from_office_km": 13.687,
-          "planned_route_distance_km": 15.418,
-          "extra_distance_travelled_km": 1.731,
-          "percent_extra_distance": 12.65,
-          "group": "Group_RR140",
-          "service_time": 120
+          "pickup_sequence": 2,
+          "trip_km": 6.3
         }
       ],
       "legs": [
         {
-          "from": "OFFICE",
-          "to": "Group_RR140",
-          "distance": 2717,
-          "time": 326
+          "from": "Office",
+          "to": "RR131",
+          "distance": 4098,
+          "time": 368
         },
         {
-          "from": "Group_RR140",
-          "to": "OFFICE",
-          "distance": 13342,
-          "time": 1601
+          "from": "RR131",
+          "to": "RR075",
+          "distance": 2200,
+          "time": 245
+        },
+        {
+          "from": "RR075",
+          "to": "Office",
+          "distance": 4477,
+          "time": 402
         }
       ],
-      "total_distance": 16058
+      "total_distance": 10775
     },
     {
       "vehicle_id": "Veh_23",
-      "route_summary": "OFFICE -> Group_RR122 -> Male_RR165 -> Male_RR139 -> OFFICE",
+      "route_summary": "Office -> RR025 -> Office",
       "employees": [
         {
-          "id": "RR133",
+          "description": "Pickup #1",
+          "direct_km": 5.97,
+          "employee_id": "RR025",
+          "extra_percentage": 0,
           "gender": "Female",
-          "location": {
-            "lat": 13.053525,
-            "lon": 77.636678
-          },
-          "direct_distance_from_office_km": 3.402,
-          "planned_route_distance_km": 3.402,
-          "extra_distance_travelled_km": 0,
-          "percent_extra_distance": 0,
-          "group": "Group_RR122",
-          "service_time": 120
-        },
-        {
-          "id": "RR122",
-          "gender": "Male",
-          "location": {
-            "lat": 13.114651,
-            "lon": 77.624069
-          },
-          "direct_distance_from_office_km": 11.209,
-          "planned_route_distance_km": 12.57,
-          "extra_distance_travelled_km": 1.361,
-          "percent_extra_distance": 12.14,
-          "group": "Group_RR122",
-          "service_time": 120
-        },
-        {
-          "id": "RR165",
-          "gender": "Male",
-          "location": {
-            "lat": 13.118579,
-            "lon": 77.611404
-          },
-          "direct_distance_from_office_km": 12.809,
-          "planned_route_distance_km": 6.435,
-          "extra_distance_travelled_km": -6.373,
-          "percent_extra_distance": -49.76,
-          "group": "Male_RR165",
-          "service_time": 120
-        },
-        {
-          "id": "RR139",
-          "gender": "Male",
-          "location": {
-            "lat": 13.118579,
-            "lon": 77.611404
-          },
-          "direct_distance_from_office_km": 12.809,
-          "planned_route_distance_km": 6.435,
-          "extra_distance_travelled_km": -6.373,
-          "percent_extra_distance": -49.76,
-          "group": "Male_RR139",
-          "service_time": 120
+          "pickup_sequence": 1,
+          "trip_km": 5.97
         }
       ],
       "legs": [
         {
-          "from": "OFFICE",
-          "to": "Group_RR122",
-          "distance": 3402,
-          "time": 408
+          "from": "Office",
+          "to": "RR025",
+          "distance": 5968,
+          "time": 565
         },
         {
-          "from": "Group_RR122",
-          "to": "Male_RR165",
-          "distance": 3033,
-          "time": 364
-        },
-        {
-          "from": "Male_RR165",
-          "to": "Male_RR139",
-          "distance": 0,
-          "time": 0
-        },
-        {
-          "from": "Male_RR139",
-          "to": "OFFICE",
-          "distance": 12460,
-          "time": 1495
+          "from": "RR025",
+          "to": "Office",
+          "distance": 7496,
+          "time": 667
         }
       ],
-      "total_distance": 18895
+      "total_distance": 13464
     },
     {
       "vehicle_id": "Veh_24",
-      "route_summary": "OFFICE -> GuardedGroup_RR013 -> OFFICE",
+      "route_summary": "Office -> RR010 -> Office",
       "employees": [
         {
-          "id": "RR013",
+          "description": "Pickup #1",
+          "direct_km": 5.06,
+          "employee_id": "RR010",
+          "extra_percentage": 0,
           "gender": "Female",
-          "location": {
-            "lat": 12.7991264510038,
-            "lon": 77.7048707194626
-          },
-          "direct_distance_from_office_km": 35.858,
-          "planned_route_distance_km": 35.858,
-          "extra_distance_travelled_km": 0,
-          "percent_extra_distance": 0,
-          "group": "GuardedGroup_RR013",
-          "service_time": 120
+          "pickup_sequence": 1,
+          "trip_km": 5.06
         }
       ],
       "legs": [
         {
-          "from": "OFFICE",
-          "to": "GuardedGroup_RR013",
-          "distance": 35858,
-          "time": 4303
+          "from": "Office",
+          "to": "RR010",
+          "distance": 5056,
+          "time": 514
         },
         {
-          "from": "GuardedGroup_RR013",
-          "to": "OFFICE",
-          "distance": 33273,
-          "time": 3993
+          "from": "RR010",
+          "to": "Office",
+          "distance": 4882,
+          "time": 565
         }
       ],
-      "total_distance": 69131
+      "total_distance": 9938
+    },
+    {
+      "vehicle_id": "Veh_25",
+      "route_summary": "Office -> RR073 -> Office",
+      "employees": [
+        {
+          "description": "Pickup #1",
+          "direct_km": 3.47,
+          "employee_id": "RR073",
+          "extra_percentage": 0,
+          "gender": "Female",
+          "pickup_sequence": 1,
+          "trip_km": 3.47
+        }
+      ],
+      "legs": [
+        {
+          "from": "Office",
+          "to": "RR073",
+          "distance": 3470,
+          "time": 309
+        },
+        {
+          "from": "RR073",
+          "to": "Office",
+          "distance": 1914,
+          "time": 195
+        }
+      ],
+      "total_distance": 5384
+    },
+    {
+      "vehicle_id": "Veh_26",
+      "route_summary": "Office -> RR133 -> Office",
+      "employees": [
+        {
+          "description": "Pickup #1",
+          "direct_km": 3.4,
+          "employee_id": "RR133",
+          "extra_percentage": 0,
+          "gender": "Female",
+          "pickup_sequence": 1,
+          "trip_km": 3.4
+        }
+      ],
+      "legs": [
+        {
+          "from": "Office",
+          "to": "RR133",
+          "distance": 3402,
+          "time": 365
+        },
+        {
+          "from": "RR133",
+          "to": "Office",
+          "distance": 3807,
+          "time": 408
+        }
+      ],
+      "total_distance": 7209
+    },
+    {
+      "vehicle_id": "Veh_27",
+      "route_summary": "Office -> RR074 -> RR136 -> Office",
+      "employees": [
+        {
+          "description": "Pickup #1",
+          "direct_km": 5.12,
+          "employee_id": "RR074",
+          "extra_percentage": 0,
+          "gender": "Male",
+          "pickup_sequence": 1,
+          "trip_km": 5.12
+        },
+        {
+          "description": "Pickup #2",
+          "direct_km": 12.5,
+          "employee_id": "RR136",
+          "extra_percentage": 16.48,
+          "gender": "Male",
+          "pickup_sequence": 2,
+          "trip_km": 14.56
+        }
+      ],
+      "legs": [
+        {
+          "from": "Office",
+          "to": "RR074",
+          "distance": 5121,
+          "time": 435
+        },
+        {
+          "from": "RR074",
+          "to": "RR136",
+          "distance": 9437,
+          "time": 744
+        },
+        {
+          "from": "RR136",
+          "to": "Office",
+          "distance": 12385,
+          "time": 1019
+        }
+      ],
+      "total_distance": 26943
+    },
+    {
+      "vehicle_id": "Veh_39",
+      "route_summary": "Office -> RR161 -> RR139 -> Office",
+      "employees": [
+        {
+          "description": "Pickup #1",
+          "direct_km": 7.17,
+          "employee_id": "RR161",
+          "extra_percentage": 0,
+          "gender": "Male",
+          "pickup_sequence": 1,
+          "trip_km": 7.17
+        },
+        {
+          "description": "Pickup #2",
+          "direct_km": 12.81,
+          "employee_id": "RR139",
+          "extra_percentage": 8.07,
+          "gender": "Male",
+          "pickup_sequence": 2,
+          "trip_km": 13.84
+        }
+      ],
+      "legs": [
+        {
+          "from": "Office",
+          "to": "RR161",
+          "distance": 7170,
+          "time": 530
+        },
+        {
+          "from": "RR161",
+          "to": "RR139",
+          "distance": 6672,
+          "time": 461
+        },
+        {
+          "from": "RR139",
+          "to": "Office",
+          "distance": 12460,
+          "time": 902
+        }
+      ],
+      "total_distance": 26302
     }
   ]
 }

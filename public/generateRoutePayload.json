@@ -607,10 +607,9 @@
       78.385718
     ],
     "fare_per_km": 10,
-    "extra_dist_pct": 30,
+    "extra_dist_pct": 20,
     "max_cab_capacity": 4,
-    "escort_avoidance_percentage": 30,
-    "escort_required": true
+    "escort_avoidance_percentage": 10
   },
   "trip_type": "logout"
 }

@@ -1,0 +1,12 @@
+Reading payload from generateRoutePayload.json...
+Sending request to http://localhost:3000/optimise...
+Response received!
+Status: 200
+Response keys: [ 'metadata', 'routes', 'groups', 'statistics', 'summary' ]
+✅ Response structure looks correct.
+Generated 60 routes.
+Total cost: 13014.600000000006
+
+Running Escort Capacity Sanity Check...
+✅ Escort capacity sanity check passed. All escorted trips fit within capacity.
+Saved response to test_response.json

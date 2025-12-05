@@ -4,33 +4,44 @@ class RathamPreprocessor {
     }
 
     processEscorts(employees, officeLoc, distMatrix, timeMatrix, vehicleCapacity = 4, maxDetourPercent = 0.5) {
-        // Helper to validate a group
+        // Helper to validate a group using TIME and SERVICE TIME
+        console.log("Processing escorts...");
         const isGroupValid = (members) => {
             const males = members.filter(m => m.gender === 'M');
             const females = members.filter(m => m.gender === 'F');
 
             // Sort females by distance from office (Ascending: Office -> Close -> Far)
+            // Note: We use distance for sorting, but time for validation.
             females.sort((a, b) => a.dist_from_office - b.dist_from_office);
             
             // Construct Route: Office -> Females -> Male(s)
-            // If multiple males, we assume they are dropped last. 
-            // For this specific logic where we have 1 escort, he is last.
-            // If we had multiple males, maybe we sort them too? 
-            // But usually only 1 escort is needed.
-            // Let's put all males at the end.
             const routeOrder = [...females, ...males];
             
-            let currentRouteDist = 0;
+            let currentRouteTime = 0;
             let prevIdx = 0; // Office
             
             for (const member of routeOrder) {
-                currentRouteDist += distMatrix[prevIdx][member.original_idx];
-                prevIdx = member.original_idx;
+                const travelTime = timeMatrix[prevIdx][member.original_idx];
+                currentRouteTime += travelTime;
                 
-                const directDist = distMatrix[0][member.original_idx];
-                const detour = directDist > 0 ? (currentRouteDist - directDist) / directDist : 0;
+                // Arrived at member. Check detour.
+                // Direct time from office
+                const directTime = timeMatrix[0][member.original_idx];
+                
+                // Detour = (Actual Arrival Time - Direct Arrival Time) / Direct Arrival Time
+                // Note: Actual Arrival Time does NOT include service time at this stop (drop-off), 
+                // but DOES include service times of PREVIOUS stops.
+                
+                // Handle small direct times to avoid huge percentages
+                const safeDirectTime = Math.max(directTime, 300); // Min 5 mins baseline
+                
+                const detour = (currentRouteTime - directTime) / safeDirectTime;
                 
                 if (detour > maxDetourPercent) return false;
+                
+                // Add service time for NEXT leg
+                currentRouteTime += (member.service_time || 120);
+                prevIdx = member.original_idx;
             }
             return true;
         };
@@ -39,87 +50,10 @@ class RathamPreprocessor {
         const males = employees.filter(e => e.gender === 'M');
         const females = employees.filter(e => e.gender === 'F');
 
-        // Calculate distance from office for all females
-        // distMatrix[0] is distances from office (index 0) to all others
-        females.forEach(f => {
-            f.dist_from_office = distMatrix[0][f.original_idx];
+        // Calculate distance from office for all employees
+        employees.forEach(e => {
+            e.dist_from_office = distMatrix[0][e.original_idx];
         });
-
-        // --- Step 1: Identify Unmatchable Females ---
-        const unmatchableFemales = [];
-        const matchableFemales = [];
-
-        for (const f of females) {
-            let canBeMatched = false;
-            // Check if there is ANY male that satisfies the detour constraint
-            for (const m of males) {
-                const distOfficeToM = distMatrix[0][m.original_idx];
-                const distOfficeToF = f.dist_from_office;
-                const distFToM = distMatrix[f.original_idx][m.original_idx];
-                
-                // Route: Office -> Female -> Male
-                // Detour is calculated for the MALE (who is the "anchor" or driver-like figure in this logic?)
-                // Actually, the constraint is usually on the PASSENGER's detour or the TOTAL detour.
-                // The prompt says: "ensure all the employees added to this group are satisfying the % detour constarint."
-                // Usually detour is (Actual Path - Direct Path) / Direct Path.
-                // For Female: Direct is Office->F. Actual is Office->F->M (if she is dropped first? No, M is last).
-                // If M is last, the route is Office -> F -> M.
-                // Female travels Office -> F. (Wait, is this pickup or drop?)
-                // If it's DROP (Office -> Home):
-                // Route: Office -> F -> M.
-                // F travels Office -> F. Distance is dist(Office, F). This is direct. 0 detour for F?
-                // M travels Office -> F -> M. Direct is dist(Office, M).
-                // Detour for M: (dist(Office, F) + dist(F, M) - dist(Office, M)) / dist(Office, M).
-                
-                // If it's PICKUP (Home -> Office):
-                // Route: F -> M -> Office.
-                // F travels F -> M -> Office. Direct is dist(F, Office).
-                // Detour for F: (dist(F, M) + dist(M, Office) - dist(F, Office)) / dist(F, Office).
-                // M travels M -> Office. Direct is dist(M, Office). 0 detour for M.
-                
-                // The code in `run_real_data.js` seems to imply "Pickup" logic or "Drop" logic depending on how you read it.
-                // But `processEscorts` creates groups.
-                // The previous logic calculated `minDetour` as `distMatrix[fIdx][mIdx]`.
-                // This is just the distance between F and M.
-                
-                // Let's assume the constraint is on the MALE's detour if he is the escort?
-                // "ensure all the employees added to this group are satisfying the % detour constarint"
-                // If it's a shared cab, everyone should satisfy the constraint.
-                // Let's assume the standard VRP definition:
-                // Detour = (Actual Travel Time/Dist - Direct Travel Time/Dist) / Direct.
-                
-                // In a group [F1, F2, M], the route is likely optimized.
-                // But here we are building the group.
-                // Let's assume the route order is F1 -> F2 -> M (or optimized).
-                // For simplicity in this pre-processor, let's assume we check if M can pick up F without M suffering too much detour?
-                // OR if F can join M without F suffering?
-                // Usually "Escort" means M is there to protect F.
-                // If M is the last one out (Drop) or first one in (Pickup), he is the escort.
-                // Let's assume DROP: Office -> F -> M.
-                // M has to travel extra to drop F.
-                // So we check M's detour.
-                
-                if (distOfficeToM > 0) {
-                    const detour = (distOfficeToF + distFToM - distOfficeToM) / distOfficeToM;
-                    if (detour <= maxDetourPercent) {
-                        canBeMatched = true;
-                        break;
-                    }
-                } else {
-                    // If M is at office (0 dist), any deviation is infinite detour?
-                    // Or maybe he is the driver?
-                    // Let's assume if dist is 0, he can't be an escort for someone far away?
-                    // Or he is just available.
-                    if (distFToM < 1000) canBeMatched = true; // Arbitrary small dist
-                }
-            }
-
-            if (canBeMatched) {
-                matchableFemales.push(f);
-            } else {
-                unmatchableFemales.push(f);
-            }
-        }
 
         const processedNodes = [];
         const nodeMapping = {};
@@ -133,31 +67,163 @@ class RathamPreprocessor {
             original_indices: [0]
         });
 
-        // --- Step 2: Guarded Groups (Unmatchable) ---
-        // Sort by distance (descending) - Start with farthest
-        unmatchableFemales.sort((a, b) => b.dist_from_office - a.dist_from_office);
-        const assignedUnmatchable = new Set();
+        // --- Step 1: Male-Centric Grouping ---
+        // We want to find the BEST male to lead a group, prioritizing filling the vehicle.
+        
+        const assignedFemales = new Set();
+        const assignedMales = new Set();
+        const MAX_FEMALES_PER_GROUP = vehicleCapacity - 1;
+        const MAX_DIST_FEMALE_TO_MALE = 10000; // 10km in meters
 
-        for (const f of unmatchableFemales) {
-            if (assignedUnmatchable.has(f.id)) continue;
+        while (true) {
+            let bestGroup = null;
+            let bestScore = -Infinity;
+
+            // Iterate through all available males
+            for (const m of males) {
+                if (assignedMales.has(m.id)) continue;
+
+                // Find all compatible females for this male
+                const compatibleFemales = [];
+                for (const f of females) {
+                    if (assignedFemales.has(f.id)) continue;
+
+                    // Constraint 1: Distance between Female and Male <= 10km
+                    const distFToM = distMatrix[f.original_idx][m.original_idx];
+                    if (distFToM > MAX_DIST_FEMALE_TO_MALE) continue;
+
+                    // Constraint 2: Detour Check (Quick pre-check, full validation later)
+                    // Simple check: Office -> F -> M detour for M
+                    const distOfficeToM = m.dist_from_office;
+                    const distOfficeToF = f.dist_from_office;
+                    
+                    let detour = Infinity;
+                    if (distOfficeToM > 0) {
+                        detour = (distOfficeToF + distFToM - distOfficeToM) / distOfficeToM;
+                    } else {
+                        detour = distFToM < 1000 ? 0 : Infinity;
+                    }
+
+                    if (detour <= maxDetourPercent) {
+                        compatibleFemales.push({ female: f, distToM: distFToM });
+                    }
+                }
+
+                // If no compatible females, this male can't lead a group right now
+                if (compatibleFemales.length === 0) continue;
+
+                // Form the best possible group for this male
+                // Heuristic: Pick closest females to the male to minimize internal distance
+                compatibleFemales.sort((a, b) => a.distToM - b.distToM);
+                
+                // Try to take as many as possible up to capacity
+                const candidateFemales = [];
+                for (const item of compatibleFemales) {
+                    if (candidateFemales.length >= MAX_FEMALES_PER_GROUP) break;
+                    
+                    // Verify group validity incrementally
+                    const testGroup = [...candidateFemales, item.female, m];
+                    if (isGroupValid(testGroup)) {
+                        candidateFemales.push(item.female);
+                    }
+                }
+
+                if (candidateFemales.length > 0) {
+                    // Score this group
+                    // Primary Goal: Maximize size (Weight: 1000 per female)
+                    // Secondary Goal: Minimize total distance or detour (Weight: -1 * internal_dist)
+                    // We use a simple score for now
+                    const sizeScore = candidateFemales.length * 1000;
+                    
+                    // Calculate internal distance (proxy for efficiency)
+                    // Sort by office dist for routing calculation
+                    const groupForCalc = [...candidateFemales, m];
+                    groupForCalc.sort((a, b) => a.dist_from_office - b.dist_from_office);
+                    
+                    let internalDist = 0;
+                    for(let k=0; k<groupForCalc.length-1; k++) {
+                        internalDist += distMatrix[groupForCalc[k].original_idx][groupForCalc[k+1].original_idx];
+                    }
+
+                    // Normalize distance impact (e.g., subtract km)
+                    const score = sizeScore - (internalDist / 1000);
+
+                    if (score > bestScore) {
+                        bestScore = score;
+                        bestGroup = {
+                            male: m,
+                            females: candidateFemales,
+                            internalDist: internalDist
+                        };
+                    }
+                }
+            }
+
+            // If we found a group in this pass, commit it
+            if (bestGroup) {
+                const { male, females: groupFemales } = bestGroup;
+                
+                // Mark assigned
+                assignedMales.add(male.id);
+                groupFemales.forEach(f => assignedFemales.add(f.id));
+
+                // Create Node
+                const components = [...groupFemales, male];
+                // Sort for time calc (Office -> Closest -> Farthest)
+                components.sort((a, b) => a.dist_from_office - b.dist_from_office);
+
+                let internalTime = 0;
+                for (let k = 0; k < components.length - 1; k++) {
+                    const c1 = components[k];
+                    const c2 = components[k+1];
+                    const t = timeMatrix[c1.original_idx][c2.original_idx];
+                    internalTime += (c1.service_time || 0) + t;
+                }
+
+                const pNode = {
+                    id: `Group_${male.id}`,
+                    type: 'group',
+                    demand: components.length,
+                    components: components,
+                    original_indices: components.map(c => c.original_idx),
+                    internal_time: internalTime
+                };
+                processedNodes.push(pNode);
+                nodeMapping[currentIdx] = pNode;
+                currentIdx++;
+
+            } else {
+                // No more groups can be formed
+                break;
+            }
+        }
+
+        // --- Step 2: Remaining Females (Guarded Groups) ---
+        const remainingFemales = females.filter(f => !assignedFemales.has(f.id));
+        // Sort by distance (descending) - Start with farthest
+        remainingFemales.sort((a, b) => b.dist_from_office - a.dist_from_office);
+        
+        const assignedRemaining = new Set();
+
+        for (const f of remainingFemales) {
+            if (assignedRemaining.has(f.id)) continue;
             
             const group = [f];
-            assignedUnmatchable.add(f.id);
+            assignedRemaining.add(f.id);
             
             // Try to fill with other unmatchable females
-            for (const candidate of unmatchableFemales) {
-                if (assignedUnmatchable.has(candidate.id)) continue;
+            for (const candidate of remainingFemales) {
+                if (assignedRemaining.has(candidate.id)) continue;
                 if (group.length >= vehicleCapacity - 1) break; // -1 for guard
 
                 // Check if adding candidate is valid
                 if (isGroupValid([...group, candidate])) {
                     group.push(candidate);
-                    assignedUnmatchable.add(candidate.id);
+                    assignedRemaining.add(candidate.id);
                 }
             }
 
             // Create Node
-            // Sort internally for time calculation
             group.sort((a, b) => a.dist_from_office - b.dist_from_office);
 
             let internalTime = 0;
@@ -181,153 +247,9 @@ class RathamPreprocessor {
             currentIdx++;
         }
 
-        // --- Step 3: Male Escorted Groups (Matchable) ---
-        matchableFemales.sort((a, b) => b.dist_from_office - a.dist_from_office);
-        const availableMales = new Set(males.map(m => m.id));
-        const assignedFemales = new Set();
-
-        for (const fFar of matchableFemales) {
-            if (assignedFemales.has(fFar.id)) continue;
-
-            // Find best male
-            let bestM = null;
-            let minDetour = Infinity;
-            
-            for (const m of males) {
-                if (availableMales.has(m.id)) {
-                    const distOfficeToM = distMatrix[0][m.original_idx];
-                    const distOfficeToF = fFar.dist_from_office;
-                    const distFToM = distMatrix[fFar.original_idx][m.original_idx];
-                    
-                    let detour = Infinity;
-                    if (distOfficeToM > 0) {
-                        detour = (distOfficeToF + distFToM - distOfficeToM) / distOfficeToM;
-                    } else {
-                        detour = distFToM; // Fallback
-                    }
-
-                    if (detour <= maxDetourPercent && detour < minDetour) {
-                        minDetour = detour;
-                        bestM = m;
-                    }
-                }
-            }
-
-            if (bestM) {
-                const groupFemales = [fFar];
-                assignedFemales.add(fFar.id);
-                availableMales.delete(bestM.id);
-
-                // Try to fill the vehicle
-                // We can add (vehicleCapacity - 1) females total (1 Male is already there)
-                while (groupFemales.length < vehicleCapacity - 1) {
-                    let bestCand = null;
-                    let minCandDist = Infinity;
-                    
-                    for (const fCand of matchableFemales) {
-                        if (!assignedFemales.has(fCand.id)) {
-                            // Use helper to validate
-                            if (isGroupValid([...groupFemales, fCand, bestM])) {
-                                // Valid candidate. Pick the one closest to the last added female?
-                                // Or just the one that minimizes detour increase?
-                                // Let's pick closest to the current group centroid or last female.
-                                // Simple: Closest to fFar (the anchor of this group).
-                                const d = distMatrix[fFar.original_idx][fCand.original_idx];
-                                if (d < minCandDist) {
-                                    minCandDist = d;
-                                    bestCand = fCand;
-                                }
-                            }
-                        }
-                    }
-
-                    if (bestCand) {
-                        groupFemales.push(bestCand);
-                        assignedFemales.add(bestCand.id);
-                    } else {
-                        break;
-                    }
-                }
-
-                // Finalize Group
-                groupFemales.sort((a, b) => a.dist_from_office - b.dist_from_office);
-                const components = [...groupFemales, bestM];
-
-                let internalTime = 0;
-                for (let k = 0; k < components.length - 1; k++) {
-                    const c1 = components[k];
-                    const c2 = components[k+1];
-                    const t = timeMatrix[c1.original_idx][c2.original_idx];
-                    internalTime += (c1.service_time || 0) + t;
-                }
-
-                const pNode = {
-                    id: `Group_${bestM.id}`,
-                    type: 'group',
-                    demand: components.length,
-                    components: components,
-                    original_indices: components.map(c => c.original_idx),
-                    internal_time: internalTime
-                };
-                processedNodes.push(pNode);
-                nodeMapping[currentIdx] = pNode;
-                currentIdx++;
-            }
-        }
-
-        // --- Step 4: Remaining Matchable Females (Fallback) ---
-        // If any matchable females were left because their best male was taken
-        const remainingFemales = matchableFemales.filter(f => !assignedFemales.has(f.id));
-        // Add them to guarded groups
-        if (remainingFemales.length > 0) {
-             // Sort by distance (descending)
-             remainingFemales.sort((a, b) => b.dist_from_office - a.dist_from_office);
-             const assignedRemaining = new Set();
-
-             for (const f of remainingFemales) {
-                 if (assignedRemaining.has(f.id)) continue;
-
-                 const group = [f];
-                 assignedRemaining.add(f.id);
-
-                 // Try to fill
-                 for (const candidate of remainingFemales) {
-                     if (assignedRemaining.has(candidate.id)) continue;
-                     if (group.length >= vehicleCapacity - 1) break;
-
-                     if (isGroupValid([...group, candidate])) {
-                         group.push(candidate);
-                         assignedRemaining.add(candidate.id);
-                     }
-                 }
-                 
-                 group.sort((a, b) => a.dist_from_office - b.dist_from_office);
-     
-                 let internalTime = 0;
-                 for (let k = 0; k < group.length - 1; k++) {
-                     const c1 = group[k];
-                     const c2 = group[k+1];
-                     const t = timeMatrix[c1.original_idx][c2.original_idx];
-                     internalTime += (c1.service_time || 0) + t;
-                 }
-     
-                 const gNode = {
-                     id: `GuardedGroup_Fallback_${group[0].id}`,
-                     type: 'guarded_group',
-                     demand: group.length + 1,
-                     components: group,
-                     original_indices: group.map(c => c.original_idx),
-                     internal_time: internalTime
-                 };
-                 processedNodes.push(gNode);
-                 nodeMapping[currentIdx] = gNode;
-                 currentIdx++;
-             }
-        }
-
-        // --- Step 5: Remaining Males ---
+        // --- Step 3: Remaining Males ---
         for (const m of males) {
-            if (availableMales.has(m.id)) {
+            if (!assignedMales.has(m.id)) {
                 const mNode = {
                     id: `Male_${m.id}`,
                     type: 'male',
@@ -348,22 +270,9 @@ class RathamPreprocessor {
                 groups.push(node);
             }
         }
-
-        // Return ORIGINAL matrices and raw employee data for solver
-        // The solver will now treat every employee as a node.
-        // We pass 'groups' to enforce vehicle constraints.
         
         return {
-            nodes: processedNodes, // We still return this for logging/debugging if needed, but solver will use 'employees'
-            // Actually, let's return a clean list of tasks matching the original matrix indices
-            // Task 0: Office
-            // Task i: Employee at original_idx i
-            
-            // We need to ensure the solver sees tasks 0..N matching the matrix 0..N
-            // The 'employees' array passed in might not be sorted by original_idx?
-            // But original_idx was assigned as i+1 in solver_service.js.
-            // So we can assume index i corresponds to original_idx i.
-            
+            nodes: processedNodes,
             dist_matrix: distMatrix,
             time_matrix: timeMatrix,
             groups: groups,

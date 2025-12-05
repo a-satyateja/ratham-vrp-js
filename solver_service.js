@@ -86,7 +86,10 @@ async function solveRoute(payload) {
         // 3. Pre-process (Escort Logic)
         const preprocessor = new RathamPreprocessor();
         
-        const BYPASS_ESCORT = true;
+        let BYPASS_ESCORT = false;
+        if (config.escort_required === false) {
+            BYPASS_ESCORT = true;
+        }
         let result;
 
         if (BYPASS_ESCORT) {
@@ -99,9 +102,12 @@ async function solveRoute(payload) {
                 nodes: []
             };
         } else {
+            console.log("🚨 Escort enabled. Processing escorts...");
             result = preprocessor.processEscorts(
                 formattedEmployees, officeLoc, normalizedDistMatrix, normalizedTimeMatrix, vehicle_capacity, max_detour_percent
             );
+            console.log(" 🚨 Escorts processed. Proceeding to solver...");
+            console.log(JSON.stringify(result, null, 2));
         }
 
         // const nodes = result.nodes; // No longer used for solver, only for logging if needed
@@ -118,7 +124,8 @@ async function solveRoute(payload) {
             vehicle_capacity,
             max_detour_time,
             max_detour_percent,
-            time_limit
+            time_limit,
+            BYPASS_ESCORT
         );
 
         // 5. Format Response
@@ -240,81 +247,17 @@ async function solveRoute(payload) {
                         }
                     }
 
-                    // Determine route type
-                    // Logic inferred from response.json:
-                    // MALE-LED PICKUP: is_male_led = true, requires_escort = false
-                    // FEMALE-LED PICKUP: is_male_led = false, requires_escort = true (if escort needed)
-                    
-                    // Simple logic: if last drop (first pickup in login?) is female, it might need escort?
-                    // Wait, "login" trip type means pickup from home to office.
-                    // So the route is: Employee 1 -> Employee 2 -> ... -> Office.
-                    // The solver output `route` usually starts with 0 (Depot) -> Node 1 -> Node 2 -> 0 (Depot).
-                    // But for VRP, usually it's Depot -> Cust 1 -> Cust 2 -> Depot.
-                    // In "login", the vehicle starts at office (depot), goes to first pickup, then last pickup, then back to office?
-                    // Actually, for "login", the flow is usually: Cab starts at first pickup -> ... -> last pickup -> Office.
-                    // But standard VRP models usually assume start and end at depot.
-                    // Let's assume the route returned by solver is the sequence of visits.
-                    // If it's login, the employees are picked up and brought to office.
-                    // The sequence in `route` is likely: Office -> Emp 1 -> Emp 2 -> ... -> Office.
-                    // But wait, if it's login, the vehicle should collect everyone and arrive at office.
-                    // The distance calculation in `run_real_data.js` (lines 244-252) calculates cumulative distance from office.
-                    // `cumulativeDistances` starts at 0 (Office).
-                    // If it's login, the "trip_km" for an employee is the distance they travel in the cab.
-                    // If the cab route is Office -> A -> B -> C -> Office.
-                    // A travels A -> B -> C -> Office.
-                    // B travels B -> C -> Office.
-                    // C travels C -> Office.
-                    
-                    // However, `run_real_data.js` calculates `plannedRouteDistance` as `routeDistanceToNode + internalDistance`.
-                    // `routeDistanceToNode` is distance from Office (start of route) to the Node.
-                    // This implies the metric being minimized/calculated is distance FROM office.
-                    // This matches a "Drop" scenario (Office -> Home).
-                    // But the payload says "trip_type": "login".
-                    // If it's "login", we usually care about distance TO office.
-                    // But let's stick to the logic in `run_real_data.js` for now to ensure consistency with the "current implementation".
-                    // The user asked to "Enhance the existing logic by wrapping it in an express server".
-                    // So I should faithfully replicate `run_real_data.js` logic.
-                    
-                    // Re-reading `run_real_data.js`:
-                    // `plannedRouteDistance = routeDistanceToNode + internalDistance`
-                    // `routeDistanceToNode` is cumulative distance from start of route (Office).
-                    // So this calculates distance from Office -> Employee.
-                    // This is effectively "Drop" logic or "Pickup" logic where we measure from depot start.
-                    // In `response.json`, `trip_km` is comparable to `direct_km`.
-                    
-                    // Let's look at `is_male_led` and `requires_escort`.
-                    // In `response.json`, one route has `is_male_led: false, requires_escort: true`.
-                    // This usually happens if the first pickup (or last drop) is female and no male is there?
-                    // Or if the cab has only females?
-                    // In `response.json` Cab 3 has Female, Male. `is_male_led: false`.
-                    // Cab 1 has Male, Female, Male, Female. `is_male_led: true`.
-                    // It seems `is_male_led` might refer to the driver or the first passenger?
-                    // Since we don't have driver info, maybe it means "First passenger is Male"?
-                    // In Cab 3 (Pickup #1 Female, #2 Male), `is_male_led` is false.
-                    // In Cab 1 (Pickup #1 Male), `is_male_led` is true.
-                    // So `is_male_led` likely means "First pickup is Male".
+                  
                     
                     const firstPassenger = routeEmployees[0];
                     const isMaleLed = firstPassenger && firstPassenger.gender === 'Male';
                     
-                    // `requires_escort`:
-                    // In Cab 3 (Female first), it says `requires_escort: true`.
-                    // Even though there is a Male picked up later?
-                    // Usually "escort" is needed if a female is the first pickup (login) or last drop (logout) 
-                    // and the time is between 8PM - 6AM (or similar rules).
-                    // Or if there are NO males in the cab?
-                    // Cab 3 has a male. But `requires_escort` is true.
-                    // Maybe because the female is alone for the first leg?
-                    // Let's assume logic: If !isMaleLed, then requires_escort = true.
-                    // Let's check Cab 4: Male only. `is_male_led: true`, `requires_escort: false`.
-                    // Cab 2: Male, Male. `is_male_led: true`, `requires_escort: false`.
+ 
                     
                     const requiresEscort = !isMaleLed; 
-                    // This is a simplification. Real logic might be more complex, but this fits the data.
                     
                     if (isMaleLed) maleLedCabs++;
-                    else escortCabs++; // Assuming non-male-led implies escort needed or it's an escort cab?
-                    // Actually `response.json` summary says "escort_cabs": 1. Cab 3 is the only one with `requires_escort: true`.
+                    else escortCabs++; 
                     
                     routes.push({
                         cab_number: cabCounter++,
@@ -322,18 +265,11 @@ async function solveRoute(payload) {
                         is_male_led: isMaleLed,
                         requires_escort: requiresEscort,
                         route_type: isMaleLed ? "MALE-LED PICKUP" : "FEMALE-LED PICKUP",
-                        total_cost: parseFloat(routeDistance.toFixed(2)), // Using distance as cost for now, or solver cost?
-                        // Solver cost might be different. `run_real_data.js` prints `solverResp.solution_cost`.
-                        // But here we need per-route cost.
-                        // `response.json` has `total_cost` per route.
-                        // Cab 1: 223.12 cost, 22.31 km. Ratio 10.
-                        // Config `fare_per_km`: 10.
-                        // So cost = distance_km * 10.
+                        total_cost: parseFloat(routeDistance.toFixed(2)), 
                         total_distance_km: parseFloat((routeDistance / 1000).toFixed(2)),
                         trip_type: trip_type
                     });
                     
-                    // Update route cost based on config
                     const farePerKm = config.fare_per_km || 10;
                     routes[routes.length - 1].total_cost = parseFloat((routes[routes.length - 1].total_distance_km * farePerKm).toFixed(2));
                 }
@@ -362,6 +298,7 @@ async function solveRoute(payload) {
                         trip_type: trip_type
                     },
                     routes: routes,
+                    groups: result.groups, // Return groups for visualization
                     statistics: {
                         escort_avoidance_rate: 0,
                         escorts_avoided: 0,

@@ -125,12 +125,21 @@ class CuOptServerClient {
 
 
 
-async function solveVrp(processedData, nVehicles, vehicleCapacity, maxDetourTime, maxDetourPercent = 0.5, timeLimit = 20) {
+async function solveVrp(processedData, nVehicles, vehicleCapacity, maxDetourTime, maxDetourPercent = 0.5, timeLimit = 20, BYPASS_ESCORT = false) {
     const distMatrix = processedData.dist_matrix;
     const timeMatrix = processedData.time_matrix;
     const groups = processedData.groups;
     const totalEmployees = processedData.total_employees;
     const nLocations = totalEmployees + 1; // Office + Employees
+
+    // Dynamic Fleet Sizing: Ensure we have enough vehicles for our groups
+    // If we have more groups than the requested nVehicles, we must increase fleet size
+    // to avoid "Vehicle order match" infeasibility (forcing multiple full groups into one car).
+    let adjustedNVehicles = nVehicles;
+    if (groups.length > nVehicles) {
+        console.warn(`\n⚠️ Warning: Number of groups (${groups.length}) exceeds available vehicles (${nVehicles}). Increasing fleet size to ${groups.length}.`);
+        adjustedNVehicles = groups.length;
+    }
 
     // Prepare Time Windows using Constraint Builder
     const timeWindows = buildTimeWindows(totalEmployees, timeMatrix, maxDetourPercent);
@@ -148,46 +157,68 @@ async function solveVrp(processedData, nVehicles, vehicleCapacity, maxDetourTime
             }
         },
         "fleet_data": {
-            "vehicle_locations": Array(nVehicles).fill([0, 0]),
-            "vehicle_ids": Array.from({length: nVehicles}, (_, i) => `Veh_${i}`),
-            "vehicle_types": Array(nVehicles).fill(0),
-            "capacities": [Array(nVehicles).fill(vehicleCapacity)],
-            "vehicle_time_windows": Array(nVehicles).fill([0, 86400]),
-            "drop_return_trips": Array(nVehicles).fill(false),  // false = don't return to depot
+            "vehicle_locations": Array(adjustedNVehicles).fill([0, 0]),
+            "vehicle_ids": Array.from({length: adjustedNVehicles}, (_, i) => `Veh_${i}`),
+            "vehicle_types": Array(adjustedNVehicles).fill(0),
+            "capacities": [Array(adjustedNVehicles).fill(vehicleCapacity)],
+            "vehicle_time_windows": Array(adjustedNVehicles).fill([0, 86400]),
+            "drop_return_trips": Array(adjustedNVehicles).fill(false),
         },
         "task_data": {
             "task_locations": Array.from({length: nLocations}, (_, i) => i),
-            "demand": [Array.from({length: nLocations}, (_, i) => i === 0 ? 0 : 1)],
+            "demand": [(() => {
+                const demandArray = Array(nLocations).fill(1);
+                demandArray[0] = 0; // Office
+                
+                // Add demand for guards in guarded groups
+                for (const group of groups) {
+                    if (group.type === 'guarded_group' && group.components.length > 0) {
+                        // Add +1 demand to the first female in the group to account for the guard
+                        // The solver will see this node as having demand 2 (1 female + 1 guard)
+                        const firstMemberIdx = group.components[0].original_idx;
+                        if (firstMemberIdx < nLocations) {
+                            demandArray[firstMemberIdx] += 1;
+                        }
+                    }
+                }
+                return demandArray;
+            })()],
             "task_time_windows": timeWindows,
             "service_times": Array(nLocations).fill(120), // Default 2 mins per stop
-            "order_vehicle_match": (() => {
-                // Create order_vehicle_match to ensure grouped employees share a vehicle
-                const orderVehicleMatch = [];
-                let vehicleIdx = 0;
+            ...(BYPASS_ESCORT ? {} : {
+                "order_vehicle_match": (() => {
+                    // Create order_vehicle_match to ensure grouped employees share a vehicle
+                    const orderVehicleMatch = [];
+                    let vehicleIdx = 0;
                 
-                // 1. Assign Groups to Vehicles
-                for (const group of groups) {
-                    const vId = vehicleIdx % nVehicles;
-                    for (const member of group.components) {
-                        orderVehicleMatch.push({
-                            "order_id": member.original_idx,
-                            "vehicle_ids": [vId]
-                        });
+                    console.log(`\nDEBUG: Generating order_vehicle_match for ${groups.length} groups.`);
+                    console.log(`DEBUG: Adjusted Fleet Size: ${adjustedNVehicles}`);
+
+                    // 1. Assign Groups to Vehicles
+                    for (const group of groups) {
+                        // Use modulo just in case, but we adjustedNVehicles so it should be unique
+                        const vId = vehicleIdx % adjustedNVehicles;
+                    
+                        // DEBUG: Check if we are assigning too many people to one vehicle
+                        // But here we assign 1 group -> 1 vehicle.
+                        // If group size > capacity, that's an issue.
+                        if (group.components.length > vehicleCapacity) {
+                            console.error(`CRITICAL ERROR: Group ${group.id} has size ${group.components.length} > Capacity ${vehicleCapacity}`);
+                        }
+
+                        for (const member of group.components) {
+                            orderVehicleMatch.push({
+                                "order_id": member.original_idx,
+                                "vehicle_ids": [vId]
+                            });
+                        }
+                        vehicleIdx++;
                     }
-                    vehicleIdx++;
-                }
                 
-                // 2. Assign Single Males to Vehicles?
-                // If they are not in any group, they are free.
-                // But wait, processEscorts puts everyone in SOME node (Group, GuardedGroup, or Male Node).
-                // If 'Male Node' is returned in 'groups' list?
-                // In escort_processor.js, I only added 'group' and 'guarded_group' to 'groups' list.
-                // Single males (type 'male') are NOT in 'groups'.
-                // So they are free to be assigned to any vehicle (or we can assign them to remaining vehicles).
-                // The solver will handle them.
-                
-                return orderVehicleMatch;
-            })()
+                    console.log(`DEBUG: Generated ${orderVehicleMatch.length} constraints.`);
+                    return orderVehicleMatch;
+                })()
+            })
         },
         "solver_config": {
             "time_limit": timeLimit,

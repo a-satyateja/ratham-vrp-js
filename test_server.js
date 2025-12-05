@@ -24,7 +24,32 @@ async function testServer() {
             console.log(`Total cost: ${output.summary.total_cost}`);
         } else {
             console.error('❌ Response structure is missing required keys.');
+            return;
         }
+
+        // --- Escort Capacity Sanity Check ---
+        console.log('\nRunning Escort Capacity Sanity Check...');
+        const maxCapacity = payload.config.max_cab_capacity;
+        const escortRequiredGlobal = payload.config.escort_required;
+        let violations = 0;
+
+        output.routes.forEach(route => {
+            if (escortRequiredGlobal && route.requires_escort) {
+                // +1 for the escort
+                const totalOccupants = route.employee_details.length + 1;
+                if (totalOccupants > maxCapacity) {
+                    console.error(`❌ Violation in Cab #${route.cab_number}: ${route.employee_details.length} employees + 1 escort = ${totalOccupants} > Max Capacity (${maxCapacity})`);
+                    violations++;
+                }
+            }
+        });
+
+        if (violations === 0) {
+            console.log('✅ Escort capacity sanity check passed. All escorted trips fit within capacity.');
+        } else {
+            console.error(`❌ Escort capacity sanity check failed. Found ${violations} violations.`);
+        }
+        // ------------------------------------
 
         // Save response for inspection
         fs.writeFileSync('test_response.json', JSON.stringify(output, null, 2));
