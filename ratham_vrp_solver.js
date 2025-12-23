@@ -61,7 +61,7 @@ class CuOptServerClient {
         }
     }
 
-    async getOptimizedRoutes(problemData) {
+    async getOptimizedRoutes(problemData, timeLimit) {
         try {
             const response = await axios.post(this.optimizeUrl, problemData, {
                 headers: { 
@@ -77,7 +77,9 @@ class CuOptServerClient {
             if (result.reqId && !result.response) {
                 console.log(`Async Response Received: ${JSON.stringify(result, null, 2)}`);
                 console.log(`Request queued with ID: ${result.reqId}. Polling...`);
-                return await this.pollResult(result.reqId);
+                const pollMaxTime = 30 + timeLimit;
+
+                return await this.pollResult(result.reqId, pollMaxTime);
             }
 
             return result;
@@ -90,12 +92,12 @@ class CuOptServerClient {
         }
     }
 
-    async pollResult(reqId, retries = 60) {
+    async pollResult(reqId, maxTime = 60) {
         const statusUrl = `${this.baseUrl}/cuopt/request/${reqId}`;
         const solutionUrl = `${this.baseUrl}/cuopt/solution/${reqId}`;
         const headers = { "Accept": "application/json" };
 
-        for (let i = 0; i < retries; i++) {
+        for (let i = 0; i < maxTime; i++) {
             await new Promise(resolve => setTimeout(resolve, 1000));
             try {
                 const response = await axios.get(statusUrl, { headers });
@@ -117,6 +119,9 @@ class CuOptServerClient {
                 }
             } catch (error) {
                 console.error(`Polling error: ${error.message}`);
+                if (error.response) {
+                    console.error(`Polling Error Data: ${JSON.stringify(error.response.data)}`);
+                }
             }
         }
         return { status: -1, error: "Polling timed out" };
@@ -140,6 +145,35 @@ async function solveVrp(processedData, nVehicles, vehicleCapacity, maxDetourTime
         console.warn(`\n⚠️ Warning: Number of groups (${groups.length}) exceeds available vehicles (${nVehicles}). Increasing fleet size to ${groups.length}.`);
         adjustedNVehicles = groups.length;
     }
+
+    // --- DEBUG: Demand vs Capacity Check ---
+    if (processedData.nodes) {
+        let totalDemand = 0;
+        processedData.nodes.forEach(node => {
+            if (node.id !== 'OFFICE') {
+                totalDemand += (node.demand || 1);
+            }
+        });
+        const totalCapacity = adjustedNVehicles * vehicleCapacity;
+        
+        console.log(`\n🔍 DEBUG: Demand/Capacity Check`);
+        console.log(`   - Total Demand (People + Guards): ${totalDemand}`);
+        console.log(`   - Fleet Size: ${adjustedNVehicles}`);
+        console.log(`   - Vehicle Capacity: ${vehicleCapacity}`);
+        console.log(`   - Total Fleet Capacity: ${totalCapacity}`);
+        
+        if (totalDemand > totalCapacity) {
+            console.error(`\n🚨 CRITICAL ISSUE: Total Demand (${totalDemand}) exceeds Total Fleet Capacity (${totalCapacity}). Solver WILL be infeasible.`);
+            console.error(`   - Suggestion: Increase fleet size to at least ${Math.ceil(totalDemand / vehicleCapacity)}`);
+            // Auto-fix for debugging purposes? Un-comment to enable
+            const newMin = Math.ceil(totalDemand / vehicleCapacity);
+            if (newMin > adjustedNVehicles) {
+                 console.warn(`   - 💡 Auto-adjusting fleet size to ${newMin} to allow solution.`);
+                 adjustedNVehicles = newMin;
+            }
+        }
+    }
+    // ---------------------------------------
 
     // Prepare Time Windows using Constraint Builder
     const timeWindows = buildTimeWindows(totalEmployees, timeMatrix, maxDetourPercent);
@@ -209,7 +243,7 @@ async function solveVrp(processedData, nVehicles, vehicleCapacity, maxDetourTime
                         for (const member of group.components) {
                             orderVehicleMatch.push({
                                 "order_id": member.original_idx,
-                                "vehicle_ids": [vId]
+                                "vehicle_ids": [vId] // Reverted to integer ID to match solver expectation
                             });
                         }
                         vehicleIdx++;
@@ -229,8 +263,17 @@ async function solveVrp(processedData, nVehicles, vehicleCapacity, maxDetourTime
     };
 
     const client = new CuOptServerClient();
+    // Write payload to file for debugging
+    try {
+        const fs = require('fs');
+        fs.writeFileSync('debug_cuopt_payload.json', JSON.stringify(payload, null, 2));
+        console.log("DEBUG: Saved cuOpt payload to debug_cuopt_payload.json");
+    } catch (err) {
+        console.error("Failed to write debug payload:", err);
+    }
+
     console.log("Sending request to cuOpt Server...");
-    const result = await client.getOptimizedRoutes(payload);
+    const result = await client.getOptimizedRoutes(payload, timeLimit);
     return { solution: result, processedData };
 }
 

@@ -33,7 +33,7 @@ class RathamPreprocessor {
                 // but DOES include service times of PREVIOUS stops.
                 
                 // Handle small direct times to avoid huge percentages
-                const safeDirectTime = Math.max(directTime, 300); // Min 5 mins baseline
+                const safeDirectTime = Math.max(directTime, 1800); // Min 30 mins baseline
                 
                 const detour = (currentRouteTime - directTime) / safeDirectTime;
                 

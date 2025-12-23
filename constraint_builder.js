@@ -36,10 +36,12 @@ function buildTimeWindows(totalEmployees, timeMatrix, maxDetourPercent) {
 
         const directTime = timeMatrix[0][i];
         
-        // Earliest Drop = Direct Time
-        // Latest Drop = Direct Time * (1 + deviation)
+        // Earliest Drop = Direct Time (Physical minimum)
+        // Latest Drop = Direct Time + (SafeDirectTime * deviation)
+        // This matches: (Actual - Direct) / SafeDirect <= Percent
+        const safeDirectTime = Math.max(directTime, 1800);
         const earliestDrop = directTime;
-        const latestDrop = directTime * (1 + maxDetourPercent);
+        const latestDrop = safeDirectTime + (safeDirectTime * maxDetourPercent);
         
         timeWindows.push([Math.floor(earliestDrop), Math.floor(latestDrop)]);
     }

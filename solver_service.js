@@ -128,7 +128,7 @@ async function solveRoute(payload) {
     const totalLocations = result.total_employees + 1; // Office + Employees
 
     // Calculate time limit: 10 + (nodes / 6)
-    const time_limit = Math.ceil(10 + totalLocations / 6);
+    const time_limit = Math.ceil(10 + totalLocations / 6) + 60;
     console.log(
       `Calculated Time Limit: ${time_limit}s (Nodes: ${totalLocations})`
     );
@@ -147,17 +147,28 @@ async function solveRoute(payload) {
     // 5. Format Response
     console.log("Solver Response received. Checking structure...");
     if (solutionJson) {
+      console.log("Solution JSON keys:", Object.keys(solutionJson));
+      
+      // Log the status if it exists
+      if (solutionJson.status) {
+        console.log("Solution JSON status:", solutionJson.status);
+      }
+      // Log the error if it exists
+      if (solutionJson.error) {
+        console.log("Solution JSON error:", solutionJson.error);
+      }
+      
       if (solutionJson.response?.solver_infeasible_response) {
         console.log(
-          "Solution JSON:",
+          "Solution JSON infeasible response:",
           JSON.stringify(solutionJson.response?.solver_infeasible_response)
         );
       }
       if (solutionJson.warnings) {
-        console.log("Solution JSON:", JSON.stringify(solutionJson.warnings));
+        console.log("Solution JSON warnings:", JSON.stringify(solutionJson.warnings));
       }
       if (solutionJson.notes) {
-        console.log("Solution JSON:", JSON.stringify(solutionJson.notes));
+        console.log("Solution JSON notes:", JSON.stringify(solutionJson.notes));
       }
       if (solutionJson.response?.total_solve_time) {
         console.log(
@@ -165,14 +176,16 @@ async function solveRoute(payload) {
           solutionJson.response.total_solve_time
         );
       }
-      console.log("Solution JSON keys:", Object.keys(solutionJson));
-      console.log(
-        "Solution Response JSON keys:",
-        Object.keys(solutionJson.response)
-      );
+      
+
+     
+      // console.log(
+      //   "Solution Response JSON keys:",
+      //   Object.keys(solutionJson.response)
+      // );
       if (solutionJson.response) {
         console.log(
-          "Response status:",
+          "Solution JSON response status:",
           solutionJson.response.solver_response
             ? solutionJson.response.solver_response.status
             : "No solver_response"
@@ -255,7 +268,7 @@ async function solveRoute(payload) {
                 hasMale = true;
                 totalMales++;
               }
-
+                      
               const routeDistanceToNode = cumulativeDistances[i] || 0;
               const directDistance = normalizedDistMatrix[0][emp.original_idx];
 
@@ -292,8 +305,25 @@ async function solveRoute(payload) {
             }
           }
 
-          const firstPassenger = routeEmployees[0];
-          const isMaleLed = firstPassenger && firstPassenger.gender === "Male";
+          // Determine if Male Led/Escorted based on trip type
+          let isMaleLed = false;
+          if (trip_type === 'logout') {
+             // For DROP (Logout): Male must be the LAST drop to ensure safety for all previous females
+             const lastPassenger = routeEmployees[routeEmployees.length - 1];
+             isMaleLed = lastPassenger && lastPassenger.gender === 'Male';
+          } else {
+             // For PICKUP (Login): Male must be the FIRST pickup to ensure safety for subsequent females
+             const firstPassenger = routeEmployees[0];
+             isMaleLed = firstPassenger && firstPassenger.gender === 'Male'; 
+          }
+
+          // If no females in the car, we don't need an escort anyway
+          if (!hasFemale) {
+              // Mark as "Male Led" (or "Safe") effectively so we don't add escort
+              // Though technically if it's all males, requiresEscort should be false.
+              // Letting isMaleLed=true handles the requiresEscort=false logic below.
+              isMaleLed = true; 
+          }
 
           const requiresEscort = !isMaleLed;
 

@@ -47,7 +47,24 @@ async function testServer() {
         if (violations === 0) {
             console.log('✅ Escort capacity sanity check passed. All escorted trips fit within capacity.');
         } else {
-            console.error(`❌ Escort capacity sanity check failed. Found ${violations} violations.`);
+            console.log(`❌ Escort capacity sanity check failed. Found ${violations} violations.`);
+    
+            // Write detailed groupings to debug file
+            // Note: The 'routes' variable here refers to output.routes from the server response.
+            const debugOutput = output.routes.map(route => {
+                const employees = route.employee_details;
+                const hasFemale = employees.some(e => e.gender === 'F');
+                const onlyFemales = employees.every(e => e.gender === 'F');
+                // Simplified logic for debug output, based on route's requires_escort property
+                const needsEscort = route.requires_escort; 
+                
+                return `Cab ${route.cab_number} (Count: ${employees.length} + ${needsEscort ? 1 : 0} Escort):\n` +
+                       employees.map(e => `  - ${e.employee_id} (${e.gender})`).join('\n');
+            }).join('\n\n');
+            
+            fs.writeFileSync('cab_groupings_debug.txt', debugOutput);
+            console.log("Detailed cab groupings written to cab_groupings_debug.txt");
+
         }
         // ------------------------------------
 

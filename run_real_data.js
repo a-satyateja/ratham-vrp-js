@@ -187,10 +187,10 @@ async function runRealData() {
     console.log("Attempting to solve with cuOpt Server...");
     const { solution: solutionJson } = await solveVrp(
         result,
-        40, // n_vehicles
-        4,  // vehicle_capacity
+        200, // n_vehicles (DEBUG: REDUCED TO TRIGGER CAPACITY CHECK)
+        6,  // vehicle_capacity
         7200, // max_detour_time (2 hours in seconds)
-        0.5   // max_detour_percent
+        0.3   // max_detour_percent
     );
     
     // Parse Response
